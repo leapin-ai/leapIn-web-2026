@@ -26,6 +26,10 @@ const { pageName } = Astro.props;
     <Footer />
 </Layout>
 
+<script>
+	import { loadTranslations } from '../scripts/i18n-loader';
+	loadTranslations();
+</script>
 
 <style>
     .legal-hero {

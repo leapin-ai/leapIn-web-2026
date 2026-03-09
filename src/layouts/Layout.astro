@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import ChatbotButton from '../components/ChatbotButton.astro';
+import bgBottom1 from '../assets/index/bg_linear_1.png';
+import bgBottom2 from '../assets/index/bg_linear_2.png';
 ---
 
 <!doctype html>
@@ -67,7 +69,10 @@ import ChatbotButton from '../components/ChatbotButton.astro';
 	</body>
 </html>
 
-<style is:global>
+<style define:vars={{
+  bgBottom1: `url(${bgBottom1.src})`,
+  bgBottom2: `url(${bgBottom2.src})`,
+}} is:global>
 	:root {
 		--color-primary: #0066ff;
 		--color-secondary: #00d4ff;
@@ -82,7 +87,7 @@ import ChatbotButton from '../components/ChatbotButton.astro';
 		--spacing-lg: 4rem;
 		--spacing-xl: 6rem;
 		--border-radius: 8px;
-		--max-width: 1232px;
+		--max-width: 83.25rem; /* 1232px */
 		--AI-Gradient-Neon-Horizon-Heavy: linear-gradient(131deg, #5386FA 9.64%, #8B5CF6 89.29%);
 		--Neutrals-White-00: #FFF;
 		--Neutrals-Dark-40: #6B7280;
@@ -126,4 +131,82 @@ import ChatbotButton from '../components/ChatbotButton.astro';
 		border: none;
 		background: none;
 	}
+	
+	.hero-glow {
+		position: absolute;
+		width: 18.75rem;
+		height: 18.75rem;
+		aspect-ratio: 1/1;
+		border-radius: 18.75rem;
+		border: 20px solid #FFF;
+		background: linear-gradient(90deg, #FBE5CF 0%, #AFC9FF 100%);
+		box-shadow: 0 0 10px 10px #FFF inset;
+		filter: blur(40px);
+		opacity: 0.9;
+		pointer-events: none;
+		z-index: 0;
+		transform: translate(-50%, -50%);
+		transition: opacity 0.3s ease;
+	}
+
+	.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-top: 4.75rem;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-bg-bottom-1,
+  .hero-bg-bottom-2 {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: cover;
+  }
+
+  .hero-bg-bottom-1 {
+		background-image: var(--bgBottom1);
+    animation: bgFadeInOut1 8s ease-in-out infinite;
+    z-index: 1;
+  }
+
+  .hero-bg-bottom-2 {
+		background-image: var(--bgBottom2);
+    animation: bgFadeInOut2 8s ease-in-out infinite;
+    z-index: 2;
+  }
+
+  @keyframes bgFadeInOut1 {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes bgFadeInOut2 {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 </style>

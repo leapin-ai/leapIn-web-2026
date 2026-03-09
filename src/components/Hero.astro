@@ -44,52 +44,6 @@ import bgBottom2 from '../assets/index/bg_linear_2.png';
     z-index: 0;
   }
 
-  .hero-bg-bottom-1,
-  .hero-bg-bottom-2 {
-    position: absolute;
-    inset: 0;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    background-size: cover;
-  }
-
-  .hero-bg-bottom-1 {
-		background-image: var(--bgBottom1);
-    animation: bgFadeInOut1 8s ease-in-out infinite;
-    z-index: 1;
-  }
-
-  .hero-bg-bottom-2 {
-		background-image: var(--bgBottom2);
-    animation: bgFadeInOut2 8s ease-in-out infinite;
-    z-index: 2;
-  }
-
-  @keyframes bgFadeInOut1 {
-    0% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-
-  @keyframes bgFadeInOut2 {
-    0% {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-
   .hero-bg-img {
     position: absolute;
     inset: 0;
@@ -118,20 +72,6 @@ import bgBottom2 from '../assets/index/bg_linear_2.png';
     0%, 100% { transform: translate(0, 0); }
     50% { transform: translate(30px, -30px); }
   }
-
-	.hero-glow {
-		position: absolute;
-		width: 360px;
-		height: 360px;
-		border-radius: 360px;
-		background: var(--AI-Gradient-Sky-Aurora-Medium, linear-gradient(90deg, #FBE5CF 0%, #AFC9FF 100%));
-		filter: blur(32px);
-		opacity: 0.9;
-		pointer-events: none;
-		z-index: 0;
-		transform: translate(-50%, -50%);
-		transition: opacity 0.3s ease;
-	}
 
   .container {
     position: relative;

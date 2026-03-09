@@ -316,5 +316,28 @@
     "status": "Online",
     "placeholder": "Type your question...",
     "welcome": "Hello! I'm LeapIn AI Assistant. How can I help you today?"
+  },
+  "request": {
+    "title": "Request Free Demo",
+    "form": {
+      "title": "Request Free Demo",
+      "name": "Name",
+      "email": "Work Email",
+      "phone": "Phone",
+      "company": "Company",
+      "position": "Position",
+      "companySize": "Company Size",
+      "message": "Message",
+      "submit": "Submit",
+      "pleaseSelect": "Please Select",
+      "size1": "1-50 employees",
+      "size2": "51-200 employees",
+      "size3": "201-500 employees",
+      "size4": "501-1000 employees",
+      "size5": "1000+ employees",
+      "submitting": "Submitting...",
+      "success": "Success! We'll contact you soon.",
+      "error": "Submission failed. Please try again or contact us."
+    }
   }
 }

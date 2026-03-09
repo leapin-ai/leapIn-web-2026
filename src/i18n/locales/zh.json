@@ -315,5 +315,28 @@
     "status": "在线",
     "placeholder": "输入您的问题...",
     "welcome": "您好！我是 LeapIn AI 助手。有什么可以帮助您的吗？"
+  },
+  "request": {
+    "title": "即刻开启业务增长",
+    "form": {
+      "title": "预约免费演示",
+      "name": "姓名",
+      "email": "工作邮箱",
+      "phone": "电话",
+      "company": "公司",
+      "position": "职位",
+      "companySize": "公司规模",
+      "message": "留言",
+      "submit": "提交信息",
+      "pleaseSelect": "请选择",
+      "size1": "1-50人",
+      "size2": "51-200人",
+      "size3": "201-500人",
+      "size4": "501-1000人",
+      "size5": "1000+人",
+      "submitting": "提交中...",
+      "success": "提交成功！我们会尽快与您联系。",
+      "error": "提交失败，请稍后重试或联系我们。"
+    }
   }
 }

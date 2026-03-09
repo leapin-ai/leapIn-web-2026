@@ -36,10 +36,11 @@ console.log("base", base)
     <!-- 移动端菜单下拉 -->
     <div class="mobile-menu" id="mobile-menu">
       <nav class="mobile-nav">
-        <a href={`${base}/platform`} class={`mobile-nav-link ${currentPath.includes('/platform') ? 'active' : ''}`} data-i18n="header.platform"></a>
-        <a href={`${base}/solutions`} class={`mobile-nav-link ${currentPath.includes('/solutions') ? 'active' : ''}`} data-i18n="header.solutions"></a>
-        <a href={`${base}/industries`} class={`mobile-nav-link ${currentPath.includes('/industries') ? 'active' : ''}`} data-i18n="header.industries"></a>
-        <a href={`${base}/about`} class={`mobile-nav-link ${currentPath.includes('/about') ? 'active' : ''}`} data-i18n="header.about"></a>
+        <a href={`${base}`} class={`mobile-nav-link ${currentPath === '/' ? 'active' : ''}`} data-i18n="header.platform"></a>
+        <a href={`${base}platform`} class={`mobile-nav-link ${currentPath.includes('/platform') ? 'active' : ''}`} data-i18n="header.platform"></a>
+        <a href={`${base}solutions`} class={`mobile-nav-link ${currentPath.includes('/solutions') ? 'active' : ''}`} data-i18n="header.solutions"></a>
+        <a href={`${base}industries`} class={`mobile-nav-link ${currentPath.includes('/industries') ? 'active' : ''}`} data-i18n="header.industries"></a>
+        <a href={`${base}about`} class={`mobile-nav-link ${currentPath.includes('/about') ? 'active' : ''}`} data-i18n="header.about"></a>
       </nav>
     </div>
   </div>
