@@ -39,4 +39,13 @@ import Footer from '../components/Footer.astro';
 	.partners-section {
 		min-height: auto;
 	}
+
+	/* PC 端启用滚动捕捉 */
+	@media (min-width: 769px) {
+
+		/* 除了 hero 外，其他区域需要留出 header 高度 */
+		.scroll-section:not([data-section="hero"]) {
+			scroll-margin-top: 4.75rem;
+		}
+	}
 </style>

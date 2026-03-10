@@ -1,137 +1,84 @@
 ---
-import bgDot from '../assets/index/product/bg_dot.png';
 import PlatformFeatureCard from './PlatformFeatureCard.astro';
-
-const { children } = Astro.props;
 ---
 
-<section class="product-showcase" id="product-showcase">
-    <div class="showcase-content">
-      <div class="dark-box" id="dark-box">
-        <div class="dark-box-bg" style={`background-image: url(${bgDot.src})`}></div>
-        <div class="product-slider" id="product-slider">
-            <div class="feature-slide" data-index={0}>
-                <div class="info-item info-item-mobile" data-index={0}>
-                    <PlatformFeatureCard type='Acquisition' />
-                </div>
-            </div>
-            <div class="feature-slide" data-index={1}>
-                <div class="info-item info-item-mobile" data-index={1}>
-                    <PlatformFeatureCard type='Marketplace' />
-                </div>
-            </div>
-            <div class="feature-slide" data-index={2}>
-                <div class="info-item info-item-mobile" data-index={2}>
-                    <PlatformFeatureCard type='Development' />
-                </div>
-            </div>
-        </div>
-      </div>
+<div class="platform-feature-container" id="platform-feature-container">
+    <div class="feature-card-wrapper" data-index="0" data-active="false">
+        <PlatformFeatureCard type='Acquisition' />
     </div>
-  </div>
-</section>
+    <div class="feature-card-wrapper" data-index="1" data-active="false">
+        <PlatformFeatureCard type='Marketplace' />
+    </div>
+    <div class="feature-card-wrapper" data-index="2" data-active="false">
+        <PlatformFeatureCard type='Development' />
+    </div>
+</div>
 
 <style>
-  .product-slider {
+  .platform-feature-container {
     position: relative;
-    z-index: 1;
-    aspect-ratio: 16 / 10;
-    border-radius: 16px;
-    overflow: hidden;
-  }
-
-  .feature-slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .feature-slide[data-active="true"] {
+  .feature-card-wrapper {
+    position: absolute;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Initial state - Card 0 (Acquisition) */
+  .feature-card-wrapper[data-index="0"] {
+    top: -20vh;
+    transform: rotate(-45deg);
     opacity: 1;
   }
 
-  .feature-slide[data-active="false"] {
-    display: none;
+  /* Initial state - Card 1 (Marketplace) */
+  .feature-card-wrapper[data-index="1"] {
+    transform: rotate(45deg);
+    opacity: 0;
   }
 
-  .info-item[data-active="true"] {
-    display: block;
-    animation: fadeIn 0.5s ease;
+  /* Initial state - Card 2 (Development) */
+  .feature-card-wrapper[data-index="2"] {
+    transform: rotate(-45deg);
+    opacity: 0;
   }
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  /* Active state - all cards centered and straight */
+  .feature-card-wrapper[data-active="true"] {
+    top: 30vh !important;
+    transform: rotate(0deg) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Hidden state - cards that are not current */
+  .feature-card-wrapper[data-active="false"]:not([data-index="0"]) {
+    opacity: 0 !important;
+    pointer-events: none;
   }
 
   @media (max-width: 768px) {
-    .container {
-      padding: 0 1rem;
-    }
-
-    .product-showcase {
-      padding: 1.5rem 0;
-      height: fit-content;
-    }
-
-    .section-title {
-      font-size: 1.5rem;
-    }
-    .section-subtitle {
-      font-size: 0.8125rem;
-    }
-
-    .showcase-content {
-      gap: 1.5rem;
-    }
-
-    .dark-box {
-      display: flex;
-      flex-direction: column;
-      padding: 0;
-      gap: 0;
-      min-height: auto;
-      background: transparent;
-    }
-
-    .dark-box-bg {
-      display: none;
-    }
-
-    .product-slider {
-      width: 100%;
-      height: auto;
-      aspect-ratio: unset;
-      position: static;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .feature-slide {
-      position: static;
-      opacity: 1;
-      height: auto;
-      background: #111827;
-      border-radius: 1rem;
-      padding: 1rem;
+    .platform-feature-container {
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      position: static;
+      height: auto;
     }
 
-    .feature-slide[data-active="false"] {
-      display: flex;
+    .feature-card-wrapper {
+      position: static;
+      transform: none !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      top: 0 !important;
     }
   }
 </style>
@@ -140,56 +87,119 @@ const { children } = Astro.props;
   import { loadTranslations } from '../scripts/i18n-loader';
   loadTranslations();
 
-  const darkBox = document.getElementById('dark-box');
-  const slider = document.getElementById('product-slider');
-  const info = document.getElementById('feature-info');
+  const container = document.getElementById('platform-feature-container');
+  const scrollSection = document.querySelector('.scroll-section.features-dark');
   
-  if (darkBox && slider && info) {
+  if (container && scrollSection) {
     let currentIndex = 0;
-    const slides = slider.querySelectorAll('.feature-slide');
-    const infoItems = info.querySelectorAll('.info-item');
-    const totalSlides = slides.length;
+    const cards = container.querySelectorAll('.feature-card-wrapper');
+    const totalCards = cards.length;
+    let isScrolling = false;
+    let isInViewport = false;
 
-    const updateSlide = (index: number) => {
-      slides.forEach((slide, i) => {
-        slide.setAttribute('data-active', i === index ? 'true' : 'false');
-      });
-      infoItems.forEach((item, i) => {
-        item.setAttribute('data-active', i === index ? 'true' : 'false');
-      });
+    // Update card visibility and animations
+    const updateCards = (index: number) => {
+      currentIndex = index;
       
-      // 第二屏（index=1）反转布局
-      if (index === 1) {
-        darkBox.setAttribute('data-layout', 'reverse');
-      } else {
-        darkBox.removeAttribute('data-layout');
+      cards.forEach((card, i) => {
+        if (i === index) {
+          card.setAttribute('data-active', 'true');
+        } else {
+          card.setAttribute('data-active', 'false');
+        }
+      });
+    };
+
+    // Check if section is in viewport
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.3
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isInViewport = entry.isIntersecting;
+        
+        if (isInViewport && currentIndex === 0) {
+          // Activate first card when entering viewport
+          updateCards(0);
+        } else if (!isInViewport) {
+          // Reset to initial state when leaving viewport
+          currentIndex = 0;
+          cards.forEach((card, i) => {
+            card.setAttribute('data-active', 'false');
+          });
+        }
+      });
+    }, observerOptions);
+
+    observer.observe(scrollSection);
+
+    // Handle wheel scroll within the section
+    const handleWheel = (e: WheelEvent) => {
+      // Only handle scroll when in viewport and not currently scrolling
+      if (!isInViewport || isScrolling) return;
+
+      const scrollingDown = e.deltaY > 0;
+      const scrollingUp = e.deltaY < 0;
+
+      // Check if we should handle this scroll
+      const shouldHandleDown = scrollingDown && currentIndex < totalCards - 1;
+      const shouldHandleUp = scrollingUp && currentIndex > 0;
+
+      if (shouldHandleDown || shouldHandleUp) {
+        // Prevent default scroll behavior
+        e.preventDefault();
+        e.stopPropagation();
+        
+        isScrolling = true;
+
+        if (shouldHandleDown) {
+          updateCards(currentIndex + 1);
+        } else if (shouldHandleUp) {
+          updateCards(currentIndex - 1);
+        }
+
+        // Reset scrolling flag after animation
+        setTimeout(() => {
+          isScrolling = false;
+        }, 800);
+      }
+      // If at boundaries, allow normal scroll to continue
+    };
+
+    // Listen to wheel events on the scroll section
+    scrollSection.addEventListener('wheel', handleWheel, { passive: false });
+
+    // Handle scroll position to determine card index
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking && isInViewport) {
+        window.requestAnimationFrame(() => {
+          const rect = scrollSection.getBoundingClientRect();
+          const sectionHeight = scrollSection.offsetHeight;
+          const viewportHeight = window.innerHeight;
+          
+          // Calculate scroll progress through the section
+          const scrollProgress = Math.abs(rect.top) / (sectionHeight - viewportHeight);
+          
+          // Determine which card should be active based on scroll progress
+          const newIndex = Math.min(
+            Math.floor(scrollProgress * totalCards),
+            totalCards - 1
+          );
+          
+          if (newIndex !== currentIndex && !isScrolling) {
+            updateCards(Math.max(0, newIndex));
+          }
+          
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    // 初始化第一个
-    updateSlide(0);
-
-    // 监听滚动
-    let isScrolling = false;
-    darkBox.addEventListener('wheel', (e) => {
-      if (isScrolling) return;
-      
-      e.preventDefault();
-      isScrolling = true;
-
-      if (e.deltaY > 0) {
-        // 向下滚动
-        currentIndex = (currentIndex + 1) % totalSlides;
-      } else {
-        // 向上滚动
-        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-      }
-
-      updateSlide(currentIndex);
-
-      setTimeout(() => {
-        isScrolling = false;
-      }, 500);
-    }, { passive: false });
+    window.addEventListener('scroll', handleScroll, { passive: true });
   }
 </script>

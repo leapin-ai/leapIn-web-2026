@@ -17,32 +17,11 @@ import PlatformFeature from '../components/PlatformFeature.astro';
 		</section>
 		<!-- <h2 class="card-title" data-i18n="platform.coreFeatures.title"></h2> -->
 		<!-- Hero Section -->
-		 <section class="scroll-section features-dark features-dark-first">
+		<section class="scroll-section features-dark">
 			<div class="container">
 				<PlatformFeature />
 			</div>
 		</section>
-
-		<!-- Core Features Section - Dark -->
-		<!-- <section class="scroll-section features-dark features-dark-first">
-			<div class="container">
-				<PlatformFeatureCard type='Acquisition' />
-			</div>
-		</section> -->
-
-		<!-- AI Matching Section - Dark -->
-		<!-- <section class="scroll-section features-dark">
-			<div class="container">
-				<PlatformFeatureCard type='Marketplace' />
-			</div>
-		</section> -->
-
-		<!-- Global Talent Section - Dark -->
-		<!-- <section class="scroll-section features-dark">
-			<div class="container">
-				<PlatformFeatureCard type='Development' />
-			</div>
-		</section> -->
 
 		<!-- Platform Features Section - Light -->
 		<section class="scroll-section platform-features">
@@ -127,43 +106,6 @@ import PlatformFeature from '../components/PlatformFeature.astro';
 <script>
 	import { loadTranslations } from '../scripts/i18n-loader';
 	loadTranslations();
-
-	// Scroll animation for platform features
-	const observerOptions = {
-		root: null,
-		rootMargin: '0px',
-		threshold: 0.3
-	};
-
-	const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-		entries.forEach(entry => {
-			if (entry.isIntersecting) {
-				const section = entry.target as HTMLElement;
-				
-				// Handle first section container
-				if (section.classList.contains('features-dark-first')) {
-					const container = section.querySelector('.container');
-					if (container) {
-						container.classList.add('scrolled');
-					}
-				}
-				
-				// Handle feature cards rotation
-				const card = section.querySelector('.platform-feature-card');
-				if (card) {
-					card.classList.add('scrolled');
-				}
-			}
-		});
-	};
-
-	const observer = new IntersectionObserver(handleIntersection, observerOptions);
-
-	// Observe all dark feature sections
-	const featureSections = document.querySelectorAll('.features-dark');
-	featureSections.forEach(section => {
-		observer.observe(section);
-	});
 </script>
 
 <style>
@@ -196,23 +138,8 @@ import PlatformFeature from '../components/PlatformFeature.astro';
 		padding: 0 1rem;
 		background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
 		color: white;
-		display: flex;
-		align-items: center;
-		justify-content: center;
 		min-height: 100vh;
 		position: relative;
-	}
-
-	.features-dark-first .container {
-		position: relative;
-		top: -40vh;
-		transform: rotate(-45deg);
-		transition: top 0.6s ease-out;
-	}
-
-	.features-dark-first .container.scrolled {
-		top: 0;
-		transform: rotate(0deg);
 	}
 
 	.features-dark:nth-of-type(2) .platform-feature-card {
