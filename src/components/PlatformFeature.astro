@@ -1,0 +1,195 @@
+---
+import bgDot from '../assets/index/product/bg_dot.png';
+import PlatformFeatureCard from './PlatformFeatureCard.astro';
+
+const { children } = Astro.props;
+---
+
+<section class="product-showcase" id="product-showcase">
+    <div class="showcase-content">
+      <div class="dark-box" id="dark-box">
+        <div class="dark-box-bg" style={`background-image: url(${bgDot.src})`}></div>
+        <div class="product-slider" id="product-slider">
+            <div class="feature-slide" data-index={0}>
+                <div class="info-item info-item-mobile" data-index={0}>
+                    <PlatformFeatureCard type='Acquisition' />
+                </div>
+            </div>
+            <div class="feature-slide" data-index={1}>
+                <div class="info-item info-item-mobile" data-index={1}>
+                    <PlatformFeatureCard type='Marketplace' />
+                </div>
+            </div>
+            <div class="feature-slide" data-index={2}>
+                <div class="info-item info-item-mobile" data-index={2}>
+                    <PlatformFeatureCard type='Development' />
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-slider {
+    position: relative;
+    z-index: 1;
+    aspect-ratio: 16 / 10;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .feature-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .feature-slide[data-active="true"] {
+    opacity: 1;
+  }
+
+  .feature-slide[data-active="false"] {
+    display: none;
+  }
+
+  .info-item[data-active="true"] {
+    display: block;
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 1rem;
+    }
+
+    .product-showcase {
+      padding: 1.5rem 0;
+      height: fit-content;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+    }
+    .section-subtitle {
+      font-size: 0.8125rem;
+    }
+
+    .showcase-content {
+      gap: 1.5rem;
+    }
+
+    .dark-box {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      gap: 0;
+      min-height: auto;
+      background: transparent;
+    }
+
+    .dark-box-bg {
+      display: none;
+    }
+
+    .product-slider {
+      width: 100%;
+      height: auto;
+      aspect-ratio: unset;
+      position: static;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .feature-slide {
+      position: static;
+      opacity: 1;
+      height: auto;
+      background: #111827;
+      border-radius: 1rem;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .feature-slide[data-active="false"] {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  import { loadTranslations } from '../scripts/i18n-loader';
+  loadTranslations();
+
+  const darkBox = document.getElementById('dark-box');
+  const slider = document.getElementById('product-slider');
+  const info = document.getElementById('feature-info');
+  
+  if (darkBox && slider && info) {
+    let currentIndex = 0;
+    const slides = slider.querySelectorAll('.feature-slide');
+    const infoItems = info.querySelectorAll('.info-item');
+    const totalSlides = slides.length;
+
+    const updateSlide = (index: number) => {
+      slides.forEach((slide, i) => {
+        slide.setAttribute('data-active', i === index ? 'true' : 'false');
+      });
+      infoItems.forEach((item, i) => {
+        item.setAttribute('data-active', i === index ? 'true' : 'false');
+      });
+      
+      // 第二屏（index=1）反转布局
+      if (index === 1) {
+        darkBox.setAttribute('data-layout', 'reverse');
+      } else {
+        darkBox.removeAttribute('data-layout');
+      }
+    };
+
+    // 初始化第一个
+    updateSlide(0);
+
+    // 监听滚动
+    let isScrolling = false;
+    darkBox.addEventListener('wheel', (e) => {
+      if (isScrolling) return;
+      
+      e.preventDefault();
+      isScrolling = true;
+
+      if (e.deltaY > 0) {
+        // 向下滚动
+        currentIndex = (currentIndex + 1) % totalSlides;
+      } else {
+        // 向上滚动
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      }
+
+      updateSlide(currentIndex);
+
+      setTimeout(() => {
+        isScrolling = false;
+      }, 500);
+    }, { passive: false });
+  }
+</script>
