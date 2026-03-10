@@ -58,8 +58,14 @@ import PlatformFeatureCard from './PlatformFeatureCard.astro';
     pointer-events: auto !important;
   }
 
-  /* Hidden state - cards that are not current */
-  .feature-card-wrapper[data-active="false"]:not([data-index="0"]) {
+  /* When in viewport, ALL inactive cards (including card 0) are hidden */
+  .platform-feature-container[data-in-viewport="true"] .feature-card-wrapper[data-active="false"] {
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+
+  /* When NOT in viewport, only non-card-0 inactive cards are hidden (card 0 stays as preview) */
+  .platform-feature-container:not([data-in-viewport="true"]) .feature-card-wrapper[data-active="false"]:not([data-index="0"]) {
     opacity: 0 !important;
     pointer-events: none;
   }
@@ -89,70 +95,71 @@ import PlatformFeatureCard from './PlatformFeatureCard.astro';
 
   const container = document.getElementById('platform-feature-container');
   const scrollSection = document.querySelector('.scroll-section.features-dark');
-  
-  if (container && scrollSection) {
-    let currentIndex = 0;
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+  if (container && scrollSection && !isMobile) {
+    let currentIndex = -1;
     const cards = container.querySelectorAll('.feature-card-wrapper');
     const totalCards = cards.length;
     let isScrolling = false;
     let isInViewport = false;
+    let scrollDirection: 'down' | 'up' = 'down';
+    let lastScrollY = window.scrollY;
 
-    // Update card visibility and animations
     const updateCards = (index: number) => {
       currentIndex = index;
-      
       cards.forEach((card, i) => {
-        if (i === index) {
-          card.setAttribute('data-active', 'true');
-        } else {
-          card.setAttribute('data-active', 'false');
-        }
+        card.setAttribute('data-active', i === index ? 'true' : 'false');
       });
     };
 
-    // Check if section is in viewport
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.3
-    };
+    window.addEventListener('scroll', () => {
+      const currentY = window.scrollY;
+      if (currentY > lastScrollY) {
+        scrollDirection = 'down';
+      } else if (currentY < lastScrollY) {
+        scrollDirection = 'up';
+      }
+      lastScrollY = currentY;
+    }, { passive: true });
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
+        const wasInViewport = isInViewport;
         isInViewport = entry.isIntersecting;
-        
-        if (isInViewport && currentIndex === 0) {
-          // Activate first card when entering viewport
-          updateCards(0);
-        } else if (!isInViewport) {
-          // Reset to initial state when leaving viewport
-          currentIndex = 0;
-          cards.forEach((card, i) => {
+
+        if (isInViewport && !wasInViewport) {
+          container.setAttribute('data-in-viewport', 'true');
+
+          if (scrollDirection === 'down') {
+            updateCards(0);
+          } else {
+            updateCards(totalCards - 1);
+          }
+        } else if (!isInViewport && wasInViewport) {
+          container.setAttribute('data-in-viewport', 'false');
+          currentIndex = -1;
+          cards.forEach(card => {
             card.setAttribute('data-active', 'false');
           });
         }
       });
-    }, observerOptions);
+    }, { root: null, rootMargin: '0px', threshold: 0.3 });
 
     observer.observe(scrollSection);
 
-    // Handle wheel scroll within the section
-    const handleWheel = (e: WheelEvent) => {
-      // Only handle scroll when in viewport and not currently scrolling
+    scrollSection.addEventListener('wheel', (e: WheelEvent) => {
       if (!isInViewport || isScrolling) return;
 
       const scrollingDown = e.deltaY > 0;
       const scrollingUp = e.deltaY < 0;
 
-      // Check if we should handle this scroll
       const shouldHandleDown = scrollingDown && currentIndex < totalCards - 1;
       const shouldHandleUp = scrollingUp && currentIndex > 0;
 
       if (shouldHandleDown || shouldHandleUp) {
-        // Prevent default scroll behavior
         e.preventDefault();
         e.stopPropagation();
-        
         isScrolling = true;
 
         if (shouldHandleDown) {
@@ -161,45 +168,10 @@ import PlatformFeatureCard from './PlatformFeatureCard.astro';
           updateCards(currentIndex - 1);
         }
 
-        // Reset scrolling flag after animation
         setTimeout(() => {
           isScrolling = false;
         }, 800);
       }
-      // If at boundaries, allow normal scroll to continue
-    };
-
-    // Listen to wheel events on the scroll section
-    scrollSection.addEventListener('wheel', handleWheel, { passive: false });
-
-    // Handle scroll position to determine card index
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking && isInViewport) {
-        window.requestAnimationFrame(() => {
-          const rect = scrollSection.getBoundingClientRect();
-          const sectionHeight = scrollSection.offsetHeight;
-          const viewportHeight = window.innerHeight;
-          
-          // Calculate scroll progress through the section
-          const scrollProgress = Math.abs(rect.top) / (sectionHeight - viewportHeight);
-          
-          // Determine which card should be active based on scroll progress
-          const newIndex = Math.min(
-            Math.floor(scrollProgress * totalCards),
-            totalCards - 1
-          );
-          
-          if (newIndex !== currentIndex && !isScrolling) {
-            updateCards(Math.max(0, newIndex));
-          }
-          
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    }, { passive: false });
   }
 </script>

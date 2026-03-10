@@ -5,6 +5,7 @@ import png2 from '../assets/index/enterprises/2.png';
 import png3 from '../assets/index/enterprises/3.png';
 import png4 from '../assets/index/enterprises/4.png';
 import png5 from '../assets/index/enterprises/5.png';
+import Button from './Button.astro';
 
 const enterprises = [png1, png2, png3, png4, png5];
 
@@ -47,7 +48,7 @@ const fontSize = {
     <div class="cta-content">
       <h2 class="cta-title" data-i18n="homepage.cta.title"></h2>
       <p class="cta-subtitle" data-i18n="homepage.cta.subtitle"></p>
-      <button class="cta-button" data-i18n="button.RequestDemo"></button>
+      <Button text="button.RequestDemo" type="primary" />
     </div>
   </div>
   
@@ -161,6 +162,10 @@ const fontSize = {
     margin: 0 auto;
     padding: 4rem 2rem;
     max-width: var(--max-width);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .cta-title {
@@ -182,22 +187,6 @@ const fontSize = {
     display: flex;
     gap: 1rem;
     justify-content: center;
-  }
-
-  .cta-button {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    color: white;
-    padding: 1rem 2.5rem;
-    border-radius: 12px;
-    font-size: var(--ctaButtonSize);
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-  }
-
-  .cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
   }
 
   @media (max-width: 1024px) {
