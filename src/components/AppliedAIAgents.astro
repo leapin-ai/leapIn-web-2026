@@ -1,6 +1,7 @@
 ---
 import bgDot from '../assets/platform/AppliedAIAgents/bg_dot.png';
-import AICoachUI from '../assets/platform/AppliedAIAgents/en/ai-coach.png';
+import enAICoachUI from '../assets/platform/AppliedAIAgents/en/ai-coach.png';
+import cnAICoachUI from '../assets/platform/AppliedAIAgents/cn/ai-coach.png';
 ---
 
 <section class="applied-ai-agents" id="applied-ai-agents">
@@ -12,14 +13,7 @@ import AICoachUI from '../assets/platform/AppliedAIAgents/en/ai-coach.png';
     <div class="ai-agents-content">
       <div class="ai-agents-slider" id="ai-agents-slider">
         <div class="feature-slide" data-index={0}>
-          <img class="feature-ai-coach" src={AICoachUI.src} alt="AI Persona Card">
-          <!-- <div class="feature-ai-coach">
-            <img class="ai-coach-left" src={AIPersona.src} alt="AI Persona Card">
-            <div class="ai-coach-right">
-              <img src={ResultDisplay.src} alt="Result Display Card">
-              <img src={ConversationHighlights.src} alt="Conversation Highlights card">
-            </div>
-          </div> -->
+          <img class="feature-ai-coach" id="feature-ai-coach" src={enAICoachUI.src} data-en-src={enAICoachUI.src} data-cn-src={cnAICoachUI.src} alt="AI Persona Card">
           <div class="feature-ai-sales-coach">
             <h3 class="sales-coach-title" data-i18n="platform.platformFeatures.salesCoach.title"></h3>
             <div class="sales-coach-subtitle" data-i18n="platform.platformFeatures.salesCoach.subtitle"></div>
@@ -213,7 +207,6 @@ import AICoachUI from '../assets/platform/AppliedAIAgents/en/ai-coach.png';
     font-feature-settings: 'liga' off, 'clig' off;
     font-family: Inter;
     font-size: 2rem;
-    font-style: italic;
   }
 
   .sales-coach-subtitle {
@@ -327,6 +320,16 @@ import AICoachUI from '../assets/platform/AppliedAIAgents/en/ai-coach.png';
 
   const section = document.getElementById('applied-ai-agents');
   const slider = document.getElementById('ai-agents-slider');
+  const featureAICoach = document.getElementById('feature-ai-coach');
+
+  const currentLang = localStorage.getItem('language');
+
+  if (featureAICoach) {
+    const src = currentLang === 'en'
+      ? featureAICoach.getAttribute('data-en-src')
+      : featureAICoach.getAttribute('data-cn-src');
+    if (src) featureAICoach.setAttribute('src', src);
+  }
   
   if (section && slider) {
     let currentIndex = 0;
