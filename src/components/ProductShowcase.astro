@@ -2,16 +2,20 @@
 import product1 from '../assets/index/product/product1.png';
 import product2 from '../assets/index/product/product2.png';
 import product3 from '../assets/index/product/product3.png';
+import product2Cn from '../assets/index/product/product2-cn.png';
+import product3Cn from '../assets/index/product/product3-cn.png';
 import product1Mobile from '../assets/index/product/product1mobile.png';
 import product2Mobile from '../assets/index/product/product2mobile.png';
 import product3Mobile from '../assets/index/product/product3mobile.png';
+import product2MobileCn from '../assets/index/product/product2mobile-cn.png';
+import product3MobileCn from '../assets/index/product/product3mobile-cn.png';
 import bgDot from '../assets/index/product/bg_dot.png';
 import Button from './Button.astro';
 
 const products = [
   { image: product1, mobileImage: product1Mobile, number: '01' },
-  { image: product2, mobileImage: product2Mobile, number: '02' },
-  { image: product3, mobileImage: product3Mobile, number: '03' }
+  { image: product2, imageCn: product2Cn, mobileImage: product2Mobile, mobileImageCn: product2MobileCn, number: '02' },
+  { image: product3, imageCn: product3Cn, mobileImage: product3Mobile, mobileImageCn: product3MobileCn, number: '03' }
 ];
 ---
 
@@ -36,8 +40,8 @@ const products = [
                 <p class="info-description" data-i18n={`homepage.product.items.${index}.description`}>功能描述</p>
               </div>
               <picture>
-                <source media="(max-width: 768px)" srcset={feature.mobileImage.src} />
-                <img src={feature.image.src} alt={`Feature ${index + 1}`} class="feature-image" />
+                <source media="(max-width: 768px)" srcset={feature.mobileImage.src} data-en-srcset={feature.mobileImage.src} data-cn-srcset={feature?.mobileImageCn?.src || feature.mobileImage.src} />
+                <img src={feature.image.src} data-en-src={feature.image.src} data-cn-src={feature?.imageCn?.src || feature.image.src} alt={`Feature ${index + 1}`} class="feature-image" />
               </picture>
             </div>
           ))}
@@ -373,6 +377,32 @@ const products = [
 <script>
   import { loadTranslations } from '../scripts/i18n-loader';
   loadTranslations();
+
+  const currentLang = localStorage.getItem('language') || 'en';
+
+  // 切换图片语言
+  const images = document.querySelectorAll('.feature-image');
+  const sources = document.querySelectorAll('picture source');
+  
+  images.forEach((img) => {
+    const enSrc = img.getAttribute('data-en-src');
+    const cnSrc = img.getAttribute('data-cn-src');
+    if (currentLang === 'zh' && cnSrc) {
+      img.setAttribute('src', cnSrc);
+    } else if (enSrc) {
+      img.setAttribute('src', enSrc);
+    }
+  });
+
+  sources.forEach((source) => {
+    const enSrcset = source.getAttribute('data-en-srcset');
+    const cnSrcset = source.getAttribute('data-cn-srcset');
+    if (currentLang === 'zh' && cnSrcset) {
+      source.setAttribute('srcset', cnSrcset);
+    } else if (enSrcset) {
+      source.setAttribute('srcset', enSrcset);
+    }
+  });
 
   const darkBox = document.getElementById('dark-box');
   const slider = document.getElementById('product-slider');

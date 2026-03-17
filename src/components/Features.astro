@@ -1,6 +1,7 @@
 ---
 import { pxToRem } from '../utils/index';
 import bgPreview from '../assets/index/features/bg.png';
+import bgPreviewCn from '../assets/index/features/bg-cn.png';
 import slow1 from '../assets/index/features/slow1.png';
 import slow2 from '../assets/index/features/slow2.png';
 import slow3 from '../assets/index/features/slow3.png';
@@ -78,7 +79,7 @@ const fontSize = {
 
       <!-- Right: Preview Image -->
       <div class="features-preview" id="featuresPreview">
-        <img src={bgPreview.src} alt="Features Preview" />
+        <img src={bgPreview.src} data-en-src={bgPreview.src} data-cn-src={bgPreviewCn.src} alt="Features Preview" id="featuresPreviewImg" />
       </div>
     </div>
   </div>
@@ -87,6 +88,20 @@ const fontSize = {
 <script>
   import { loadTranslations } from '../scripts/i18n-loader';
   loadTranslations();
+
+  // 切换预览图片语言
+  const currentLang = localStorage.getItem('language') || 'en';
+  const previewImg = document.getElementById('featuresPreviewImg') as HTMLImageElement;
+  
+  if (previewImg) {
+    const enSrc = previewImg.getAttribute('data-en-src');
+    const cnSrc = previewImg.getAttribute('data-cn-src');
+    if (currentLang === 'zh' && cnSrc) {
+      previewImg.setAttribute('src', cnSrc);
+    } else if (enSrc) {
+      previewImg.setAttribute('src', enSrc);
+    }
+  }
 
   // Intersection Observer 监听 features 是否在可视区域内
   if (typeof window !== 'undefined') {
