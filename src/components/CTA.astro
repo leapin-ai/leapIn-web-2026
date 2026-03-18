@@ -44,6 +44,7 @@ const layers = [
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
     }
     .cta-bg {
         position: absolute;
@@ -54,29 +55,27 @@ const layers = [
         justify-content: center;
         flex-direction: column;
         z-index: -1;
-        animation: gap 8s infinite;
+        gap: 4.75rem;
     }
 
     .partner-item {
         max-width: 65.375rem;
         transition: all;
-        animation: float 16s infinite;
+        animation: float 16s infinite, gap 16s infinite;
     }
 
     @keyframes float {
-        0% { transform: translateZ() rotate(0); }
-        30% { transform: rotate(-180deg); }
-        50% { transform: rotate(-180deg); }
-        80% { transform: rotate(0); }
-        100% { transform: rotate(0); }
+        0%, 100% { transform: rotate(0) translateY(0); }
+        40% { transform: rotate(-180deg) translateY(-4.25rem); }
+        50% { transform: rotate(-180deg) translateY(-4.25rem); }
+        90% { transform: rotate(0) translateY(0); }
     }
 
     @keyframes gap {
-        0% { gap: 4.75rem; }
-        10% { gap: -3rem; }
-        700% { gap: -3rem; }
-        80% { gap: 4.75rem; }
-        100% { gap: 4.75rem; }
+        0%, 100% { margin-top: 0; margin-bottom: 0; }
+        40% { margin-top: -4.25rem; margin-bottom: -4.25rem; }
+        50% { margin-top: -4.25rem; margin-bottom: -4.25rem; }
+        90% { margin-top: 0; margin-bottom: 0; }
     }
 
     .container {
