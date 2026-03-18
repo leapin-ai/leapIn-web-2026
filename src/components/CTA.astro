@@ -83,38 +83,39 @@ const layers = [
     }
 
     @keyframes zIndex0 {
-        0%, 100% { z-index: 4; }
+        0%, 100% { z-index: 1; }
         40% { z-index: 4; }
-        50% { z-index: 1; }
+        50% { z-index: 4; }
         90% { z-index: 1; }
     }
 
     @keyframes zIndex1 {
-        0%, 100% { z-index: 3; }
+        0%, 100% { z-index: 2; }
         40% { z-index: 3; }
-        50% { z-index: 2; }
+        50% { z-index: 3; }
         90% { z-index: 2; }
     }
 
     @keyframes zIndex2 {
-        0%, 100% { z-index: 2; }
+        0%, 100% { z-index: 3; }
         40% { z-index: 2; }
-        50% { z-index: 3; }
+        50% { z-index: 2; }
         90% { z-index: 3; }
     }
 
     @keyframes zIndex3 {
-        0%, 100% { z-index: 1; }
+        0%, 100% { z-index: 4; }
         40% { z-index: 1; }
-        50% { z-index: 4; }
+        50% { z-index: 1; }
         90% { z-index: 4; }
     }
 
     @keyframes float {
-        0%, 100% { transform: rotate(0) translateY(0); }
+        0% { transform: rotate(0deg) translateY(0); }
         40% { transform: rotate(-180deg) translateY(-4rem); }
         50% { transform: rotate(-180deg) translateY(-4rem); }
-        90% { transform: rotate(0) translateY(0); }
+        90% { transform: rotate(-360deg) translateY(0); }
+        100% { transform: rotate(-360deg) translateY(0); }
     }
 
     @keyframes gap {
