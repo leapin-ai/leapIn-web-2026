@@ -15,6 +15,7 @@ const layers = [
         {layers.map(({ img, opacity }, index) => (
             <img 
                 class="partner-item"
+                data-index={index}
                 src={img.src} 
                 alt={`Partner ${index + 1}`}
                 style={{ opacity }}
@@ -62,19 +63,64 @@ const layers = [
         max-width: 65.375rem;
         transition: all;
         animation: float 16s infinite, gap 16s infinite;
+        position: relative;
+    }
+
+    .partner-item[data-index="0"] {
+        animation: float 16s infinite, gap 16s infinite, zIndex0 16s infinite;
+    }
+
+    .partner-item[data-index="1"] {
+        animation: float 16s infinite, gap 16s infinite, zIndex1 16s infinite;
+    }
+
+    .partner-item[data-index="2"] {
+        animation: float 16s infinite, gap 16s infinite, zIndex2 16s infinite;
+    }
+
+    .partner-item[data-index="3"] {
+        animation: float 16s infinite, gap 16s infinite, zIndex3 16s infinite;
+    }
+
+    @keyframes zIndex0 {
+        0%, 100% { z-index: 4; }
+        40% { z-index: 4; }
+        50% { z-index: 1; }
+        90% { z-index: 1; }
+    }
+
+    @keyframes zIndex1 {
+        0%, 100% { z-index: 3; }
+        40% { z-index: 3; }
+        50% { z-index: 2; }
+        90% { z-index: 2; }
+    }
+
+    @keyframes zIndex2 {
+        0%, 100% { z-index: 2; }
+        40% { z-index: 2; }
+        50% { z-index: 3; }
+        90% { z-index: 3; }
+    }
+
+    @keyframes zIndex3 {
+        0%, 100% { z-index: 1; }
+        40% { z-index: 1; }
+        50% { z-index: 4; }
+        90% { z-index: 4; }
     }
 
     @keyframes float {
         0%, 100% { transform: rotate(0) translateY(0); }
-        40% { transform: rotate(-180deg) translateY(-4.25rem); }
-        50% { transform: rotate(-180deg) translateY(-4.25rem); }
+        40% { transform: rotate(-180deg) translateY(-4rem); }
+        50% { transform: rotate(-180deg) translateY(-4rem); }
         90% { transform: rotate(0) translateY(0); }
     }
 
     @keyframes gap {
         0%, 100% { margin-top: 0; margin-bottom: 0; }
-        40% { margin-top: -4.25rem; margin-bottom: -4.25rem; }
-        50% { margin-top: -4.25rem; margin-bottom: -4.25rem; }
+        40% { margin-top: -4rem; margin-bottom: -4rem; }
+        50% { margin-top: -4rem; margin-bottom: -4rem; }
         90% { margin-top: 0; margin-bottom: 0; }
     }
 
