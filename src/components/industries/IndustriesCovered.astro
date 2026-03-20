@@ -20,8 +20,8 @@ const imgs = [
 
 <section class="section-container covered-section" id="covered-section">
     <div class="container" id="covered-section-container">
+        <h2 class="covered-title" data-i18n="industries.covered.title"></h2>
         <div class="feature-slide" data-index={0}>
-            <h2 class="covered-title" data-i18n="industries.covered.title"></h2>
             {
                 imgs.map(({img, text},index) => (
                     <div class="covered-item" data-index={index}>
@@ -53,6 +53,13 @@ const imgs = [
         z-index: 1;
     }
 
+    .container[active-slider="1"],
+    .container[active-slider="2"],
+    .container[active-slider="3"],
+    .container[active-slider="4"] {
+        overflow: hidden;
+    }
+
     .feature-slide {
         display: flex;
         align-items: center;
@@ -70,11 +77,27 @@ const imgs = [
         font-size: 2rem;
         line-height: 124%; /* 39.68px */
         letter-spacing: -0.352px;
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.8s ease;
+        z-index: 10;
+    }
+
+    .feature-slide[data-index="4"] .covered-title {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin-bottom: 2rem;
     }
 
     .covered-item {
+        display: flex;
         width: 14.5rem;
-        padding: 1.5rem;
+        padding: 1.5rem 0;
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -83,7 +106,7 @@ const imgs = [
         border: 1px solid var(--Neutrals-White-00, #FFF);
         background: var(--Grey-Gray-10, rgba(17, 24, 39, 0.05));
         backdrop-filter: blur(7.5px);
-        transition: all 0.8s;
+        transition: all 0.8s ease;
     }
 
     .covered-item-img {
@@ -105,31 +128,201 @@ const imgs = [
         text-align: center;
         margin-bottom: 1rem;
     }
-
-    .feature-slide[data-index="0"] .covered-item[data-index="0"] {
+    /* pre */
+    .feature-slide-pre.feature-slide[data-index="0"] .covered-item[data-index="0"] {
         position: absolute;
         left: 0;
         right: 0;
         margin: 0 auto;
-        top: 2rem;
-        transform: rotate(-45deg);
+        top: 0;
+        transform: translateY(-70vh) rotate(-45deg);
+    }
+
+    .feature-slide-pre.feature-slide[data-index="0"] .covered-item[data-index="1"] {
+        position: absolute;
+        right: 5rem;
+        transform: translateY(-20vh) rotate(-30deg);
+    }
+
+    .feature-slide-pre.feature-slide[data-index="0"] .covered-item[data-index="2"] {
+        position: absolute;
+        left: 4rem;
+        transform: translateY(-20vh) rotate(30deg);
+    }
+
+    .feature-slide-pre.feature-slide[data-index="0"] .covered-item[data-index="3"],
+    .feature-slide-pre.feature-slide[data-index="0"] .covered-item[data-index="4"],
+    .feature-slide-pre.feature-slide[data-index="0"] .covered-item[data-index="5"],
+    .feature-slide-pre.feature-slide[data-index="0"] .covered-item[data-index="6"] {
+        position: absolute;
+        transform: translateY(50vh) rotate(0deg);
+    }
+    /* pre */
+
+
+    /* data-index="0" - 初始状态 */
+    .feature-slide[data-index="0"] .covered-item[data-index="0"] {
+        position: absolute;
+        margin: 0 auto;
+        transform: translateY(-20vh) rotate(0deg);
     }
 
     .feature-slide[data-index="0"] .covered-item[data-index="1"] {
         position: absolute;
-        left: 5rem;
-        margin: 0 auto;
-        top: 50vh;
-        transform: rotate(15deg);
+        right: 5rem;
+        transform: translateY(15vh) rotate(-15deg);
     }
 
     .feature-slide[data-index="0"] .covered-item[data-index="2"] {
         position: absolute;
-        right: 5rem;
-        margin: 0 auto;
-        top: 30vh;
-        transform: rotate(-15deg);
+        left: 4rem;
+        transform: translateY(30vh) rotate(15deg);
     }
+
+    .feature-slide[data-index="0"] .covered-item[data-index="3"],
+    .feature-slide[data-index="0"] .covered-item[data-index="4"],
+    .feature-slide[data-index="0"] .covered-item[data-index="5"],
+    .feature-slide[data-index="0"] .covered-item[data-index="6"] {
+        position: absolute;
+        transform: translateY(100vh) rotate(0deg);
+    }
+
+    .feature-slide[data-index="0"] .covered-item[data-index="6"] {
+        margin: 0 auto;
+    }
+
+    /* data-index="1" */
+    .feature-slide[data-index="1"] .covered-item[data-index="0"],
+    .feature-slide[data-index="2"] .covered-item[data-index="0"],
+    .feature-slide[data-index="3"] .covered-item[data-index="0"],
+    .feature-slide[data-index="3"] .covered-item[data-index="3"] {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        transform: translateY(-100vh) rotate(0deg);
+    }
+
+    .feature-slide[data-index="1"] .covered-item[data-index="1"] {
+        position: absolute;
+        right: 5rem;
+        transform: translateY(-35vh) rotate(0deg);
+    }
+
+    .feature-slide[data-index="1"] .covered-item[data-index="2"] {
+        position: absolute;
+        left: 4rem;
+        top: 0;
+        transform: translateY(-30vh) rotate(0deg);
+    }
+
+    .feature-slide[data-index="1"] .covered-item[data-index="3"] {
+        position: absolute;
+        margin: 0 auto;
+        transform: translateY(10vh) rotate(-24.259deg);
+    }
+
+    .feature-slide[data-index="1"] .covered-item[data-index="4"],
+    .feature-slide[data-index="1"] .covered-item[data-index="5"],
+    .feature-slide[data-index="1"] .covered-item[data-index="6"] {
+        position: absolute;
+        transform: translateY(100vh) rotate(0deg);
+    }
+
+    .feature-slide[data-index="1"] .covered-item[data-index="4"] {
+        left: 20%;
+    }
+
+    .feature-slide[data-index="1"] .covered-item[data-index="5"] {
+        position: absolute;
+        right: 4rem;
+        transform: translateY(50vh) rotate(30deg);
+    }
+
+    .feature-slide[data-index="1"] .covered-item[data-index="6"] {
+        margin: 0 auto;
+    }
+
+    .feature-slide[data-index="2"] .covered-item[data-index="1"],
+    .feature-slide[data-index="3"] .covered-item[data-index="1"] {
+        position: absolute;
+        right: 4rem;
+        transform: translateY(-100vh) rotate(0deg);
+    }
+
+    .feature-slide[data-index="2"] .covered-item[data-index="2"],
+    .feature-slide[data-index="3"] .covered-item[data-index="2"] {
+        position: absolute;
+        left: 4rem;
+        transform: translateY(-100vh) rotate(0deg);
+    }
+
+    .feature-slide[data-index="2"] .covered-item[data-index="3"] {
+        position: absolute;
+        transform: translateY(-30vh) rotate(0deg);
+    }
+
+    .feature-slide[data-index="2"] .covered-item[data-index="4"] {
+        position: absolute;
+        left: 4rem;
+        transform: translateY(30vh) rotate(27.142deg);;
+    }
+
+    .feature-slide[data-index="2"] .covered-item[data-index="5"] {
+        position: absolute;
+        right: 4rem;
+        transform: translateY(0) rotate(15deg);
+    }
+
+    .feature-slide[data-index="2"] .covered-item[data-index="6"] {
+        position: absolute;
+        margin: 0 auto;
+        transform: translateY(60vh) rotate(-45deg);
+    }
+
+    .feature-slide[data-index="3"] .covered-item[data-index="4"] {
+        position: absolute;
+        left: 4rem;
+        transform: translateY(10vh) rotate(0deg);;
+    }
+
+    .feature-slide[data-index="3"] .covered-item[data-index="5"] {
+        position: absolute;
+        right: 4rem;
+        transform: translateY(-20vh) rotate(0);
+    }
+
+    .feature-slide[data-index="3"] .covered-item[data-index="6"] {
+        position: absolute;
+        transform: translateY(30vh) rotate(0deg);
+    }
+
+    /* data-index="4" - 最终状态，所有卡片回正并显示 */
+    .feature-slide[data-index="4"] .covered-item {
+        position: relative;
+        transform: translateY(0) rotate(0deg);
+    }
+
+    .feature-slide[data-index="4"] .covered-title {
+        width: 100%;
+        order: -1;
+    }
+    
+    @media (max-width: 768px) {
+        .feature-slide {
+            gap: 0.25rem;
+            justify-content: left;
+        }
+		.covered-item {
+			transform: none !important;
+            left: 0 !important;
+            top: 0 !important;
+            right: 0 !important;
+            position: relative !important;
+            margin: 0 !important;
+            width: calc(50% - 0.125rem);
+		}
+	}
 </style>
 
 <script>
@@ -141,20 +334,17 @@ const imgs = [
   
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-    console.log("section", section)
-    console.log("slider", slider)
-    console.log("isMobile", isMobile)
   if (section && slider && !isMobile) {
     let currentIndex = 0;
     const slides = slider.querySelectorAll('.feature-slide');
-    const totalSlides = 5;
+    const totalSlides = 5; // 0-4 共5个状态
 
     const updateSlide = (index: number) => {
-      slides.forEach((slide, i) => {
+        slider.setAttribute('active-slider', index.toString())
+      slides.forEach((slide) => {
         slide.setAttribute('data-active', 'true');
         slide.setAttribute('data-index', index.toString());
       });
-      section.setAttribute('data-slide', index.toString());
     };
 
     updateSlide(0);
@@ -168,16 +358,22 @@ const imgs = [
       isScrolling = true;
 
       if (e.deltaY > 0) {
-        currentIndex = (currentIndex + 1) % totalSlides;
+        // 向下滚动
+        if (currentIndex < totalSlides - 1) {
+          currentIndex++;
+        }
       } else {
-        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        // 向上滚动
+        if (currentIndex > 0) {
+          currentIndex--;
+        }
       }
 
       updateSlide(currentIndex);
 
       setTimeout(() => {
         isScrolling = false;
-      }, 500);
+      }, 800);
     }, { passive: false });
   }
 </script>

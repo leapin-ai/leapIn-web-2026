@@ -45,15 +45,36 @@ import IndustriesCovered from '../components/industries/IndustriesCovered.astro'
 	import { loadTranslations } from '../scripts/i18n-loader';
 	loadTranslations();
 
-
-
-	// PC端监听 solution-section1 可见性
+	// PC端监听 industries-covered 可见性
 	if (typeof window !== 'undefined') {
 		const isMobile = () => window.innerWidth <= 768;
 		
 		if (!isMobile()) {
-			const section1 = document.querySelector('.industries-covered');
-			const featureSlider = document.querySelector('.feature-slide');
+			const industriesCovered = document.querySelector('.industries-covered');
+			const featureSlide = document.querySelector('.feature-slide');
+
+			if (industriesCovered && featureSlide) {
+				const observerCallback = (entries: IntersectionObserverEntry[]) => {
+					entries.forEach(entry => {
+						const currentIndex = parseInt(featureSlide.getAttribute('data-index') || '0');
+						
+				console.log("featureSlide", entry.isIntersecting, currentIndex)
+						if (!entry.isIntersecting && currentIndex === 0) {
+							// 不在可视区域内，且 data-index 为 0
+							featureSlide.setAttribute('class', 'feature-slide feature-slide-pre')
+						} else {
+							featureSlide.setAttribute('class', 'feature-slide feature-slide-inner')
+						}
+					});
+				};
+
+				const observer = new IntersectionObserver(observerCallback, {
+					threshold: 0.1,
+					rootMargin: '0px'
+				});
+
+				observer.observe(industriesCovered);
+			}
 		}
 	}
 </script>
@@ -65,6 +86,10 @@ import IndustriesCovered from '../components/industries/IndustriesCovered.astro'
 	.footer-section,
 	.industries-cta {
 		min-height: auto;
+	}
+
+	.industries-covered {
+		padding: 2.625rem 0;
 	}
 
 	/* Industries Grid */
@@ -165,9 +190,3 @@ import IndustriesCovered from '../components/industries/IndustriesCovered.astro'
 		}
 	}
 </style>
-
-
-<script>
-	import { loadTranslations } from '../scripts/i18n-loader';
-	loadTranslations();
-</script>
