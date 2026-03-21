@@ -48,8 +48,52 @@ const layers = [
 		const isMobile = () => window.innerWidth <= 768;
 		
 		if (!isMobile()) {
-			const footerSection = document.querySelector('.footer-section');
 			const ctaSection = document.getElementById('cta-section');
+			const industriesCta = document.getElementById('industries-cta');
+            let currentIndex = 0;
+            // ----
+            console.log('industriesCta', industriesCta);
+            if (industriesCta && ctaSection) {
+                const totalSlides = 2; // 0-1 共2个状态
+
+                const updateSlide = (index: number) => {
+                    industriesCta.setAttribute('active-slider', index.toString());
+                    ctaSection.setAttribute('active-slider', index.toString());
+                };
+
+                updateSlide(0);
+
+                let isScrolling = false;
+                industriesCta.addEventListener('wheel', (e) => {
+                if (isScrolling) return;
+                
+                e.preventDefault();
+                e.stopPropagation();
+                isScrolling = true;
+
+                if (e.deltaY > 0) {
+                    // 向下滚动
+                    if (currentIndex < totalSlides - 1) {
+                    currentIndex++;
+                    }
+                } else {
+                    // 向上滚动
+                    if (currentIndex > 0) {
+                    currentIndex--;
+                    }
+                }
+
+                updateSlide(currentIndex);
+
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 800);
+                }, { passive: false });
+            }
+            // ----
+
+
+			const footerSection = document.querySelector('.footer-section');
 			const ctaBg = document.getElementById('cta-bg');
 			const partnerItems = document.querySelectorAll('.partner-item');
 
@@ -140,6 +184,17 @@ const layers = [
 		background: var(--AI-Gradient-Sky-Aurora-Medium, linear-gradient(90deg, #FBE5CF 0%, #AFC9FF 100%));
 		filter: blur(18.149999618530273px);
 		z-index: -1;
+	}
+
+	.cta-industries[active-slider="0"].cta-industries {
+		position: absolute;
+		opacity: 0;
+        min-height: 0;
+	}
+
+	.cta-industries[active-slider="1"].cta-industries {
+		opacity: 1;
+        min-height: calc(100% - 4.75rem);
 	}
     .cta-bg {
         position: absolute;

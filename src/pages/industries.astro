@@ -24,13 +24,12 @@ import industriesBg from '../assets/industries/cta-bg.png';
 			</div> -->
 			<IndustriesCovered />
 		</section>
-    
-        <section class="scroll-section industries-slide">
-            <h2 class="cta-title" data-i18n={`industries.cta.title`}></h2>
-        </section>
 
 		<!-- CTA Section -->
-		<section class="scroll-section industries-cta alt" data-section="cta">
+		<section class="scroll-section industries-cta alt" data-section="cta" id="industries-cta">
+			<div class="industries-slide" id="industries-slide">
+				<h2 class="cta-title" data-i18n={`industries.cta.title`}></h2>
+			</div>
 			<CTA pageName='industries' />
 		</section>
 
@@ -95,10 +94,10 @@ import industriesBg from '../assets/industries/cta-bg.png';
 	/* CTA Section */
 	.industries-cta {
 		background: linear-gradient(135deg, #f8f9ff 0%, #e0e7ff 100%);
+		position: relative;
 	}
 
     .industries-slide {
-        /* position: absolute; */
         width: 100%;
         height: 100%;
         background: var(--grey-gray-60-base, #111827);
@@ -109,8 +108,19 @@ import industriesBg from '../assets/industries/cta-bg.png';
         display: flex;
         align-items: center;
         justify-content: center;
+		transition: all 0.5s ease;
     }
 
+	.industries-cta[active-slider="0"] .industries-slide {
+		opacity: 1;
+		min-height: 100vh;
+	}
+
+	.industries-cta[active-slider="1"] .industries-slide {
+		position: absolute;
+		opacity: 0;
+        min-height: calc(100% - 4.75rem);
+	}
     .industries-slide .cta-title {
         color: var(--Neutrals-White-00, #FFF);
         font-weight: 600;
