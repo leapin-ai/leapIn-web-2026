@@ -79,13 +79,23 @@ const layers = [
                     } else {
                         // 向上滚动
                         if (currentIndex > 0) {
-                            currentIndex--;
-                            // 检查更新后的索引
-                            if (currentIndex === 0) {
-                                ctaSection.style.minHeight = "0";
-                                ctaSection.style.padding = "0";
+                            if (ctaSection.style.minHeight !== '100vh') {
+                                ctaSection.style.minHeight = "100vh";
+                                    ctaSection.style.setProperty('--after-width', '62.25rem');
+                                    ctaSection.style.setProperty('--after-height', '62.25rem');
+                                    ctaSection.style.setProperty('--after-border-radius', '50%');
                                 // 滚动到 industries-cta 顶部，使其完全可见
                                 industriesCta.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            } else {
+                                currentIndex--;
+                                // 检查更新后的索引
+                                if (currentIndex === 0) {
+                                    ctaSection.style.minHeight = "0";
+                                    ctaSection.style.padding = "0";
+                                    ctaSection.style.setProperty('--after-width', '100%');
+                                    ctaSection.style.setProperty('--after-height', '100%');
+                                    ctaSection.style.setProperty('--after-border-radius', '0');
+                                }
                             }
                         }
                     }
@@ -218,9 +228,9 @@ const layers = [
         bottom: 0;
         top: 0;
         margin: auto auto;
-        width: 62.25rem;
-        height: 62.25rem;
-        border-radius: 50%;
+        width: var(--after-width, 62.25rem);
+        height: var(--after-height, 62.25rem);
+        border-radius: var(--after-border-radius, 50%);
         background: var(--AI-Gradient-Sky-Aurora-Medium, linear-gradient(90deg, #FBE5CF 0%, #AFC9FF 100%));
         filter: blur(18.149999618530273px);
         transition: all 0.5s ease;
