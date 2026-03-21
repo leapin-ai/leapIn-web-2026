@@ -405,9 +405,15 @@ import cnAICoachUI from '../../assets/platform/AppliedAIAgents/cn/ai-coach.png';
       isScrolling = true;
 
       if (e.deltaY > 0) {
-        currentIndex = (currentIndex + 1) % totalSlides;
+        // 向下滚动
+        if (currentIndex < totalSlides - 1) {
+            currentIndex++;
+        }
       } else {
-        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+          // 向上滚动
+          if (currentIndex > 0) {
+              currentIndex--;
+          }
       }
 
       updateSlide(currentIndex);
