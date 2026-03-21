@@ -6,6 +6,7 @@ import CommonHero from '../components/hero/CommonHero.astro';
 import IndustriesCovered from '../components/industries/IndustriesCovered.astro';
 import CTA from '../components/CTA.astro';
 import industriesBg from '../assets/industries/cta-bg.png';
+import bgDot from '../assets/bg_dot.png';
 ---
 
 <Layout>
@@ -78,6 +79,7 @@ import industriesBg from '../assets/industries/cta-bg.png';
 
 <style define:vars={{ 
   industriesBg: `url(${industriesBg.src})`,
+  bgDot: `url(${bgDot.src})`,
 }}>
 	.container {
 		width: 100%;
@@ -110,6 +112,20 @@ import industriesBg from '../assets/industries/cta-bg.png';
         justify-content: center;
 		transition: all 0.5s ease;
     }
+
+	.industries-slide::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		top: 0;
+		background-image: var(--bgDot);
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+		z-index: 1;
+	}
 
 	.industries-cta[active-slider="0"] .industries-slide {
 		opacity: 1;

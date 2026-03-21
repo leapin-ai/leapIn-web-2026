@@ -1,6 +1,7 @@
 ---
 import SquareLayer from '../assets/platform/cta/square-layer.png';
 import solutionsBg from '../assets/solutions/cta/bg_data.png';
+import bgDot from '../assets/bg_dot.png';
 import Button from './Button.astro';
 
 
@@ -52,7 +53,6 @@ const layers = [
 			const industriesCta = document.getElementById('industries-cta');
             let currentIndex = 0;
             // ----
-            console.log('industriesCta', industriesCta);
             if (industriesCta && ctaSection) {
                 const totalSlides = 2; // 0-1 共2个状态
 
@@ -162,6 +162,7 @@ const layers = [
 
 <style define:vars={{ 
   solutionsBg: `url(${solutionsBg.src})`,
+  bgDot: `url(${bgDot.src})`,
 }}>
     .cta-section {
         min-height: 100vh;
@@ -192,6 +193,39 @@ const layers = [
 		filter: blur(18.149999618530273px);
 		z-index: -1;
 	}
+
+    .cta-industries .container {
+        z-index: 1;
+    }
+	.cta-industries::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		top: 0;
+		background-image: var(--bgDot);
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+		z-index: 1;
+	}
+    .cta-industries::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        margin: auto auto;
+        width: 62.25rem;
+        height: 62.25rem;
+        border-radius: 50%;
+        background: var(--AI-Gradient-Sky-Aurora-Medium, linear-gradient(90deg, #FBE5CF 0%, #AFC9FF 100%));
+        filter: blur(18.149999618530273px);
+        transition: all 0.5s ease;
+		z-index: 0;
+    }
 
 	.cta-industries[active-slider="0"].cta-industries {
 		position: absolute;
