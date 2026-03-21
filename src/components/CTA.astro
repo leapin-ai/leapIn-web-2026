@@ -65,29 +65,36 @@ const layers = [
 
                 let isScrolling = false;
                 industriesCta.addEventListener('wheel', (e) => {
-                if (isScrolling) return;
-                
-                e.preventDefault();
-                e.stopPropagation();
-                isScrolling = true;
+                    if (isScrolling) return;
+                    
+                    e.preventDefault();
+                    e.stopPropagation();
+                    isScrolling = true;
 
-                if (e.deltaY > 0) {
-                    // 向下滚动
-                    if (currentIndex < totalSlides - 1) {
-                    currentIndex++;
+                    if (e.deltaY > 0) {
+                        // 向下滚动
+                        if (currentIndex < totalSlides - 1) {
+                            currentIndex++;
+                        }
+                    } else {
+                        // 向上滚动
+                        if (currentIndex > 0) {
+                            currentIndex--;
+                            // 检查更新后的索引
+                            if (currentIndex === 0) {
+                                ctaSection.style.minHeight = "0";
+                                ctaSection.style.padding = "0";
+                                // 滚动到 industries-cta 顶部，使其完全可见
+                                industriesCta.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        }
                     }
-                } else {
-                    // 向上滚动
-                    if (currentIndex > 0) {
-                    currentIndex--;
-                    }
-                }
 
-                updateSlide(currentIndex);
+                    updateSlide(currentIndex);
 
-                setTimeout(() => {
-                    isScrolling = false;
-                }, 800);
+                    setTimeout(() => {
+                        isScrolling = false;
+                    }, 800);
                 }, { passive: false });
             }
             // ----
