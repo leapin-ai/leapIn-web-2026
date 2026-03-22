@@ -432,11 +432,16 @@ const fontSize = {
     .features-list {
       gap: 0.5rem;
       grid-template-columns: repeat(2, 1fr);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
     .feature-item {
       display: flex;
       flex-direction: column;
+      max-width: calc(50% - 0.5rem);
+      transform: none;
     }
 
     .feature-header {
