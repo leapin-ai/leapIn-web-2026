@@ -10,6 +10,7 @@ import position from '../../assets/about/position.png';
         <img class="position-img" src={position.src} alt="">
         <div class="open-positions">
             <div class="open-positions-title" data-i18n="about.position.OpenPositions"></div>
+            <div class="position-list"></div>
         </div>
     </div>
   </div>
@@ -18,6 +19,63 @@ import position from '../../assets/about/position.png';
 <script>
   import { loadTranslations } from '../../scripts/i18n-loader';
   loadTranslations();
+
+  // 临时模拟数据，后续替换为接口调用
+  const mockPositions = [
+    { id: 1, name: '高级销售经理', nameEn: 'Senior Sales Manager' },
+    { id: 2, name: '高级产品经理', nameEn: 'Senior Product Manager' },
+    { id: 3, name: '区域销售总监(亚太地区)', nameEn: 'Regional Sales Director (APAC)' },
+    { id: 4, name: '国际业务发展助理', nameEn: 'International Business Development Assistant' },
+    { id: 5, name: '创始人助理', nameEn: 'Founder Assistant' }
+  ];
+
+  // TODO: 替换为实际接口调用
+  // async function fetchPositions() {
+  //   try {
+  //     const response = await fetch('/api/positions');
+  //     const data = await response.json();
+  //     return data;
+  //   } catch (error) {
+  //     console.error('Failed to fetch positions:', error);
+  //     return [];
+  //   }
+  // }
+
+  function renderPositions(positions: typeof mockPositions) {
+    const positionList = document.querySelector('.position-list');
+    if (!positionList) return;
+
+    const currentLang = localStorage.getItem('language') || 'en';
+    const base = import.meta.env.BASE_URL || '';
+    
+    positionList.innerHTML = positions.map(position => `
+      <div class="position-item">
+        <div class="position-name">${currentLang === 'zh' ? position.name : position.nameEn}</div>
+        <a href="${base}request" class="button button-primary position-apply-btn">
+          <span class="button-text" data-i18n="about.position.apply">申请</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <mask id="mask0_apply_${position.id}" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+              <rect width="24" height="24" fill="#D9D9D9"/>
+            </mask>
+            <g mask="url(#mask0_apply_${position.id})">
+              <path d="M18.175 12.9998H3C2.71667 12.9998 2.47917 12.904 2.2875 12.7123C2.09583 12.5206 2 12.2831 2 11.9998C2 11.7165 2.09583 11.479 2.2875 11.2873C2.47917 11.0956 2.71667 10.9998 3 10.9998H18.175L14.3 7.0998C14.1167 6.91647 14.0208 6.6873 14.0125 6.4123C14.0042 6.1373 14.1 5.8998 14.3 5.6998C14.4833 5.51647 14.7167 5.4248 15 5.4248C15.2833 5.4248 15.5167 5.51647 15.7 5.6998L21.3 11.2998C21.4 11.3998 21.4708 11.5081 21.5125 11.6248C21.5542 11.7415 21.575 11.8665 21.575 11.9998C21.575 12.1331 21.5542 12.2581 21.5125 12.3748C21.4708 12.4915 21.4 12.5998 21.3 12.6998L15.7 18.2998C15.5167 18.4831 15.2875 18.5748 15.0125 18.5748C14.7375 18.5748 14.5 18.4831 14.3 18.2998C14.1 18.0998 14 17.8623 14 17.5873C14 17.3123 14.1 17.0748 14.3 16.8748L18.175 12.9998Z" fill="white"/>
+            </g>
+          </svg>
+        </a>
+      </div>
+    `).join('');
+
+    // 重新加载翻译
+    loadTranslations();
+  }
+
+  // 初始化渲染
+  renderPositions(mockPositions);
+
+  // TODO: 使用接口数据
+  // fetchPositions().then(positions => {
+  //   renderPositions(positions);
+  // });
 </script>
 
 <style define:vars={{
@@ -69,7 +127,6 @@ import position from '../../assets/about/position.png';
 
   .open-positions {
     max-width: 42rem;
-    min-width: 30rem;
     display: flex;
     flex-direction: column;
   }
@@ -80,6 +137,83 @@ import position from '../../assets/about/position.png';
     font-size: 1.5rem;
     font-weight: 600;
     line-height: 120%;
+    margin-bottom: 1.5rem;
+  }
+
+  .position-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(.position-item) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    background: #FFFFFF;
+    border-bottom: 1px solid rgba(17, 24, 39, 0.1);
+    transition: all 0.3s ease;
+    gap: 1rem;
+  }
+
+  :global(.position-item:hover) {
+    border-color: rgba(83, 134, 250, 0.3);
+    box-shadow: 0 2px 8px rgba(83, 134, 250, 0.1);
+  }
+
+  :global(.position-name) {
+    color: var(--grey-gray-60-base, #111827);
+    font-size: 1.125rem;
+    font-weight: 500;
+    flex: 1;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  :global(.position-apply-btn) {
+    text-align: center;
+    display: flex;
+    gap: 0rem;
+    transition: all 0.3s;
+    text-decoration: none;
+    cursor: pointer;
+    min-width: 6.625rem;
+    height: 1.75rem;
+    padding: 0 1rem;
+    border-radius: 0.75rem;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: var(--AI-Gradient-Neon-Horizon-Heavy, linear-gradient(131deg, #5386FA 9.64%, #8B5CF6 89.29%));
+  }
+
+  :global(.position-apply-btn:hover) {
+    gap: 0.5rem;
+    border: 1px solid var(--Neutrals-White-10, rgba(255, 255, 255, 0.75));
+    background: linear-gradient(131deg, #8B5CF6 9.64%, #5386FA 89.29%);
+    box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.90) inset;
+  }
+
+  :global(.position-apply-btn .button-text) {
+    color: var(--Neutrals-White-00, #FFF);
+    font-family: "PingFang SC";
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    white-space: nowrap;
+  }
+
+  :global(.position-apply-btn svg) {
+    width: 0;
+    height: 1rem;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+
+  :global(.position-apply-btn:hover svg) {
+    width: 1.5rem;
   }
 
   @media (max-width: 768px) {
@@ -93,5 +227,39 @@ import position from '../../assets/about/position.png';
       line-height: 120%;
     }
 
+    .position-content {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .position-img {
+      max-width: 100%;
+    }
+
+    .open-positions {
+      min-width: 100%;
+      max-width: 100%;
+    }
+
+    .open-positions-title {
+      font-size: 1.25rem;
+      padding: 0.75rem 1rem;
+    }
+
+    :global(.position-item) {
+      padding: 0.75rem 1rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    :global(.position-name) {
+      font-size: 0.9375rem;
+    }
+
+    :global(.position-apply-btn) {
+      width: 100%;
+      justify-content: center;
+    }
   }
 </style>
