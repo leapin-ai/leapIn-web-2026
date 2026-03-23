@@ -103,6 +103,7 @@
       "subtitle": "LeapIn 以 AI 赋能全球企业，让人才决策更智能",
       "enterprises": {
         "title": "专为不容人才决策失误的企业设计",
+        "subtitle": "",
         "items": [
           {"label" : "专利行为 AI"},
           {"label" : "基于数十亿数据点训练"},

@@ -63,15 +63,56 @@ const layers = [
 
                 updateSlide(0);
 
-                let isScrolling = false;
+                let isAnimating = false;
+                let scrollAccumulator = 0;
+                let lastScrollDirection = 0;
+                let animationTimeout: number | null = null;
+                const SCROLL_THRESHOLD = 50;
+                const ANIMATION_DURATION = 800;
+
                 industriesCta.addEventListener('wheel', (e) => {
-                    if (isScrolling) return;
-                    
+                    const scrollDirection = e.deltaY > 0 ? 1 : -1;
+
+                    const atStart = currentIndex === 0 && scrollDirection < 0;
+                    const atEnd = currentIndex === totalSlides - 1 && scrollDirection > 0;
+
+                    if (atStart || atEnd) {
+                        scrollAccumulator = 0;
+                        lastScrollDirection = 0;
+                        return;
+                    }
+
                     e.preventDefault();
                     e.stopPropagation();
-                    isScrolling = true;
 
-                    if (e.deltaY > 0) {
+                    if (lastScrollDirection !== 0 && scrollDirection !== lastScrollDirection) {
+                        if (animationTimeout) {
+                            clearTimeout(animationTimeout);
+                            animationTimeout = null;
+                        }
+                        isAnimating = false;
+                        scrollAccumulator = 0;
+                    }
+
+                    lastScrollDirection = scrollDirection;
+
+                    if (isAnimating) {
+                        scrollAccumulator += Math.abs(e.deltaY);
+                        if (scrollAccumulator < SCROLL_THRESHOLD) {
+                            return;
+                        }
+                    }
+
+                    scrollAccumulator += Math.abs(e.deltaY);
+
+                    if (scrollAccumulator < SCROLL_THRESHOLD) {
+                        return;
+                    }
+
+                    scrollAccumulator = 0;
+                    isAnimating = true;
+
+                    if (scrollDirection > 0) {
                         // 向下滚动
                         if (currentIndex < totalSlides - 1) {
                             currentIndex++;
@@ -81,9 +122,9 @@ const layers = [
                         if (currentIndex > 0) {
                             if (ctaSection.style.minHeight !== '100vh') {
                                 ctaSection.style.minHeight = "100vh";
-                                    ctaSection.style.setProperty('--after-width', '62.25rem');
-                                    ctaSection.style.setProperty('--after-height', '62.25rem');
-                                    ctaSection.style.setProperty('--after-border-radius', '50%');
+                                ctaSection.style.setProperty('--after-width', '62.25rem');
+                                ctaSection.style.setProperty('--after-height', '62.25rem');
+                                ctaSection.style.setProperty('--after-border-radius', '50%');
                                 // 滚动到 industries-cta 顶部，使其完全可见
                                 industriesCta.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             } else {
@@ -102,70 +143,75 @@ const layers = [
 
                     updateSlide(currentIndex);
 
-                    setTimeout(() => {
-                        isScrolling = false;
-                    }, 800);
+                    if (animationTimeout) {
+                        clearTimeout(animationTimeout);
+                    }
+                    animationTimeout = window.setTimeout(() => {
+                        isAnimating = false;
+                        scrollAccumulator = 0;
+                        animationTimeout = null;
+                    }, ANIMATION_DURATION);
                 }, { passive: false });
             }
-            // ----
+            // // ----
 
 
-			const footerSection = document.querySelector('.footer-section');
-			const ctaBg = document.getElementById('cta-bg');
-			const partnerItems = document.querySelectorAll('.partner-item');
+			// const footerSection = document.querySelector('.footer-section');
+			// const ctaBg = document.getElementById('cta-bg');
+			// const partnerItems = document.querySelectorAll('.partner-item');
 
-			const observerCallback = (entries: IntersectionObserverEntry[]) => {
-				entries.forEach(entry => {
-					if (entry.isIntersecting) {
-						// 滚动到 footer，收缩 CTA
-						if (ctaSection) {
-							// 先临时设置为 auto 来获取真实内容高度
-							const originalMinHeight = ctaSection.style.minHeight;
-							ctaSection.style.minHeight = 'auto';
-                            ctaSection.style.padding = '6rem 0';
-							// 恢复原始值以便触发过渡
-							ctaSection.style.minHeight = originalMinHeight || '100vh';
+			// const observerCallback = (entries: IntersectionObserverEntry[]) => {
+			// 	entries.forEach(entry => {
+			// 		if (entry.isIntersecting) {
+			// 			// 滚动到 footer，收缩 CTA
+			// 			if (ctaSection) {
+			// 				// 先临时设置为 auto 来获取真实内容高度
+			// 				const originalMinHeight = ctaSection.style.minHeight;
+			// 				ctaSection.style.minHeight = 'auto';
+            //                 ctaSection.style.padding = '6rem 0';
+			// 				// 恢复原始值以便触发过渡
+			// 				ctaSection.style.minHeight = originalMinHeight || '100vh';
 							
-							// 使用 requestAnimationFrame 确保过渡生效
-							requestAnimationFrame(() => {
-								if (ctaSection) {
-									ctaSection.style.minHeight = "calc(100vh - 25.25rem)";
-								}
-							});
-						}
+			// 				// 使用 requestAnimationFrame 确保过渡生效
+			// 				requestAnimationFrame(() => {
+			// 					if (ctaSection) {
+			// 						ctaSection.style.minHeight = "calc(100vh - 25.25rem)";
+			// 					}
+			// 				});
+			// 			}
 						
-						if (ctaBg) {
-							ctaBg.style.gap = 'clamp(1rem, 2vw, 1.875rem)';
-						}
+			// 			if (ctaBg) {
+			// 				ctaBg.style.gap = 'clamp(1rem, 2vw, 1.875rem)';
+			// 			}
 						
-						partnerItems.forEach(item => {
-							(item as HTMLElement).style.maxWidth = 'clamp(30rem, 50vw, 39.75rem)';
-						});
-					} else {
-						// 离开 footer，恢复 CTA 原始状态
-						if (ctaSection) {
-							ctaSection.style.minHeight = '100vh';
-						}
+			// 			partnerItems.forEach(item => {
+			// 				(item as HTMLElement).style.maxWidth = 'clamp(30rem, 50vw, 39.75rem)';
+			// 			});
+			// 		} else {
+			// 			// 离开 footer，恢复 CTA 原始状态
+			// 			if (ctaSection) {
+			// 				ctaSection.style.minHeight = '100vh';
+			// 			}
 						
-						if (ctaBg) {
-							ctaBg.style.gap = 'clamp(1.5rem, 3vw, 2.875rem)';
-						}
+			// 			if (ctaBg) {
+			// 				ctaBg.style.gap = 'clamp(1.5rem, 3vw, 2.875rem)';
+			// 			}
 						
-						partnerItems.forEach(item => {
-							(item as HTMLElement).style.maxWidth = 'clamp(35rem, 60vw, 65.375rem)';
-						});
-					}
-				});
-			};
+			// 			partnerItems.forEach(item => {
+			// 				(item as HTMLElement).style.maxWidth = 'clamp(35rem, 60vw, 65.375rem)';
+			// 			});
+			// 		}
+			// 	});
+			// };
 
-			const observer = new IntersectionObserver(observerCallback, {
-				threshold: 0.1,
-				rootMargin: '0px'
-			});
+			// const observer = new IntersectionObserver(observerCallback, {
+			// 	threshold: 0.1,
+			// 	rootMargin: '0px'
+			// });
 
-			if (footerSection) {
-				observer.observe(footerSection);
-			}
+			// if (footerSection) {
+			// 	observer.observe(footerSection);
+			// }
 		}
 	}
 </script>

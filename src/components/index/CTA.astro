@@ -22,11 +22,11 @@ const fontSize = {
 ---
 
 <section class="cta">
-
   <!-- Enterprises Section -->
   <div class="enterprises-container">
     <div class="enterprises-content">
       <h2 class="enterprises-title" data-i18n="homepage.cta.enterprises.title"></h2>
+      <div class="enterprises-subtitle" data-i18n="homepage.cta.enterprises.subtitle"></div>
       <div class="enterprises-grid">
         {
           enterprises.map((item, index) => (
@@ -99,14 +99,19 @@ const fontSize = {
     font-size: var(--enterprisesTitleSize);
     line-height: 1.2;
     color: #111827;
+    margin-top: 4.875rem;
     margin-bottom: 2.5rem;
     white-space: pre-wrap;
+  }
+
+  .enterprises-subtitle {
+    display: none;
   }
 
   .enterprises-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 1.5rem;
+    gap: 0.5rem;
   }
 
   .enterprises-card {
@@ -163,7 +168,18 @@ const fontSize = {
 
     .enterprises-title {
       font-size: var(--enterprisesTitleMobileSize);
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+
+    .enterprises-subtitle {
+      display: block;
+      line-height: 1.2;
+      color: #111827;
       margin-bottom: 2rem;
+      margin-top: 0.5rem;
+      color: var(--grey-gray-60-base, #111827);
+      font-size: 0.875rem;
     }
 
     .enterprises-grid {
