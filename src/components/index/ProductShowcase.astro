@@ -405,11 +405,14 @@ const products = [
     }
   });
 
+  const productShowcase = document.getElementById('product-showcase');
   const darkBox = document.getElementById('dark-box');
   const slider = document.getElementById('product-slider');
   const info = document.getElementById('feature-info');
   
-  if (darkBox && slider && info) {
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  
+  if (productShowcase && darkBox && slider && info && !isMobile) {
     let currentIndex = 0;
     const slides = slider.querySelectorAll('.feature-slide');
     const infoItems = info.querySelectorAll('.info-item');
@@ -435,26 +438,75 @@ const products = [
     updateSlide(0);
 
     // 监听滚动
-    let isScrolling = false;
-    darkBox.addEventListener('wheel', (e) => {
-      if (isScrolling) return;
-      
-      e.preventDefault();
-      isScrolling = true;
+    let isAnimating = false;
+    let scrollAccumulator = 0;
+    let lastScrollDirection = 0;
+    let animationTimeout: number | null = null;
+    const SCROLL_THRESHOLD = 50;
+    const ANIMATION_DURATION = 500;
 
-      if (e.deltaY > 0) {
-        // 向下滚动
-        currentIndex = (currentIndex + 1) % totalSlides;
-      } else {
-        // 向上滚动
-        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    productShowcase.addEventListener('wheel', (e) => {
+      const scrollDirection = e.deltaY > 0 ? 1 : -1;
+
+      // 检查是否在边界
+      const atStart = currentIndex === 0 && scrollDirection < 0;
+      const atEnd = currentIndex === totalSlides - 1 && scrollDirection > 0;
+
+      // 在边界时，不阻止默认行为，让滚动传递到父级 scroll-section
+      if (atStart || atEnd) {
+        scrollAccumulator = 0;
+        lastScrollDirection = 0;
+        return;
       }
 
+      e.preventDefault();
+      e.stopPropagation();
+
+      // 检测方向改变
+      if (lastScrollDirection !== 0 && scrollDirection !== lastScrollDirection) {
+        if (animationTimeout) {
+          clearTimeout(animationTimeout);
+          animationTimeout = null;
+        }
+        isAnimating = false;
+        scrollAccumulator = 0;
+      }
+
+      lastScrollDirection = scrollDirection;
+
+      // 如果正在动画中且方向相同，累积滚动量
+      if (isAnimating) {
+        scrollAccumulator += Math.abs(e.deltaY);
+        if (scrollAccumulator < SCROLL_THRESHOLD) {
+          return;
+        }
+      }
+
+      // 累积滚动量
+      scrollAccumulator += Math.abs(e.deltaY);
+
+      // 未达到阈值，不触发切换
+      if (scrollAccumulator < SCROLL_THRESHOLD) {
+        return;
+      }
+
+      // 达到阈值，执行切换
+      scrollAccumulator = 0;
+      isAnimating = true;
+
+      const targetIndex = scrollDirection > 0 ? currentIndex + 1 : currentIndex - 1;
+      currentIndex = targetIndex;
       updateSlide(currentIndex);
 
-      setTimeout(() => {
-        isScrolling = false;
-      }, 500);
+      // 动画完成后重置状态
+      if (animationTimeout) {
+        clearTimeout(animationTimeout);
+      }
+      animationTimeout = window.setTimeout(() => {
+        isAnimating = false;
+        scrollAccumulator = 0;
+        animationTimeout = null;
+      }, ANIMATION_DURATION);
     }, { passive: false });
   }
 </script>
