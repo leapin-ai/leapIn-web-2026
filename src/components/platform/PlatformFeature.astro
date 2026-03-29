@@ -5,13 +5,11 @@ import PlatformFeatureCard from './PlatformFeatureCard.astro';
 <div class="platform-feature-container" id="platform-feature-container">
   <h2 class="feature-card-title" id="feature-card-title" data-i18n="platform.coreFeatures.title"></h2>
     <div class="feature-card-wrapper" data-index="0" data-active="false">
-        <PlatformFeatureCard type='Acquisition' />
-    </div>
-    <div class="feature-card-wrapper" data-index="1" data-active="false">
-        <PlatformFeatureCard type='Marketplace' />
-    </div>
-    <div class="feature-card-wrapper" data-index="2" data-active="false">
-        <PlatformFeatureCard type='Development' />
+      {
+        ['Acquisition', 'Marketplace', 'Development'].map((item, index) => (
+          <PlatformFeatureCard type={item} dataIndex={index} />
+        ))
+      }
     </div>
 </div>
 
@@ -26,12 +24,16 @@ import PlatformFeatureCard from './PlatformFeatureCard.astro';
   }
 
   .feature-card-wrapper {
+    position: relative;
+  } 
+
+  /* .feature-card-wrapper {
     position: absolute;
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0;
     pointer-events: none;
     z-index: 1;
-  }
+  } */
   
   .feature-card-title {
     color: var(--grey-gray-60-base, #111827);
@@ -46,57 +48,63 @@ import PlatformFeatureCard from './PlatformFeatureCard.astro';
     z-index: 0;
   }
 
-  .platform-feature-container[data-in-viewport="true"] .feature-card-title {
+  .platform-feature-container.platform-feature-container-inner .feature-card-title {
     color: var(--Neutrals-White-00, #FFF);
     text-align: center;
     font-size: 100px;
     font-style: normal;
     font-weight: 400;
-    line-height: 124%; /* 124px */
+    line-height: 124%;
     letter-spacing: -1.1px;
     top: 45vh;
     opacity: 0.1;
     position: relative;
   }
 
-  /* Initial state - Card 0 (Acquisition) */
-  .feature-card-wrapper[data-index="0"] {
+  .platform-feature-container-pre .feature-card-wrapper[data-index="0"] .platform-feature-card[data-index="0"] {
     top: -15vh;
     transform: rotate(-45deg);
     opacity: 1;
   }
 
+  /* Initial state - Card 0 (Acquisition) */
+  /* .platform-feature-container-inner .platform-feature-card[data-index="0"] {
+    top: -15vh;
+    transform: rotate(-45deg);
+    opacity: 1;
+  } */
+
   /* Initial state - Card 1 (Marketplace) */
-  .feature-card-wrapper[data-index="1"] {
+  /* .platform-feature-card[data-index="1"] {
     transform: rotate(45deg);
     opacity: 0;
-  }
+  } */
 
   /* Initial state - Card 2 (Development) */
-  .feature-card-wrapper[data-index="2"] {
+  /* .platform-feature-card[data-index="2"] {
     transform: rotate(-45deg);
     opacity: 0;
-  }
+  } */
 
   /* Active state - all cards centered and straight */
-  .feature-card-wrapper[data-active="true"] {
+  /* .feature-card-wrapper[data-active="true"] {
     top: 25vh !important;
     transform: rotate(0deg) !important;
     opacity: 1 !important;
     pointer-events: auto !important;
-  }
+  } */
 
   /* When in viewport, ALL inactive cards (including card 0) are hidden */
-  .platform-feature-container[data-in-viewport="true"] .feature-card-wrapper[data-active="false"] {
+  /* .platform-feature-container[data-in-viewport="true"] .feature-card-wrapper[data-active="false"] {
     opacity: 0 !important;
     pointer-events: none;
-  }
+  } */
 
   /* When NOT in viewport, only non-card-0 inactive cards are hidden (card 0 stays as preview) */
-  .platform-feature-container:not([data-in-viewport="true"]) .feature-card-wrapper[data-active="false"]:not([data-index="0"]) {
+  /* .platform-feature-container:not([data-in-viewport="true"]) .feature-card-wrapper[data-active="false"]:not([data-index="0"]) {
     opacity: 0 !important;
     pointer-events: none;
-  }
+  } */
 
   @media (max-width: 768px) {
     .platform-feature-container {
@@ -143,126 +151,98 @@ import PlatformFeatureCard from './PlatformFeatureCard.astro';
   import { loadTranslations } from '../../scripts/i18n-loader';
   loadTranslations();
 
-  const container = document.getElementById('platform-feature-container');
-  const scrollSection = document.querySelector('.scroll-section.features-dark');
-  const title = document.getElementById('feature-card-title');
   // feature-card-title
+  const section = document.getElementById('platform-feature');
+  const slider = document.getElementById('platform-feature-container');
+  
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  if (section && slider && !isMobile) {
+    let currentIndex = 0;
+    const slides = slider.querySelectorAll('.feature-card-wrapper');
+    const totalSlides = 3; // 0-2 共3个状态
 
-  if (title && container && scrollSection && !isMobile) {
-    let currentIndex = -1;
-    const cards = container.querySelectorAll('.feature-card-wrapper');
-    const totalCards = cards.length;
-    let isScrolling = false;
-    let isInViewport = false;
-    let scrollDirection: 'down' | 'up' = 'down';
-    let lastScrollY = window.scrollY;
+    let isAnimating = false;
+    let scrollAccumulator = 0;
+    let lastScrollDirection = 0; // 1 for down, -1 for up
+    let animationTimeout: number | null = null;
+    
+    const SCROLL_THRESHOLD = 50; // 滚动阈值
+    const ANIMATION_DURATION = 800;
 
-    const updateCards = (index: number) => {
-      currentIndex = index;
-      cards.forEach((card, i) => {
-        card.setAttribute('data-active', i === index ? 'true' : 'false');
+    const updateSlide = (index: number) => {
+      section.setAttribute('active-slider', index.toString());
+      slides.forEach((slide) => {
+        slide.setAttribute('data-active', 'true');
+        slide.setAttribute('data-index', index.toString());
       });
     };
 
-    window.addEventListener('scroll', () => {
-      const currentY = window.scrollY;
-      if (currentY > lastScrollY) {
-        scrollDirection = 'down';
-      } else if (currentY < lastScrollY) {
-        scrollDirection = 'up';
-      }
-      lastScrollY = currentY;
-    }, { passive: true });
+    updateSlide(0);
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const wasInViewport = isInViewport;
-        isInViewport = entry.isIntersecting;
-
-        if (isInViewport && !wasInViewport) {
-          title.setAttribute('data-in-viewport', 'true');
-          container.setAttribute('data-in-viewport', 'true');
-
-          if (scrollDirection === 'down') {
-            updateCards(0);
-          } else {
-            updateCards(totalCards - 1);
-          }
-        } else if (!isInViewport && wasInViewport) {
-          title.setAttribute('data-in-viewport', 'true');
-          container.setAttribute('data-in-viewport', 'false');
-          currentIndex = -1;
-          cards.forEach(card => {
-            card.setAttribute('data-active', 'false');
-          });
-        }
-      });
-    }, { root: null, rootMargin: '0px', threshold: 0.3 });
-
-    observer.observe(scrollSection);
-
-    let scrollAccumulator = 0;
-    let lastScrollDirection = 0;
-    let animationTimeout: number | null = null;
-    const SCROLL_THRESHOLD = 50;
-    const ANIMATION_DURATION = 800;
-
-    scrollSection.addEventListener('wheel', (e: WheelEvent) => {
-      if (!isInViewport) return;
-
+    section.addEventListener('wheel', (e) => {
       const scrollDirection = e.deltaY > 0 ? 1 : -1;
 
       // 检查是否在边界
       const atStart = currentIndex === 0 && scrollDirection < 0;
-      const atEnd = currentIndex === totalCards - 1 && scrollDirection > 0;
+      const atEnd = currentIndex === totalSlides - 1 && scrollDirection > 0;
 
       // 在边界时，不阻止默认行为，让滚动传递到父级 scroll-section
       if (atStart || atEnd) {
+        // 重置状态
         scrollAccumulator = 0;
         lastScrollDirection = 0;
         return;
       }
 
+      // 不在边界，阻止默认滚动行为
       e.preventDefault();
       e.stopPropagation();
 
       // 检测方向改变
       if (lastScrollDirection !== 0 && scrollDirection !== lastScrollDirection) {
+        // 反向滚动，中断当前动画
         if (animationTimeout) {
           clearTimeout(animationTimeout);
           animationTimeout = null;
         }
-        isScrolling = false;
+        isAnimating = false;
         scrollAccumulator = 0;
       }
 
       lastScrollDirection = scrollDirection;
 
-      if (isScrolling) {
+      // 如果正在动画中且方向相同，累积滚动量
+      if (isAnimating) {
         scrollAccumulator += Math.abs(e.deltaY);
+        // 同方向滚动未达到阈值，忽略
         if (scrollAccumulator < SCROLL_THRESHOLD) {
           return;
         }
       }
 
+      // 累积滚动量
       scrollAccumulator += Math.abs(e.deltaY);
 
+      // 未达到阈值，不触发切换
       if (scrollAccumulator < SCROLL_THRESHOLD) {
         return;
       }
 
+      // 达到阈值，执行切换
       scrollAccumulator = 0;
-      isScrolling = true;
+      isAnimating = true;
 
       const targetIndex = scrollDirection > 0 ? currentIndex + 1 : currentIndex - 1;
-      updateCards(targetIndex);
 
+      currentIndex = targetIndex;
+      updateSlide(currentIndex);
+
+      // 动画完成后重置状态
       if (animationTimeout) {
         clearTimeout(animationTimeout);
       }
       animationTimeout = window.setTimeout(() => {
-        isScrolling = false;
+        isAnimating = false;
         scrollAccumulator = 0;
         animationTimeout = null;
       }, ANIMATION_DURATION);

@@ -2,12 +2,13 @@
 interface Props {
 	type: 'Acquisition' | 'Marketplace' | 'Development';
     className?: string;
+    dataIndex: number;
 }
 
-const { type, className } = Astro.props;
+const { type, className, dataIndex } = Astro.props;
 ---
 
-<div class="platform-feature-card">
+<div class="platform-feature-card" data-index={dataIndex}>
     <div class="feature-title-wrap">
         <h2 class="feature-title" data-i18n={`platform.coreFeatures.${type}.title`}></h2>
         <p class="feature-description" data-i18n={`platform.coreFeatures.${type}.description`}></p>
