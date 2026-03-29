@@ -171,11 +171,15 @@ const orbConf = orbConfig || defaultOrbConfig;
 				pageName === 'about' && (
 					<div class="mission-vision">
 						<div class="mission-vision-container">
-							<div class="mission-vision-title" data-i18n="about.hero.mission.title"></div>
+							<div class="mission-vision-title-wrapper">
+								<div class="mission-vision-title mission-title" data-i18n="about.hero.mission.title"></div>
+							</div>
 							<div class="mission-vision-info" data-i18n="about.hero.mission.info"></div>
 						</div>
 						<div class="mission-vision-container">
-							<div class="mission-vision-title" data-i18n="about.hero.vision.title"></div>
+							<div class="mission-vision-title-wrapper">
+								<div class="mission-vision-title vision-title" data-i18n="about.hero.vision.title"></div>
+							</div>
 							<div class="mission-vision-info" data-i18n="about.hero.vision.info"></div>
 						</div>
 					</div>
@@ -312,6 +316,47 @@ const orbConf = orbConfig || defaultOrbConfig;
 		}
 	}
 
+	@keyframes scrollDownFirst {
+		0% {
+			transform: translateY(100%);
+			background-image: linear-gradient(var(--grey-gray-60-base, #111827), var(--grey-gray-60-base, #111827));
+		}
+		12.5% {
+			transform: translateY(0);
+			background-image: linear-gradient(var(--grey-gray-60-base, #111827), var(--grey-gray-60-base, #111827));
+		}
+		37.5% {
+			transform: translateY(0);
+			background-image: linear-gradient(var(--grey-gray-60-base, #111827), var(--grey-gray-60-base, #111827));
+		}
+		49.9% {
+			transform: translateY(-100%);
+			background-image: linear-gradient(var(--grey-gray-60-base, #111827), var(--grey-gray-60-base, #111827));
+			animation-timing-function: steps(1);
+		}
+		50% {
+			transform: translateY(100%);
+			background-image: var(--AI-Gradient-Neon-Horizon-Heavy, linear-gradient(131deg, #5386FA 9.64%, #8B5CF6 89.29%));
+		}
+		62.5% {
+			transform: translateY(0);
+			background-image: var(--AI-Gradient-Neon-Horizon-Heavy, linear-gradient(131deg, #5386FA 9.64%, #8B5CF6 89.29%));
+		}
+		87.5% {
+			transform: translateY(0);
+			background-image: var(--AI-Gradient-Neon-Horizon-Heavy, linear-gradient(131deg, #5386FA 9.64%, #8B5CF6 89.29%));
+		}
+		99.9% {
+			transform: translateY(-100%);
+			background-image: var(--AI-Gradient-Neon-Horizon-Heavy, linear-gradient(131deg, #5386FA 9.64%, #8B5CF6 89.29%));
+			animation-timing-function: steps(1);
+		}
+		100% {
+			transform: translateY(100%);
+			background-image: linear-gradient(var(--grey-gray-60-base, #111827), var(--grey-gray-60-base, #111827));
+		}
+	}
+
 	.hero-description {
 		font-size: 1rem;
 		margin-bottom: 10rem;
@@ -355,14 +400,30 @@ const orbConf = orbConfig || defaultOrbConfig;
 		backdrop-filter: blur(7.5px);
 	}
 
+	.mission-vision-title-wrapper {
+		overflow: hidden;
+		height: 3.875rem;
+		width: 100%;
+		display: flex;
+		align-items: flex-start;
+	}
+
 	.mission-vision-title {
 		font-size: 2rem;
-		font-weight: 193.75%;
+		font-weight: 600;
 		letter-spacing: 0.2px;
-		background: var(--AI-Gradient-Neon-Horizon-Heavy, linear-gradient(131deg, #5386FA 9.64%, #8B5CF6 89.29%));
 		background-clip: text;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
+		display: inline-block;
+	}
+
+	.mission-title {
+		animation: scrollUpFirst 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+	}
+
+	.vision-title {
+		animation: scrollDownFirst 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 	}
 
 	.mission-vision-info {
@@ -425,6 +486,10 @@ const orbConf = orbConfig || defaultOrbConfig;
 		.mission-vision-container {
 			padding: 1rem;
 			gap: 0.5rem;
+		}
+
+		.mission-vision-title-wrapper {
+			height: 1.1875rem;
 		}
 
 		.mission-vision-title {
