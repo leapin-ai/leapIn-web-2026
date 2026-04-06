@@ -399,7 +399,8 @@ const imgs = [
             justify-content: left !important;
         }
 		.covered-item {
-			transform: none !important;
+			/* transform: none !important; */
+            /* transform: translateX(0) translateY(0) rotate(0) !important; */
             left: 0 !important;
             top: 0 !important;
             right: 0 !important;
@@ -415,12 +416,36 @@ const imgs = [
             line-height: 133.333%;
             margin-bottom: 0;
         }
+
+        .covered-section .covered-item[data-index="0"],
+        .covered-section .covered-item[data-index="1"],
+        .covered-section .covered-item[data-index="2"] {
+            transform: translateX(-200%) translateY(0) rotate(0) !important;
+        }
+
+        .covered-section .covered-item[data-index="3"],
+        .covered-section .covered-item[data-index="4"],
+        .covered-section .covered-item[data-index="5"],
+        .covered-section .covered-item[data-index="6"] {
+            transform: translateX(200%) translateY(0) rotate(0) !important;
+        }
+
+        .covered-section.in-view .covered-item[data-index="0"],
+        .covered-section.in-view .covered-item[data-index="1"],
+        .covered-section.in-view .covered-item[data-index="2"],
+        .covered-section.in-view .covered-item[data-index="3"],
+        .covered-section.in-view .covered-item[data-index="4"],
+        .covered-section.in-view .covered-item[data-index="5"],
+        .covered-section.in-view .covered-item[data-index="6"] {
+            transform: translateX(0) translateY(0) rotate(0) !important;
+        }
 	}
 </style>
 
 <script>
   import { loadTranslations } from '../../scripts/i18n-loader';
   loadTranslations();
+  import { inView } from '../../utils/inView';
 
   const section = document.getElementById('covered-section');
   const slider = document.getElementById('covered-section-container');
@@ -517,5 +542,9 @@ const imgs = [
         animationTimeout = null;
       }, ANIMATION_DURATION);
     }, { passive: false });
+  }
+  // Intersection Observer 监听 features 是否在可视区域内
+  if (isMobile && typeof window !== 'undefined') {
+    inView({id: "covered-section", threshold: 0.2});
   }
 </script>
