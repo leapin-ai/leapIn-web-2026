@@ -10,12 +10,12 @@ const features = [
 
 <section class="section-container platform-feature-section" id="platform-feature-section">
     <div class="container platform-feature-container" id="platform-feature-container">
-        <div class="platform-feature-slider" data-index={0}>
+        <div class="feature-item" data-index={0}>
             <h2 class="feature-title" data-i18n="platform.coreFeatures.title"></h2>
             <div class="feature-slider-content">
                 {
                     features.map(({type, index}) => (
-                        <div class="feature-item" data-index={index}>
+                        <div class="feature-item-card" data-index={index}>
                             <PlatformFeatureCard type={type} dataIndex={index} />
                         </div>
                     ))
@@ -62,7 +62,7 @@ const features = [
         z-index: 1;
     }
 
-    .platform-feature-slider {
+    .feature-item {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -97,13 +97,13 @@ const features = [
         position: absolute;
     }
 
-    .platform-feature-container-pre .platform-feature-slider[data-index="0"] .feature-title {
+    .platform-feature-container-pre .feature-item[data-index="0"] .feature-title {
         transform: translateY(-80vh);
     }
 
-    .platform-feature-container-inner .platform-feature-slider[data-index="0"] .feature-title,
-    .platform-feature-container-inner .platform-feature-slider[data-index="1"] .feature-title,
-    .platform-feature-container-inner .platform-feature-slider[data-index="2"] .feature-title {
+    .platform-feature-container-inner .feature-item[data-index="0"] .feature-title,
+    .platform-feature-container-inner .feature-item[data-index="1"] .feature-title,
+    .platform-feature-container-inner .feature-item[data-index="2"] .feature-title {
         color: var(--Neutrals-White-00, #FFF);
         opacity: 0.1;
         text-align: center;
@@ -113,7 +113,7 @@ const features = [
         letter-spacing: -1.1px;
     }
 
-    .feature-item {
+    .feature-item-card {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -126,7 +126,7 @@ const features = [
     }
 
     /* pre */
-    .platform-feature-container-pre .platform-feature-slider[data-index="0"] .feature-item[data-index="0"] {
+    .platform-feature-container-pre .feature-item[data-index="0"] .feature-item-card[data-index="0"] {
         position: absolute;
         left: 0;
         right: 0;
@@ -138,41 +138,41 @@ const features = [
         backdrop-filter: blur(7.5px);
     }
 
-    .platform-feature-container-pre .platform-feature-slider[data-index="0"] .feature-item[data-index="1"],
-    .platform-feature-slider[data-index="0"] .feature-item[data-index="1"] {
+    .platform-feature-container-pre .feature-item[data-index="0"] .feature-item-card[data-index="1"],
+    .feature-item[data-index="0"] .feature-item-card[data-index="1"] {
         position: absolute;
         transform: translateY(100vh) rotate(-45deg);
     }
 
-    .platform-feature-container-pre .platform-feature-slider[data-index="0"] .feature-item[data-index="2"],
-    .platform-feature-slider[data-index="0"] .feature-item[data-index="2"],
-    .platform-feature-slider[data-index="1"] .feature-item[data-index="2"] {
+    .platform-feature-container-pre .feature-item[data-index="0"] .feature-item-card[data-index="2"],
+    .feature-item[data-index="0"] .feature-item-card[data-index="2"],
+    .feature-item[data-index="1"] .feature-item-card[data-index="2"] {
         position: absolute;
         transform: translateY(100vh) rotate(45deg);
     }
 
     /* data-index="0" - 初始状态 */
-    .platform-feature-slider[data-index="0"] .feature-item[data-index="0"] {
+    .feature-item[data-index="0"] .feature-item-card[data-index="0"] {
         position: absolute;
         margin: 0 auto;
         transform: translateY(0) rotate(0deg);
     }
 
     /* data-index="1" */
-    .platform-feature-slider[data-index="1"] .feature-item[data-index="0"],
-    .platform-feature-slider[data-index="2"] .feature-item[data-index="0"],
-    .platform-feature-slider[data-index="2"] .feature-item[data-index="1"] {
+    .feature-item[data-index="1"] .feature-item-card[data-index="0"],
+    .feature-item[data-index="2"] .feature-item-card[data-index="0"],
+    .feature-item[data-index="2"] .feature-item-card[data-index="1"] {
         position: absolute;
         transform: translateY(-100vh) rotate(0deg);
     }
 
-    .platform-feature-slider[data-index="1"] .feature-item[data-index="1"] {
+    .feature-item[data-index="1"] .feature-item-card[data-index="1"] {
         position: absolute;
         margin: 0 auto;
         transform: translateY(0) rotate(0deg);
     }
 
-    .platform-feature-slider[data-index="2"] .feature-item[data-index="2"] {
+    .feature-item[data-index="2"] .feature-item-card[data-index="2"] {
         position: absolute;
         margin: 0 auto;
         transform: translateY(0) rotate(0deg);
@@ -183,12 +183,13 @@ const features = [
         justify-content: center;
         padding: 2.25rem 0;
       }
-      .platform-feature-slider {
+      .feature-item {
           gap: 1.5rem;
       }
 
       .platform-feature-container {
         padding: 0;
+        overflow: hidden;
       }
 
       .feature-title {
@@ -202,8 +203,8 @@ const features = [
           gap: 1rem;
       }
 
-      .feature-item {
-          transform: none !important;
+      .feature-item-card {
+          /* transform: none !important; */
           left: 0 !important;
           top: 0 !important;
           right: 0 !important;
@@ -212,11 +213,27 @@ const features = [
           max-width: calc(100% - 3.75rem);
           margin: 0 auto;
       }
+
+      .platform-feature-section .feature-item-card[data-index="0"],
+      .platform-feature-section .feature-item-card[data-index="2"] {
+        transform: translateX(-100%) translateY(100%) rotate(30deg);
+      }
+
+      .platform-feature-section .feature-item-card[data-index="1"] {
+        transform: translateX(100%) translateY(100%) rotate(-30deg);
+      }
+
+      .platform-feature-section.in-view .feature-item-card[data-index="0"],
+      .platform-feature-section.in-view .feature-item-card[data-index="1"],
+      .platform-feature-section.in-view .feature-item-card[data-index="2"] {
+        transform: translateX(0) rotate(0);
+      }
     }
 </style>
 
 <script>
   import { loadTranslations } from '../../scripts/i18n-loader';
+  import { inView } from '../../utils/inView';
   loadTranslations();
 
   const section = document.getElementById('platform-feature-section');
@@ -225,7 +242,7 @@ const features = [
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
   if (section && slider && !isMobile) {
     let currentIndex = 0;
-    const slides = slider.querySelectorAll('.platform-feature-slider');
+    const slides = slider.querySelectorAll('.feature-item');
     const totalSlides = 3; // 0-2 共3个状态
 
     let isAnimating = false;
@@ -314,5 +331,10 @@ const features = [
         animationTimeout = null;
       }, ANIMATION_DURATION);
     }, { passive: false });
+  }
+
+  // Intersection Observer 监听 features 是否在可视区域内
+  if (isMobile && typeof window !== 'undefined') {
+    inView({id: "platform-feature-section", threshold: 0.3});
   }
 </script>
