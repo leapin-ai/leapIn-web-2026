@@ -326,6 +326,7 @@ const products = [
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      transition: all 0.5s;
     }
 
     .feature-slide[data-active="false"] {
@@ -372,6 +373,20 @@ const products = [
     .info-description {
       font-size: 0.8125rem;
     }
+    .product-showcase .feature-slide[data-index="0"],
+    .product-showcase .feature-slide[data-index="2"] {
+      transform: translateX(-100%) translateY(100%) rotate(30deg);
+    }
+
+    .product-showcase .feature-slide[data-index="1"] {
+      transform: translateX(100%) translateY(100%) rotate(-30deg);
+    }
+
+    .product-showcase.in-view .feature-slide[data-index="0"],
+    .product-showcase.in-view .feature-slide[data-index="1"],
+    .product-showcase.in-view .feature-slide[data-index="2"] {
+      transform: translateX(0) rotate(0);
+    }
   }
 </style>
 
@@ -412,7 +427,7 @@ const products = [
   
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
   
-  if (productShowcase && darkBox && slider && info && !isMobile) {
+  if (productShowcase && darkBox && slider && info) {
     let currentIndex = 0;
     const slides = slider.querySelectorAll('.feature-slide');
     const infoItems = info.querySelectorAll('.info-item');
@@ -508,5 +523,31 @@ const products = [
         animationTimeout = null;
       }, ANIMATION_DURATION);
     }, { passive: false });
+  }
+
+  // Intersection Observer 监听 features 是否在可视区域内
+  if (isMobile && typeof window !== 'undefined') {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const element = entry.target as HTMLElement;
+          if (entry.isIntersecting) {
+            // 进入可视区域，添加 in-view 类，触发对齐动画
+            element.classList.add('in-view');
+          } else {
+            // 离开可视区域，移除 in-view 类，恢复错位状态
+            element.classList.remove('in-view');
+          }
+        });
+      },
+      {
+        threshold: 0.2, // 当 20% 的元素可见时触发
+      }
+    );
+
+    const featuresLayout = document.getElementById('product-showcase');
+    if (featuresLayout) {
+      observer.observe(featuresLayout);
+    }
   }
 </script>
