@@ -6,7 +6,7 @@ import cnAvatar from '../../assets/solutions/section/cn/section1-avatar.png';
 import cnScore from '../../assets/solutions/section/cn/section1-score.png';
 ---
 
-<section class="section-container">
+<section class="section-container" id="solutions-section-1">
     <div class="container">
         <div class="section-avatar">
             <picture>
@@ -23,6 +23,9 @@ import cnScore from '../../assets/solutions/section/cn/section1-score.png';
 </section>
 
 <script>
+  import { loadTranslations } from '../../scripts/i18n-loader';
+  import { inView } from '../../utils/inView';
+  loadTranslations();
     // 根据语言切换图片
     const updateImages = () => {
         const currentLang = localStorage.getItem('language') || 'en';
@@ -45,6 +48,11 @@ import cnScore from '../../assets/solutions/section/cn/section1-score.png';
 
     // 监听语言切换事件
     window.addEventListener('languageChanged', updateImages);
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  // Intersection Observer 监听 features 是否在可视区域内
+  if (isMobile && typeof window !== 'undefined') {
+    inView({id: "solutions-section-1", threshold: 0.2});
+  }
 </script>
 
 <style>
@@ -103,13 +111,30 @@ import cnScore from '../../assets/solutions/section/cn/section1-score.png';
 		.section-avatar {
             width: calc(100% - 2rem);
 			position: relative;
-            transform: none;
 		}
-
         .section-score {
             position: absolute;
             width: calc(100% - 3.75rem);
+        }
+        .in-view .section-avatar {
+            transform: translateX(0) translateY(0) rotate(0);
+		}
+
+        .in-view .section-score {
             transform: translateX(1.875rem) translateY(7.5rem);
         }
+
+        :global(.card-section1) {
+            transform: translateX(1.875rem) translateY(100%) rotate(45deg);
+        }
+        .in-view :global(.card-section1) {
+            transform: translateX(0) translateY(0);
+        }
+        .section-score {
+            transform: translateX(0) translateY(0);
+        }
+        .section-avatar {
+            transform: translateX(0) translateY(0) rotate(-45deg);
+		}
 	}
 </style>

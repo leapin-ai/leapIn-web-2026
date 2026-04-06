@@ -5,20 +5,53 @@ import Score from '../../assets/solutions/section/section2-score.png';
 import ScoreMobile from '../../assets/solutions/section/section2-score-mobile.png';
 ---
 
-<section class="section-container">
+<section class="section-container" id="solutions-section-2">
     <div class="container">
         <Card index={2} itemLength={3} className="card-section2"></Card>
         <div class="section-avatar2">
-            <img src={Avatar.src} alt="">
+            <img src={Avatar.src} alt="" class="lang-image">
         </div>
         <div class="section-score2">
             <picture>
                 <source media="(max-width: 768px)" srcset={ScoreMobile.src} />
-                <img src={Score.src} alt="" class="score-image">
+                <img src={Score.src} alt="" class="score-image" class="lang-image">
             </picture>
         </div>
     </div>
 </section>
+
+<script>
+  import { loadTranslations } from '../../scripts/i18n-loader';
+  import { inView } from '../../utils/inView';
+  loadTranslations();
+  // 根据语言切换图片
+  // const updateImages = () => {
+  //     const currentLang = localStorage.getItem('language') || 'en';
+  //     const images = document.querySelectorAll('.lang-image');
+      
+  //     images.forEach((img) => {
+  //         const enSrc = img.getAttribute('data-en-src');
+  //         const cnSrc = img.getAttribute('data-cn-src');
+          
+  //         if (currentLang === 'zh' && cnSrc) {
+  //             img.setAttribute('src', cnSrc);
+  //         } else if (enSrc) {
+  //             img.setAttribute('src', enSrc);
+  //         }
+  //     });
+  // };
+
+  // // 页面加载时更新
+  // updateImages();
+
+  // // 监听语言切换事件
+  // window.addEventListener('languageChanged', updateImages);
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  // Intersection Observer 监听 features 是否在可视区域内
+  if (isMobile && typeof window !== 'undefined') {
+    inView({id: "solutions-section-2", threshold: 0.2});
+  }
+</script>
 
 <style>
     .section-container {
@@ -79,30 +112,48 @@ import ScoreMobile from '../../assets/solutions/section/section2-score-mobile.pn
     }
 
 	@media (max-width: 768px) {
-        .container {
-            flex-direction: column;
-            margin: 0;
-            padding: 0 1rem;
-		    overflow: hidden;
-        }
+    .container {
+      flex-direction: column;
+      margin: 0;
+      padding: 0 1rem;
+      overflow: hidden;
+    }
 		.section-avatar2 {
-            width: 38.875rem;
+      width: 38.875rem;
 			position: relative;
-            transform: translateX(8rem) translateY(200%);
-            z-index: 1;
+      z-index: 1;
 		}
 
-        .section-score2 {
-            position: relative;
-            width: calc(100% - 1rem);
-            transform: translateY(-40%);
-            z-index: 0;
-            aspect-ratio: auto;
-        }
+    .section-score2 {
+      position: relative;
+      width: calc(100% - 1rem);
+      z-index: 0;
+      aspect-ratio: auto;
+    }
 
-        .score-image {
-            width: 100%;
-            height: auto;
-        }
+    .score-image {
+        width: 100%;
+        height: auto;
+    }
+
+    .in-view .section-avatar2 {
+      transform: translateX(8rem) translateY(200%);
+		}
+    .section-avatar2 {
+      transform: translateX(-8rem) translateY(200%) rotate(30deg);
+		}
+    .in-view .section-score2 {
+      transform: translateY(-40%);
+		}
+    .section-score2 {
+      transform: translateY(-40%) rotate(-30deg);
+		}
+
+    :global(.card-section2) {
+      transform: translateX(1.875rem) translateY(100%) rotate(45deg);
+    }
+    .in-view :global(.card-section2) {
+      transform: translateX(0) translateY(0);
+    }
 	}
 </style>
