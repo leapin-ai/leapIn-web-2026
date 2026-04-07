@@ -116,15 +116,10 @@
   },
   "platform": {
     "hero": {
-      "title": "LeapIn 人才",
-      "titleSuffix": "智能",
-      "subtitle": "平台",
-      "description": "统一的 AI 平台，用于在全球范围内规模化地招聘、培养和调配人才。\nLeapIn 超越了传统的人力资源系统，为整个员工队伍提供以能力为核心的智能洞察。",
-      "info": "平台核心支柱"
-    },
-    "partners": {
-      "title": "深受全球企业信赖",
-      "description": "服务于全球 8 大主要行业的领先组织"
+      "title": "贯穿人才全生命周期的",
+      "titleSuffix": "",
+      "subtitle": "预测能力",
+      "description": "覆盖招聘、发展到领导力建设。\nLeapIn 通过统一的行为引擎输出预测型智能，把决策确定性嵌入你现有的基础设施。"
     },
     "coreFeatures": {
       "title": "平台核心支柱",
@@ -132,15 +127,15 @@
         "title": "AI 人才招聘",
         "description": "AI Talent Acquisition",
         "content": {
-          "title": "在招聘前的预判能力。",
-          "description": "LeapIn 利用行为 AI 预判候选人的能力、潜力与适配度，助力企业在规模化招聘中做出更快速、更公平、更精准的决策。"
+          "title": "在入职前预测谁会成功。",
+          "description": "“流动匹配分”量化跨岗位成功潜力，把人才部署从被动补位转为主动能力再配置。"
         },
         "result": {
           "title": "关键成果",
           "list": [
-            { "label": "缩短招聘周期" },
-            { "label": "降低招聘偏见" },
-            { "label": "提升招聘质量" }
+            { "label": "提升内部流动" },
+            { "label": "降低早期流失" },
+            { "label": "规模化预测准确性" }
           ]
         }
       },
@@ -148,15 +143,15 @@
         "title": "AI 人才市场",
         "description": "AI Talent Marketplace",
         "content": {
-          "title": "将隐藏人才转化为战略优势。",
+          "title": "把内部流动转化为战略优势。",
           "description": "LeapIn 持续将员工的能力与潜力匹配到内部岗位、项目及继任需求中。"
         },
         "result": {
           "title": "关键成果",
           "list": [
-            { "label": "提升内部人才流动率" },
-            { "label": "强化继任人才梯队" },
-            { "label": "提升员工留存率" }
+            { "label": "预测型内部匹配" },
+            { "label": "降低外部依赖" },
+            { "label": "释放被“锁住”的产能" }
           ]
         }
       },
@@ -164,15 +159,15 @@
         "title": "AI 人才发展",
         "description": "AI Talent Development",
         "content": {
-          "title": "将人才成长与业务战略对齐。",
-          "description": "LeapIn 识别能力缺口，并提供与业务重点对齐的个性化发展路径。"
+          "title": "用预测确定性构建领导力梯队。",
+          "description": "“晋升成功概率”和“继任风险指数”在岗位空缺前预测领导力结果，使发展计划与已验证的潜力对齐。"
         },
         "result": {
           "title": "关键成果",
           "list": [
-            { "label": "更坚实的领导人才梯队" },
-            { "label": "面向未来的员工队伍" },
-            { "label": "持续的能力提升" }
+            { "label": "继任准备度得到验证" },
+            { "label": "持续的人才管道智能" },
+            { "label": "降风险的晋升决策" }
           ]
         }
       }
@@ -193,7 +188,12 @@
     },
     "cta": {
       "title": "共享智能层",
-      "subtitle": "LeapIn 的所有能力均基于统一的智能核心运行，确保招聘、人才流动、员工发展与绩效管理围绕相同的能力标准与目标协同一致。",
+      "subtitle": "所有能力基于同一个行为预测引擎运行，确保招聘、流动与发展决策在同一套技能向量与结果指标上对齐。",
+      "items": [
+        { "description": "集中式技能信号处理" },
+        { "description": "跨决策数据验证" },
+        { "description": "基础设施级可扩展性" }
+      ],
       "button": "预约平台演示"
     }
   },

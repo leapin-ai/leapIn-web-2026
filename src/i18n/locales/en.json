@@ -119,60 +119,55 @@
   },
   "platform": {
     "hero": {
-      "title": "The LeapIn Talent ",
-      "titleSuffix": "Intelligence",
-      "subtitle": "Platform",
-      "description": "A single AI platform to hire, develop, and mobilize talent — globally and at scale.\nLeapIn moves beyond traditional HR systems to deliver skills-based intelligence across your workforce.",
-      "info": "Core Platform Pillars"
-    },
-    "partners": {
-      "title": "Trusted by Global Enterprises",
-      "description": "Serving leading organizations across 8 major industries worldwide."
+      "title": "One ",
+      "titleSuffix": " Layer Across the Talent Lifecycle",
+      "subtitle": "Predictive",
+      "description": "From hiring to development to leadership\nLeapIn moves beyond traditional HR systems to deliver predictive intelligence through a unified behavioral engine—embedding decision certainty into your existing infrastructure."
     },
     "coreFeatures": {
       "title": "Core Platform Pillars",
       "Acquisition": {
         "title": "AI Talent\nAcquisition",
         "content": {
-          "title": "Predict skills before you hire.",
-          "description": "LeapIn predicts skills, potential, and fit using behavioral AI — enabling faster, fairer, and more accurate hiring decisions at scale."
+          "title": "Predict who will succeed before day one.",
+          "description": "Hire Success Probability uses behavioral signal processing to forecast on-the-job performance, eliminating guesswork from hiring decisions."
         },
         "result": {
           "title": "Key Outcomes",
           "list": [
-            { "label": "Faster time-to-hire" },
-            { "label": "Reduced bias" },
-            { "label": "Higher quality of hire" }
+            { "label": "Decision certainty in hiring" },
+            { "label": "Reduced early-stage attrition" },
+            { "label": "Predictive accuracy at scale" }
           ]
         }
       },
       "Marketplace": {
         "title": "AI Talent\nMarketplace",
         "content": {
-          "title": "Turn hidden talent into strategic advantage.",
-          "description": "LeapIn continuously maps skills and potential to internal roles, projects, and succession needs."
+          "title": "Turn internal mobility into strategic advantage.",
+          "description": "Mobility Fit Score quantifies cross-role success potential, transforming talent deployment from reactive backfilling to proactive capability reallocation."
         },
         "result": {
           "title": "Key Outcomes",
           "list": [
-            { "label": "Higher internal mobility" },
-            { "label": "Stronger succession pipelines" },
-            { "label": "Improved retention" }
+            { "label": "Predictive internal matching" },
+            { "label": "Reduced external dependency" },
+            { "label": "Unlocked trapped capacity" }
           ]
         }
       },
       "Development": {
         "title": "AI Talent\nDevelopment",
         "content": {
-          "title": "Align people growth with business strategy.",
-          "description": "LeapIn identifies skill gaps and delivers personalized development pathways aligned to business priorities."
+          "title": "Build leadership pipelines with predictive certainty.",
+          "description": "Promotion Success Probability and Succession Risk Index anticipate leadership outcomes before vacancies occur, aligning development with validated potential."
         },
         "result": {
           "title": "Key Outcomes",
           "list": [
-            { "label": "Stronger leadership pipelines" },
-            { "label": "Future-ready workforce" },
-            { "label": "Continuous upskilling" }
+            { "label": "Validated succession readiness" },
+            { "label": "Continuous pipeline intelligence" },
+            { "label": "Risk-reduced promotion decisions" }
           ]
         }
       }
@@ -193,7 +188,12 @@
     },
     "cta": {
       "title": "Shared Intelligence Layer",
-      "subtitle": "All LeapIn capabilities operate on a single intelligence core — ensuring hiring, mobility, development, and performance are aligned around the same skills and outcomes.",
+      "subtitle": "All capabilities operate on a single behavioral prediction engine—ensuring hiring, mobility, and development decisions align around the same skills vectors and outcomes.",
+      "items": [
+        { "description": "Centralized skill signal processing" },
+        { "description": "Cross-decision data validation" },
+        { "description": "Infrastructure-grade scalability" }
+      ],
       "button": "Explore the Platform"
     }
   },
