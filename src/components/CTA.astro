@@ -3,6 +3,7 @@ import SquareLayer from '../assets/platform/cta/square-layer.png';
 import solutionsBg from '../assets/solutions/cta/bg_data.png';
 import bgDot from '../assets/bg_dot.png';
 import Button from './Button.astro';
+import CardItem from './CardItem.astro';
 
 
 interface Props {
@@ -35,6 +36,17 @@ const layers = [
         <div class="cta-content" data-index={0}>
             <h2 class="cta-title" data-i18n={`${pageName}.cta.title`}></h2>
             <p class="cta-subtitle" data-i18n={`${pageName}.cta.subtitle`}></p>
+            {
+                pageName === 'platform' ? (
+                    <div class="cta-items">
+                        {
+                            Array(3).fill(0).map((_, itemIndex) => (
+                                <CardItem className="cta-card-item" text={`${pageName}.cta.items.${itemIndex}.description`} />
+                            ))
+                        }
+                    </div>
+                ) : null
+            }
             <Button type="primary" text={`${pageName}.cta.button`} className="cta-btn" href="request" />
         </div>
     </div>
@@ -352,11 +364,25 @@ const layers = [
         font-family: Inter;
         font-size: 1rem;
         line-height: 120%; /* 19.2px */
-        margin-bottom: 3.75rem;
+    }
+    
+    :global(.cta-items) {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+    }
+    
+    :global(.card-item.cta-card-item) {
+        background: var(--Grey-Gray-10, rgba(17, 24, 39, 0.05));
     }
 
-    .cta-btn {
+    :global(.cta-card-item .card-item-description) {
+        color: var(--grey-gray-60-base, #111827);
+    }
+
+    :global(.cta-content .cta-btn) {
         margin: 0 auto;
+        margin-top: 3.75rem;
     }
 
 	@media (max-width: 768px) {
