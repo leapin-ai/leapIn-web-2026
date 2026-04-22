@@ -10,13 +10,14 @@ import slow3 from '../../assets/index/features/slow3.png';
 import slow4 from '../../assets/index/features/slow4.png';
 import slow5 from '../../assets/index/features/slow5.png';
 import slow6 from '../../assets/index/features/slow6.png';
+import AreaTitle from './AreaTitle.astro';
 
 const features = [slow1, slow2, slow3, slow4, slow5, slow6];
 
 const fontSize = {
   title: pxToRem(40),
-  titleMobile: pxToRem(24),
-  subtitle: pxToRem(16),
+  titleMobile: pxToRem(32),
+  subtitle: pxToRem(20),
   subtitleMobile: pxToRem(14),
   cardLabel: pxToRem(14),
   cardLabelMobile: pxToRem(12),
@@ -28,6 +29,7 @@ const fontSize = {
 <section class="features">
   <div class="container">
     <div class="features-header">
+      <AreaTitle section="features" />
       <h2 class="features-title" data-i18n="homepage.features.title"></h2>
       <p class="features-subtitle" data-i18n="homepage.features.subtitle"></p>
     </div>
@@ -205,6 +207,7 @@ const fontSize = {
     font-weight: 600;
     line-height: 1.3;
     color: #111827;
+    margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     max-width: 800px;
   }

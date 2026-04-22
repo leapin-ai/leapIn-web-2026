@@ -41,6 +41,7 @@
       "description": "Serving leading organizations across 8 major industries worldwide."
     },
     "features": {
+      "areaTitle": "The Problem Section",
       "title": "HR Has Become Strategic — Without Strategic Infrastructure",
       "subtitle": "But most systems were designed for record-keeping — not decision-making.",
       "left": {
@@ -81,7 +82,8 @@
       ]
     },
     "product": {
-      "title": "LeapIn turns workforce data into predictive intelligence —",
+      "areaTitle": "Product suite",
+      "title": "Built for every stage of the talent lifecycle.",
       "subtitle": "helping enterprises make better decisions across hiring, mobility, and leadership. We don’t track what happened.We predict what will happen.",
       "cta": "Explore the Platform",
       "items": [

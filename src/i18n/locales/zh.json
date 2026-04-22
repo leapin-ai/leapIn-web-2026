@@ -41,6 +41,7 @@
       "description": "服务于全球 8 大主要行业的领先组织"
     },
     "features": {
+      "areaTitle": "The Problem Section",
       "title": "HR 已经战略化——但缺少战略级基础设施",
       "subtitle": "但大多数系统被设计用来记录，而不是用来决策。",
       "left": {
@@ -81,6 +82,7 @@
       ]
     },
     "product": {
+      "areaTitle": "Product suite",
       "title": "认识 LeapIn——面向劳动力决策的预测层",
       "subtitle": "LeapIn 不是一堆 HR 工具的拼装，而是预测型人才操作系统——统一基础设施，采集行为信号、构建动态技能图谱，并通过 API 输出决策智能。",
       "cta": "预约平台演示",

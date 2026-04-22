@@ -11,6 +11,7 @@ import product2MobileCn from '../../assets/index/product/product2mobile-cn.png';
 import product3MobileCn from '../../assets/index/product/product3mobile-cn.png';
 import bgDot from '../../assets/bg_dot_dark.png';
 import Button from '../Button.astro';
+import AreaTitle from './AreaTitle.astro';
 
 const products = [
   { image: product1, mobileImage: product1Mobile, number: '01' },
@@ -22,8 +23,9 @@ const products = [
 <section class="product-showcase" id="product-showcase">
   <div class="container">
     <div class="showcase-header">
+      <AreaTitle section="product" />
       <h2 class="section-title" data-i18n="homepage.product.title">一个平台，全域人才智能</h2>
-      <p class="section-subtitle" data-i18n="homepage.product.subtitle">LeapIn 通过行为 AI 预测技能、潜力与适配度，为每一项人才决策注入智能 —— 全部在单一企业级平台上实现。</p>
+      <!-- <p class="section-subtitle" data-i18n="homepage.product.subtitle">LeapIn 通过行为 AI 预测技能、潜力与适配度，为每一项人才决策注入智能 —— 全部在单一企业级平台上实现。</p> -->
     </div>
 
     <div class="showcase-content">
@@ -83,6 +85,7 @@ const products = [
   .section-title {
     font-size: 2.5rem;
     font-weight: 700;
+    margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     line-height: 124%;
     letter-spacing: -1.1%;
