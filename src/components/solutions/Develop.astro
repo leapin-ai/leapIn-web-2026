@@ -5,6 +5,12 @@ import developMobileImg from '../../assets/solutions/section/develop-mobile.png'
 import developImgCn from '../../assets/solutions/section/cn/develop.png';
 import developMobileImgCn from '../../assets/solutions/section/cn/develop-mobile.png';
 import Card from './Card.astro';
+
+const stats = [
+  { value: '8', suffix: 'x' },
+  { value: '63', suffix: '%' },
+  { value: '40→88', suffix: '%' },
+];
 ---
 
 <section class="develop-section">
@@ -19,15 +25,34 @@ import Card from './Card.astro';
     </div>
     <Card index={3} itemLength={3} className="card-section3" cardName='develop'></Card>
   </div>
+
+  <!-- Stats Section -->
+  <div class="stats-container">
+    <div class="stats-grid">
+      {stats.map((item, index) => (
+        <div class="stat-card">
+          <div class="stat-value-wrapper">
+            <span class="stat-value" data-i18n={`solutions.develop.stats.${index}.value`}>{item.value}</span>
+            <span class="stat-suffix">{item.suffix}</span>
+          </div>
+          <div class="stat-description" data-i18n={`solutions.develop.stats.${index}.description`}></div>
+          <div class="stat-industry" data-i18n={`solutions.develop.stats.${index}.industry`}></div>
+        </div>
+      ))}
+    </div>
+  </div>
 </section>
 
 <style define:vars={{ circleBg: `url(${circleBg.src})` }}>
   .develop-section {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     padding-top: 4.75rem;
+    padding-bottom: 6rem;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
   }
 
   .develop-container {
@@ -37,6 +62,8 @@ import Card from './Card.astro';
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex: 0 0 auto;
+    min-height: calc(100vh - 4.75rem - 6rem);
   }
 
   .develop-left {
@@ -60,19 +87,122 @@ import Card from './Card.astro';
     border-radius: 12px;
   }
 
+  /* Stats Section */
+  .stats-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 4rem;
+    flex: 0 0 auto;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .stat-card:hover {
+    border-color: rgba(90, 59, 221, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-4px);
+  }
+
+  .stat-value-wrapper {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+
+  .stat-value {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(131deg, #5386FA 9.64%, #8B5CF6 89.29%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-suffix {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(131deg, #5386FA 9.64%, #8B5CF6 89.29%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-description {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .stat-industry {
+    font-size: 0.875rem;
+    line-height: 1.2;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
   @media (max-width: 768px) {
     .develop-section {
-      padding: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      min-height: auto;
     }
 
     .develop-container {
       flex-direction: column-reverse;
       gap: 1rem;
       padding: 0 1rem;
+      min-height: auto;
     }
 
     .develop-left {
       width: 100%;
+    }
+
+    .stats-container {
+      padding: 0 1rem;
+      margin-top: 2rem;
+      width: 100%;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .stat-card {
+      padding: 1.5rem 1rem;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+    }
+
+    .stat-suffix {
+      font-size: 1.25rem;
+    }
+
+    .stat-description {
+      font-size: 0.875rem;
+    }
+
+    .stat-industry {
+      font-size: 0.75rem;
     }
   }
 </style>

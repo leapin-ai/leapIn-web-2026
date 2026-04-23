@@ -403,7 +403,24 @@
         "Predict leadership readiness before the role is open",
         "Succession coverage 40% → 88% in one review cycle"
       ],
-      "tagline": "From reactive development → predictive leadership."
+      "tagline": "From reactive development → predictive leadership.",
+      "stats": [
+        {
+          "value": "8x",
+          "description": "Faster hiring · 88% screening time saved",
+          "industry": "FMCG · 300+ roles"
+        },
+        {
+          "value": "63%",
+          "description": "More internal mobility · 50% faster role filling",
+          "industry": "Hospitality · 15,000 employees"
+        },
+        {
+          "value": "40→88%",
+          "description": "Succession coverage in one review cycle",
+          "industry": "Banking · 30,000 employees"
+        }
+      ]
     },
     "section1": {
       "title": "Hire Smarter",
