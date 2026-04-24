@@ -388,6 +388,7 @@ const products = [
   import { loadTranslations } from '../../scripts/i18n-loader';
   import { inView } from '../../utils/inView';
   import { createSectionScroll } from '../../utils/sectionScroll';
+  import { createAutoScroll } from '../../utils/autoScroll';
   loadTranslations();
 
   const currentLang = localStorage.getItem('language') || 'en';
@@ -436,7 +437,7 @@ const products = [
     const slides = slider.querySelectorAll('.feature-slide');
     const infoItems = info.querySelectorAll('.info-item');
     
-    createSectionScroll({
+    const scrollController = createSectionScroll({
       sectionId: 'product-showcase',
       totalSlides: slides.length,
       scrollThreshold: 100,
@@ -457,6 +458,16 @@ const products = [
         }
       },
     });
+
+    // 添加自动滚动功能
+    if (scrollController) {
+      createAutoScroll({
+        sectionId: 'product-showcase',
+        scrollController,
+        totalSlides: slides.length,
+        logPrefix: '[ProductShowcase]',
+      });
+    }
   }
 
   // Intersection Observer 监听 features 是否在可视区域内

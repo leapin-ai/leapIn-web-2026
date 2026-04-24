@@ -525,6 +525,7 @@ const imgs = [img2, img6, img4, img5, img7];
   import { loadTranslations } from '../../scripts/i18n-loader';
   import { inView } from '../../utils/inView';
   import { createSectionScroll } from '../../utils/sectionScroll';
+  import { createAutoScroll } from '../../utils/autoScroll';
   loadTranslations();
 
   // 为英文标题添加斜体样式
@@ -545,7 +546,7 @@ const imgs = [img2, img6, img4, img5, img7];
   if (section && slider && !isMobile) {
     const slides = slider.querySelectorAll('.team-slider');
     
-    createSectionScroll({
+    const scrollController = createSectionScroll({
       sectionId: 'team-section-inner',
       totalSlides: 3,
       scrollThreshold: 100,
@@ -558,6 +559,16 @@ const imgs = [img2, img6, img4, img5, img7];
         });
       },
     });
+
+    // 添加自动滚动功能
+    if (scrollController) {
+      createAutoScroll({
+        sectionId: 'team-section-inner',
+        scrollController,
+        totalSlides: 3,
+        logPrefix: '[Team]',
+      });
+    }
   }
   
   // Intersection Observer 监听 features 是否在可视区域内

@@ -231,6 +231,7 @@ const features = [
   import { loadTranslations } from '../../scripts/i18n-loader';
   import { inView } from '../../utils/inView';
   import { createSectionScroll } from '../../utils/sectionScroll';
+  import { createAutoScroll } from '../../utils/autoScroll';
   loadTranslations();
 
   // 为英文标题添加斜体样式
@@ -251,7 +252,7 @@ const features = [
   if (section && slider && !isMobile) {
     const slides = slider.querySelectorAll('.feature-item');
     
-    createSectionScroll({
+    const scrollController = createSectionScroll({
       sectionId: 'platform-feature-section',
       totalSlides: 3,
       scrollThreshold: 100,
@@ -264,6 +265,16 @@ const features = [
         });
       },
     });
+
+    // 添加自动滚动功能
+    if (scrollController) {
+      createAutoScroll({
+        sectionId: 'platform-feature-section',
+        scrollController,
+        totalSlides: 3,
+        logPrefix: '[PlatformFeature]',
+      });
+    }
   }
 
   // Intersection Observer 监听 features 是否在可视区域内

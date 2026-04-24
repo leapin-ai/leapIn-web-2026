@@ -365,6 +365,7 @@ import cnAICoachUI from '../../assets/platform/AppliedAIAgents/cn/ai-coach.png';
 <script>
   import { loadTranslations } from '../../scripts/i18n-loader';
   import { createSectionScroll } from '../../utils/sectionScroll';
+  import { createAutoScroll } from '../../utils/autoScroll';
   loadTranslations();
 
   const section = document.getElementById('applied-ai-agents');
@@ -394,7 +395,7 @@ import cnAICoachUI from '../../assets/platform/AppliedAIAgents/cn/ai-coach.png';
   if (section && slider && !isMobile) {
     const slides = slider.querySelectorAll('.feature-slide');
     
-    createSectionScroll({
+    const scrollController = createSectionScroll({
       sectionId: 'applied-ai-agents',
       totalSlides: 3,
       scrollThreshold: 100,
@@ -407,5 +408,15 @@ import cnAICoachUI from '../../assets/platform/AppliedAIAgents/cn/ai-coach.png';
         section.setAttribute('data-slide', index.toString());
       },
     });
+
+    // 添加自动滚动功能
+    if (scrollController) {
+      createAutoScroll({
+        sectionId: 'applied-ai-agents',
+        scrollController,
+        totalSlides: 3,
+        logPrefix: '[AppliedAIAgents]',
+      });
+    }
   }
 </script>
