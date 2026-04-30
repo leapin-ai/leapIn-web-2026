@@ -31,34 +31,38 @@ const products = [
     <div class="showcase-content">
       <div class="dark-box" id="dark-box">
         <div class="dark-box-bg" style={`background-image: url(${bgDot.src})`}></div>
-        <div class="product-slider" id="product-slider">
-          {products.map((feature, index) => (
-            <div class="feature-slide-wrap" id={`feature-slide-${index}`} data-index={index}>
-              <div class="feature-slide" data-index={index}>
-                <div class="info-item info-item-mobile" data-index={index}>
-                  <div class="info-number">{feature.number}</div>
-                  
-                  <h3 class="info-title" data-i18n={`homepage.product.items.${index}.title`}>功能标题</h3>
-                  <h3 class="info-subtitle" data-i18n={`homepage.product.items.${index}.subtitle`}>功能副标题</h3>
-                  <p class="info-description" data-i18n={`homepage.product.items.${index}.description`}>功能描述</p>
+        <div class="product-slider-wrap" id="product-slider-wrap">
+          <div class="product-slider" id="product-slider">
+            {products.map((feature, index) => (
+              <div class="feature-slide-wrap" id={`feature-slide-${index}`} data-index={index}>
+                <div class="feature-slide" data-index={index}>
+                  <div class="info-item info-item-mobile" data-index={index}>
+                    <div class="info-number">{feature.number}</div>
+                    
+                    <h3 class="info-title" data-i18n={`homepage.product.items.${index}.title`}>功能标题</h3>
+                    <h3 class="info-subtitle" data-i18n={`homepage.product.items.${index}.subtitle`}>功能副标题</h3>
+                    <p class="info-description" data-i18n={`homepage.product.items.${index}.description`}>功能描述</p>
+                  </div>
+                  <picture>
+                    <source media="(max-width: 768px)" srcset={feature.mobileImage.src} data-en-srcset={feature.mobileImage.src} data-cn-srcset={feature?.mobileImageCn?.src || feature.mobileImage.src} />
+                    <img src={feature.image.src} data-en-src={feature.image.src} data-cn-src={feature?.imageCn?.src || feature.image.src} alt={`Feature ${index + 1}`} class="feature-image" />
+                  </picture>
                 </div>
-                <picture>
-                  <source media="(max-width: 768px)" srcset={feature.mobileImage.src} data-en-srcset={feature.mobileImage.src} data-cn-srcset={feature?.mobileImageCn?.src || feature.mobileImage.src} />
-                  <img src={feature.image.src} data-en-src={feature.image.src} data-cn-src={feature?.imageCn?.src || feature.image.src} alt={`Feature ${index + 1}`} class="feature-image" />
-                </picture>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-        <div class="feature-info" id="feature-info">
-          {products.map((feature, index) => (
-            <div class="info-item" data-index={index}>
-              <div class="info-number">{feature.number}</div>
-              <h3 class="info-title" data-i18n={`homepage.product.items.${index}.title`}>功能标题</h3>
-              <p class="info-subtitle" data-i18n={`homepage.product.items.${index}.subtitle`}>功能副标题</p>
-              <p class="info-description" data-i18n={`homepage.product.items.${index}.description`}>功能描述</p>
-            </div>
-          ))}
+        <div class="feature-info-wrap" id="feature-info-wrap">
+          <div class="feature-info" id="feature-info">
+            {products.map((feature, index) => (
+              <div class="info-item" data-index={index}>
+                <div class="info-number">{feature.number}</div>
+                <h3 class="info-title" data-i18n={`homepage.product.items.${index}.title`}>功能标题</h3>
+                <p class="info-subtitle" data-i18n={`homepage.product.items.${index}.subtitle`}>功能副标题</p>
+                <p class="info-description" data-i18n={`homepage.product.items.${index}.description`}>功能描述</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <Button text="homepage.product.cta" type="primary" href="request" />
@@ -135,12 +139,27 @@ const products = [
     pointer-events: none;
   }
 
-  .product-slider {
+  .product-slider-wrap {
     position: relative;
     z-index: 1;
+  }
+
+  .product-slider {
+    position: relative;
     aspect-ratio: 16 / 10;
     border-radius: 16px;
     overflow: hidden;
+    transition: transform 2s ease-out, opacity 2s ease-out;
+  }
+
+  .product-slider[data-active="false"] {
+    transform: translateX(-1500px) translateY(100vh) rotate(-15deg);
+    opacity: 0;
+  }
+
+  .product-slider[data-active="true"] {
+    transform: translateX(0) translateY(0) rotate(0);
+    opacity: 1;
   }
 
   .feature-slide {
@@ -173,12 +192,27 @@ const products = [
     object-fit: contain;
   }
 
-  .feature-info {
+  .feature-info-wrap {
     position: relative;
     z-index: 1;
+  }
+
+  .feature-info {
+    position: relative;
     border-radius: 0.75rem;
     padding: 1.5rem;
-    border: 1px solid #FFFFFF4D
+    border: 1px solid #FFFFFF4D;
+    transition: all 1s ease-out;
+  }
+
+  .feature-info[data-active="false"] {
+    transform: translateX(1500px) translateY(100vh) rotate(15deg);
+    opacity: 0;
+  }
+
+  .feature-info[data-active="true"] {
+    transform: translateX(0) translateY(0) rotate(0);
+    opacity: 1;
   }
 
   .info-item {
@@ -452,6 +486,11 @@ const products = [
       scrollThreshold: 100,
       animationDuration: 800,
       onSlideUpdate: (index) => {
+        // 先隐藏当前元素
+        slider.setAttribute('data-active', 'false');
+        info.setAttribute('data-active', 'false');
+        
+        // 更新slide显示
         slides.forEach((slide, i) => {
           slide.setAttribute('data-active', i === index ? 'true' : 'false');
         });
@@ -465,6 +504,12 @@ const products = [
         } else {
           darkBox.removeAttribute('data-layout');
         }
+        
+        // 延迟显示新元素，让动画更明显
+        setTimeout(() => {
+          slider.setAttribute('data-active', 'true');
+          info.setAttribute('data-active', 'true');
+        }, 100);
       },
     });
 
