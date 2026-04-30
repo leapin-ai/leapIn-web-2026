@@ -26,45 +26,46 @@ import Button from '../Button.astro';
       <Button text="homepage.difference.cta" type="primary" href="request" />
     </div>
 
-    <div class="difference-right">
-      <div class="difference-demo">
-        <!-- Trigger Event Card -->
-        <div class="difference-demo-left">
-          <div class="demo-card trigger-card">
-            <div class="card-title">
-              <div class="card-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="currentColor"/>
-                </svg>
+    <div class="difference-right" id="difference-right">
+      <div class="difference-right-inner">
+        <div class="difference-demo">
+          <!-- Trigger Event Card -->
+          <div class="difference-demo-left">
+            <div class="demo-card trigger-card">
+              <div class="card-title">
+                <div class="card-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="currentColor"/>
+                  </svg>
+                </div>
+                <div class="card-label" data-i18n="homepage.difference.demo.trigger">TRIGGER EVENT</div>
               </div>
-              <div class="card-label" data-i18n="homepage.difference.demo.trigger">TRIGGER EVENT</div>
+              <div class="card-code">if @candidate_ready...</div>
             </div>
-            <div class="card-code">if @candidate_ready...</div>
-          </div>
 
-          <!-- Candidate Profile Card -->
-          <div class="demo-card profile-card">
-            <div class="profile-header">
-              <img class="profile-avatar" src={avatar4.src} alt="Alex Rivera" />
-              <div class="profile-info">
-                <div class="profile-name" data-i18n="homepage.difference.demo.name">Alex Rivera</div>
-                <div class="profile-role" data-i18n="homepage.difference.demo.role">SOFTWARE ARCHITECT</div>
+            <!-- Candidate Profile Card -->
+            <div class="demo-card profile-card">
+              <div class="profile-header">
+                <img class="profile-avatar" src={avatar4.src} alt="Alex Rivera" />
+                <div class="profile-info">
+                  <div class="profile-name" data-i18n="homepage.difference.demo.name">Alex Rivera</div>
+                  <div class="profile-role" data-i18n="homepage.difference.demo.role">SOFTWARE ARCHITECT</div>
+                </div>
+              </div>
+              <div class="profile-metric">
+                <div class="metric-label" data-i18n="homepage.difference.demo.metric">Leadership Potential</div>
+                <div class="metric-value">94%</div>
+              </div>
+              <div class="metric-bar">
+                <div class="metric-fill"></div>
+              </div>
+              <div class="profile-tags">
+                <span class="tag" data-i18n="homepage.difference.demo.tag1">High Impact</span>
+                <span class="tag" data-i18n="homepage.difference.demo.tag2">Predictive Match</span>
               </div>
             </div>
-            <div class="profile-metric">
-              <div class="metric-label" data-i18n="homepage.difference.demo.metric">Leadership Potential</div>
-              <div class="metric-value">94%</div>
-            </div>
-            <div class="metric-bar">
-              <div class="metric-fill"></div>
-            </div>
-            <div class="profile-tags">
-              <span class="tag" data-i18n="homepage.difference.demo.tag1">High Impact</span>
-              <span class="tag" data-i18n="homepage.difference.demo.tag2">Predictive Match</span>
-            </div>
           </div>
-        </div>
-        <div class="difference-demo-right">
+          <div class="difference-demo-right">
           <!-- Success Badge -->
           <div class="demo-badge">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -114,6 +115,7 @@ import Button from '../Button.astro';
         <svg class="demo-line line-2"xmlns="http://www.w3.org/2000/svg" width="230" height="118" viewBox="0 0 230 118" fill="none">
           <path d="M0 1.14893C114.888 1.14893 114.888 116.037 229.777 116.037" stroke="#5A3BDD" stroke-width="2.29777" stroke-dasharray="9.19 9.19"/>
         </svg>
+      </div>
       </div>
     </div>
   </div>
@@ -212,6 +214,20 @@ import Button from '../Button.astro';
 
   .difference-right {
     position: relative;
+    transform: translateX(0) translateY(0) rotate(0) !important;
+    transition: all 0.8s ease;
+  }
+
+  .difference-right-inner {
+    position: relative;
+    transition: all 0.8s ease;
+    transform: translateX(100%) rotate(15deg);
+    opacity: 0;
+  }
+
+  .difference-right.in-view .difference-right-inner {
+    transform: translateX(0) rotate(0);
+    opacity: 1;
   }
 
   .difference-demo::before {
@@ -511,6 +527,20 @@ import Button from '../Button.astro';
       margin-bottom: 1.5rem;
     }
 
+    .difference-right {
+      transform: translateX(0) translateY(0) rotate(0) !important;
+    }
+
+    .difference-right-inner {
+      transform: translateX(200%) translateY(100%) rotate(45deg);
+      opacity: 0;
+    }
+
+    .difference-right.in-view .difference-right-inner {
+      transform: translateX(0) translateY(0) rotate(0);
+      opacity: 1;
+    }
+
     .difference-demo {
       padding: 1.75rem 1rem;
       min-height: 600px;
@@ -577,5 +607,11 @@ import Button from '../Button.astro';
 
 <script>
   import { loadTranslations } from '../../scripts/i18n-loader';
+  import { inView } from '../../utils/inView';
   loadTranslations();
+
+  // Intersection Observer 监听 difference-right 是否在可视区域内
+  if (typeof window !== 'undefined') {
+    inView({id: "difference-right", threshold: 0.2});
+  }
 </script>
