@@ -444,10 +444,6 @@ const orbConf = orbConfig || defaultOrbConfig;
 
 	.solution-info-container {
 		border-radius: 0.75rem;
-		border: 1px solid var(--Neutrals-White-30, rgba(255, 255, 255, 0.30));
-		background: var(--banner, linear-gradient(0deg, rgba(34, 87, 191, 0.10) 0%, rgba(255, 255, 255, 0.10) 100%));
-		/* backgroud blur */
-		backdrop-filter: blur(15px);
 		display: inline-flex;
 		padding: 1.5rem;
 		flex-direction: column;
@@ -455,6 +451,10 @@ const orbConf = orbConfig || defaultOrbConfig;
 		align-items: center;
 		gap: 1rem;
 		color: var(--Neutrals-White-00, #FFF);
+		border-radius: 12px;
+		border: 1px solid var(--Neutrals-White-00, #FFF);
+		background: var(--Neutrals-White-30, rgba(255, 255, 255, 0.30));
+		backdrop-filter: blur(7.5px);
 	}
 
 	.solution-info-top {
@@ -470,8 +470,10 @@ const orbConf = orbConfig || defaultOrbConfig;
 		font-weight: 600;
 		padding: 0.75rem;
 		border-radius: 0.5rem;
-		border: 1px solid var(--Neutrals-White-30, rgba(255, 255, 255, 0.30));
-		background: rgba(34, 87, 191, 0.05);
+		color: var(--Grey-Gray-40, rgba(17, 24, 39, 0.60));
+		border: 1px solid var(--Neutrals-White-00, #FFF);
+		background: var(--Neutrals-White-30, rgba(255, 255, 255, 0.30));
+		backdrop-filter: blur(7.5px);
 	}
 
 	.solution-info-top-arrow {
@@ -485,6 +487,7 @@ const orbConf = orbConfig || defaultOrbConfig;
 		/* PC/EN/Subtitle_2 */
 		font-size: 1.25rem;
 		line-height: 120%; /* 24px */
+		color: var(--Grey-Gray-40, rgba(17, 24, 39, 0.60));
 	}
 
 	@media (max-width: 768px) {
