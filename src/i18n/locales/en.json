@@ -168,18 +168,18 @@
       "items": [
         {
           "title": "AI Talent\nAcquisition",
-          "subtitle": "Predict who will succeed—\nnot just who looks good on paper.",
-          "description": "Hire Success Probability predicts who will perform before day one, eliminating guesswork from hiring decisions."
+          "subtitle": "Predict performance. \nReduce attrition. At any scale.",
+          "description": "AI interviews replace manual first-round screening. Every candidate assessed consistently — with predictive scores for on-the-job performance, cultural fit, and early turnover risk. Trained on your internal data. Gets sharper with every cohort."
         },
         {
           "title": "AI Talent\nMarketplace",
-          "subtitle": "Make internal talent your first hiring option.",
-          "description": "Mobility Fit Score reveals hidden internal potential, turning reactive backfilling into predictive capability deployment."
+          "subtitle": "Move the right people to the right roles — automatically.",
+          "description": "Enterprise skills mapping builds a live capability profile for every employee. When a critical role opens, AI matches internal candidates by skill fit — not tenure or who their manager knows. Faster appointments, lower external hiring costs."
         },
         {
           "title": "AI Talent\nDevelopment",
-          "subtitle": "Build leadership pipelines with predictive certainty.",
-          "description": "Promotion Success Probability validates leadership readiness early, replacing annual planning with continuous succession intelligence."
+          "subtitle": "Identify who's ready to lead — before the role is open.",
+          "description": "AI talent reviews surface high-potential leaders using structured, behavioral signals — replacing manager nominations with objective, auditable assessment. Build succession depth and generate individual development plans at scale."
         }
       ]
     },
