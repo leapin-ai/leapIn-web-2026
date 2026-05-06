@@ -13,6 +13,9 @@ import logo9 from '../../assets/index/partner/logo9.png';
 import avatar1 from '../../assets/index/partner/user/1.png';
 import avatar2 from '../../assets/index/partner/user/2.png';
 import avatar3 from '../../assets/index/partner/user/3.png';
+import avatarCn1 from '../../assets/index/partner/user/cn/1.png';
+import avatarCn2 from '../../assets/index/partner/user/cn/2.png';
+import avatarCn3 from '../../assets/index/partner/user/cn/3.png';
 
 const logos = [
   { src: logo1, width: 103, mobileWidth: 40, showInLang: ['en', 'zh'] },
@@ -30,6 +33,7 @@ const currentLang = typeof localStorage !== 'undefined' ? (localStorage.getItem(
 const filteredLogos = logos.filter(logo => logo.showInLang.includes(currentLang));
 
 const avatars = [avatar1, avatar2, avatar3];
+const avatarsCn = [avatarCn1, avatarCn2, avatarCn3];
 ---
 <section class="partners">
   <div class="container">
@@ -80,7 +84,7 @@ const avatars = [avatar1, avatar2, avatar3];
                   <div class="reviews-left-quote" data-i18n="homepage.partners.quote">"</div>
                   <div class="reviews-left-description" data-i18n={`homepage.partners.reviews.${index}.quote`}></div>
                   <div class="reviews-left-user-wrap">
-                    <img class="reviews-left-user-avatar" src={avatars[index].src} alt="User avatar" />
+                    <img class="reviews-left-user-avatar partner-avatar" src={avatars[index].src} alt="User avatar" data-en-src={avatars[index].src} data-cn-src={avatarsCn[index].src} />
                     <div class="reviews-left-user-info">
                       <div class="reviews-left-user-name" data-i18n={`homepage.partners.reviews.${index}.name`}></div>
                       <div class="reviews-left-user-position" data-i18n={`homepage.partners.reviews.${index}.position`}></div>
@@ -101,7 +105,7 @@ const avatars = [avatar1, avatar2, avatar3];
                   <div class="reviews-left-quote" data-i18n="homepage.partners.quote">"</div>
                   <div class="reviews-left-description" data-i18n={`homepage.partners.reviews.${index}.quote`}></div>
                   <div class="reviews-left-user-wrap">
-                    <img class="reviews-left-user-avatar" src={avatars[index].src} alt="User avatar" />
+                    <img class="reviews-left-user-avatar partner-avatar" src={avatars[index].src} alt="User avatar" data-en-src={avatars[index].src} data-cn-src={avatarsCn[index].src} />
                     <div class="reviews-left-user-info">
                       <div class="reviews-left-user-name" data-i18n={`homepage.partners.reviews.${index}.name`}></div>
                       <div class="reviews-left-user-position" data-i18n={`homepage.partners.reviews.${index}.position`}></div>
@@ -462,6 +466,20 @@ const avatars = [avatar1, avatar2, avatar3];
   import { loadTranslations } from '../../scripts/i18n-loader';
   
   loadTranslations();
+
+  const currentLang = localStorage.getItem('language') || 'en';
+
+  // 切换头像语言
+  const partnerAvatars = document.querySelectorAll('.partner-avatar');
+  partnerAvatars.forEach((img) => {
+    const enSrc = img.getAttribute('data-en-src');
+    const cnSrc = img.getAttribute('data-cn-src');
+    if (currentLang === 'zh' && cnSrc) {
+      img.setAttribute('src', cnSrc);
+    } else if (enSrc) {
+      img.setAttribute('src', enSrc);
+    }
+  });
 
   // 应用移动端宽度
   function applyMobileWidths() {
