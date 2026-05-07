@@ -552,6 +552,7 @@ import Button from '../Button.astro';
       min-height: 600px;
       flex-direction: column;
       gap: 6rem;
+      width: 100%;
     }
 
     .difference-demo-left,
@@ -632,6 +633,6 @@ import Button from '../Button.astro';
 
   // Intersection Observer 监听 difference-right 是否在可视区域内
   if (typeof window !== 'undefined') {
-    inView({id: "difference-right", threshold: 0.2});
+    inView({id: "difference-right", threshold: 0.05});
   }
 </script>
