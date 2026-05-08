@@ -13,7 +13,7 @@ import bgBottom2 from '../assets/index/bg_linear_2.png';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>LeapIn - AI人才智能平台</title>
+		<title>LeapIn - AI 人才智能决策平台</title>
 		<script is:inline>
 			// 语言检测 - 只检测并保存到 localStorage，不进行路径跳转
 			(function() {
@@ -51,6 +51,13 @@ import bgBottom2 from '../assets/index/bg_linear_2.png';
 				// 设置 html lang 属性
 				const currentLang = localStorage.getItem('language') || 'zh';
 				document.documentElement.setAttribute('lang', currentLang);
+
+				// 根据语言设置页面标题
+				const titles = {
+					zh: 'AI 人才智能决策平台',
+					en: 'AI Workforce Intelligence'
+				};
+				document.title = titles[currentLang] || titles.zh;
 
 				// 如果 URL 中有 /en 路径，重定向到根路径（因为我们已经删除了 /en 目录）
 				const currentPath = window.location.pathname;
