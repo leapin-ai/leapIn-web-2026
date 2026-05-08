@@ -12,10 +12,10 @@
   },
   "homepage": {
     "hero": {
-      "areaTitle": "AI 人才决策平台",
+      "areaTitle": "AI 人才智能决策平台",
       "title": "入职之前，先见绩效",
       "subtitle": "",
-      "description": "专为企业打造的 AI 人才智能平台，覆盖招聘、调配、发展全流程，精准预测员工绩效、离职风险与领导潜力。",
+      "description": "专为企业打造的 AI 人才智能决策平台，覆盖招聘、调配、发展全流程，精准预测员工绩效、离职风险与领导潜力。",
       "cta": "立即开始",
       "secondary": "了解更多",
       "cards": {
@@ -25,7 +25,7 @@
           "info": "高绩效潜力 · 低离职风险"
         },
         "internalMatch": {
-          "title": "内部人才匹配H",
+          "title": "内部人才匹配",
           "subtitle": "总经理岗位 · 已匹配3名候选人",
           "info": "能力匹配度达标 · 可立即任用"
         },
@@ -66,8 +66,8 @@
     },
     "difference": {
       "areaTitle": "LeapIn 与众不同",
-      "title1": "多数 HR 工具，只复盘过去；",
-      "title2": "Leapln，帮你预演未来。",
+      "title1": "多数HR工具，只是分析结果",
+      "title2": "LeapIn，帮你预测未来。",
       "description": "传统评估只看候选人过去的经历，LeapIn 行为 AI 基于企业实际数据训练，预测未来绩效、离职风险与领导潜力，让每一次招聘、内部调动、人才评估都有据可依、科学决策。",
       "cta": "了解原理",
       "demo": {
@@ -83,7 +83,7 @@
       }
     },
     "aiWorkforce": {
-      "areaTitle": "人才全景平台/all in one",
+      "areaTitle": "AI 人才智能决策平台",
       "title": "一个平台，支撑所有人才决策",
       "hire": {
         "title": "预测式招聘",
@@ -162,7 +162,7 @@
     },
     "product": {
       "areaTitle": "产品系列",
-      "title": "认识 LeapIn——面向劳动力决策的预测层",
+      "title": "了解LeapIn — 为人才全生命周期的每一个阶段而打造",
       "subtitle": "LeapIn 不是一堆 HR 工具的拼装，而是预测型人才操作系统——统一基础设施，采集行为信号、构建动态技能图谱，并通过 API 输出决策智能。",
       "cta": "预约平台演示",
       "items": [
@@ -324,7 +324,7 @@
       "title": "告别主观判断，只看真实结果",
       "titleSuffix": "",
       "subtitle": "",
-      "description": "多数企业失败不是缺人才，而是人才决策失误\n 招聘、晋升、调配仍靠主观判断。\nLeapIn 改变这一切。",
+      "description": "多数企业失败不是缺人才，而是人才决策失误\n 招聘、晋升、调配仍靠主观判断。\nLeapIn, 让人才决策有据可依。",
       "info": {
         "behavior": "行为",
         "skills": "能力",
@@ -334,7 +334,7 @@
       }
     },
     "hire": {
-      "label": "招聘",
+      "label": "AI招聘",
       "title": "上岗之前，\n先预测绩效",
       "description": "不看简历、不凭面试感受，基于企业高绩效员工训练的行为→结果预测",
       "items": [
@@ -354,7 +354,7 @@
       }
     },
     "mobilize": {
-      "label": "人才调配",
+      "label": "AI人才调配",
       "title": "你的下一位管理者，\n早已在公司内部",
       "description": "多数企业浪费内部人才，只因看不见人才全貌。LeapIn 全景呈现员工能力，为每个岗位匹配最合适的人。",
       "items": [
@@ -365,7 +365,7 @@
       "tagline": "对的人才，对的岗位，对的时机。"
     },
     "develop": {
-      "label": "人才发展",
+      "label": "AI人才发展",
       "title": "管理缺口不是突然出现，而是悄悄形成",
       "description": "AI 人才评估用结构化信号识别高潜管理者，替代主观推荐，自动构建梯队、生成发展计划。",
       "items": [
