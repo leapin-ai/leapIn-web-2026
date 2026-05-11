@@ -17,8 +17,16 @@ import bgBottom2 from '../assets/index/bg_linear_2.png';
 		<script is:inline>
 			// 语言检测 - 只检测并保存到 localStorage，不进行路径跳转
 			(function() {
+				// 检测是否为英文锁定环境（通过 npm-tools entryHtml 注入的 runtimeEnv）
+				var isEnForced = window.runtimeEnv && window.runtimeEnv.locale === 'en';
+
 				// 检测浏览器语言
 				function detectLanguage() {
+					// 英文锁定环境，直接返回英文
+					if (isEnForced) {
+						return 'en';
+					}
+
 					// 1. 先检查 localStorage
 					const savedLang = localStorage.getItem('language');
 					if (savedLang === 'zh' || savedLang === 'en') {
@@ -42,14 +50,17 @@ import bgBottom2 from '../assets/index/bg_linear_2.png';
 					return 'zh';
 				}
 
-				// 如果 localStorage 中没有语言设置，则保存检测到的语言
-				if (!localStorage.getItem('language')) {
+				// 如果是英文锁定环境，强制设置语言为英文
+				if (isEnForced) {
+					localStorage.setItem('language', 'en');
+				} else if (!localStorage.getItem('language')) {
+					// 如果 localStorage 中没有语言设置，则保存检测到的语言
 					const detectedLang = detectLanguage();
 					localStorage.setItem('language', detectedLang);
 				}
 
 				// 设置 html lang 属性
-				const currentLang = localStorage.getItem('language') || 'zh';
+				const currentLang = isEnForced ? 'en' : (localStorage.getItem('language') || 'zh');
 				document.documentElement.setAttribute('lang', currentLang);
 
 				// 根据语言设置页面标题

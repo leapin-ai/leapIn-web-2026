@@ -8,7 +8,9 @@ function getNestedValue(obj: any, path: string) {
 }
 
 export function loadTranslations() {
-  const lang = (localStorage.getItem('language') || 'zh') as 'zh' | 'en';
+  // 检测是否为英文锁定环境（通过 npm-tools entryHtml 注入的 runtimeEnv）
+  const isEnForced = typeof window !== 'undefined' && (window as any).runtimeEnv?.locale === 'en';
+  const lang = isEnForced ? 'en' : ((localStorage.getItem('language') || 'zh') as 'zh' | 'en');
   const t = translations[lang];
 
   // 更新所有带 data-i18n 属性的元素（纯文本）

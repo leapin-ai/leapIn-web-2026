@@ -1,7 +1,7 @@
 ---
 ---
 
-<div class="language-switcher">
+<div class="language-switcher" id="language-switcher">
   <button class="lang-button" id="lang-toggle" aria-label="Switch language">
     <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <circle cx="12" cy="12" r="10"></circle>
@@ -187,6 +187,14 @@
 </style>
 
 <script>
+  // 英文锁定环境下隐藏语言切换器
+  if (window.runtimeEnv && window.runtimeEnv.locale === 'en') {
+    const switcher = document.getElementById('language-switcher');
+    if (switcher) {
+      switcher.style.display = 'none';
+    }
+  }
+
   const langToggle = document.getElementById('lang-toggle');
   const langDropdown = document.getElementById('lang-dropdown');
   const langOptions = document.querySelectorAll('.lang-option');
