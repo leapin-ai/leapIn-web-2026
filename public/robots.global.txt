@@ -1,0 +1,26 @@
+# robots.txt for Global site (www.leapin.io)
+# Optimized for global search engines
+
+User-agent: *
+Allow: /
+
+# Global search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Optional: Block Chinese search engines on global site if desired
+# Uncomment these lines if you want China-specific bots to focus on leapin-ai.com
+# User-agent: Baiduspider
+# Disallow: /
+#
+# User-agent: Sosospider
+# Disallow: /
+#
+# User-agent: Sogou web spider
+# Disallow: /
+
+# Sitemap
+Sitemap: https://www.leapin.io/sitemap-index.xml
