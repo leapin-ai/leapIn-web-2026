@@ -56,7 +56,7 @@ LeapIn 符合以下标准和法规：
 
 ### 5.2 报告安全问题
 如果您发现安全漏洞，请立即通过以下方式联系我们：
-<span class="highlight-email">security@leapin.ai</span>
+<span class="highlight-email">info@leapin.io</span>
 
 ## 6. 员工安全培训
 
@@ -88,6 +88,4 @@ LeapIn 符合以下标准和法规：
 
 ## 10. 联系我们
 
-有关我们安全实践的问题，请联系：<span class="highlight-email">security@leapin.ai</span>
-
-*这是一个占位文档。请用实际的安全政策内容替换。*
+有关我们安全实践的问题，请联系：<span class="highlight-email">info@leapin.io</span>

@@ -18,7 +18,12 @@ export function detectLanguage(): Language {
     return 'zh';
   }
 
-  // 1. 先检查 localStorage
+  // 0. 先检查 runtimeEnv（通过 npm-tools entryHtml 注入的环境变量优先级最高）
+  if ((window as any).runtimeEnv?.locale === 'en') {
+    return 'en';
+  }
+
+  // 1. 再检查 localStorage
   const savedLang = localStorage.getItem('language');
   if (savedLang === 'zh' || savedLang === 'en') {
     return savedLang;

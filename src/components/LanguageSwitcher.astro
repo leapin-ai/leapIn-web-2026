@@ -202,7 +202,7 @@
 
   // 初始化显示当前语言
   function updateDisplay() {
-    const currentLang = localStorage.getItem('language') || 'zh';
+    const currentLang = (window.runtimeEnv && window.runtimeEnv.locale === 'en') ? 'en' : (localStorage.getItem('language') || 'zh');
     if (langDisplay) {
       langDisplay.textContent = currentLang === 'zh' ? 'Cn' : 'En';
     }

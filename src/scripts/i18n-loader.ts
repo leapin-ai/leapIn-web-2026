@@ -10,6 +10,12 @@ function getNestedValue(obj: any, path: string) {
 export function loadTranslations() {
   // 检测是否为英文锁定环境（通过 npm-tools entryHtml 注入的 runtimeEnv）
   const isEnForced = typeof window !== 'undefined' && (window as any).runtimeEnv?.locale === 'en';
+  
+  // 如果 runtimeEnv 锁定英文，强制同步 localStorage
+  if (isEnForced) {
+    localStorage.setItem('language', 'en');
+  }
+  
   const lang = isEnForced ? 'en' : ((localStorage.getItem('language') || 'zh') as 'zh' | 'en');
   const t = translations[lang];
 

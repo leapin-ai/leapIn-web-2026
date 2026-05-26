@@ -56,7 +56,7 @@ LeapIn complies with the following standards and regulations:
 
 ### 5.2 Reporting Security Issues
 If you discover a security vulnerability, please contact us immediately at:
-<span class="highlight-email">security@leapin.ai</span>
+<span class="highlight-email">info@leapin.io</span>
 
 ## 6. EMPLOYEE SECURITY TRAINING
 
@@ -88,6 +88,6 @@ If you discover a security vulnerability, please contact us immediately at:
 
 ## 10. CONTACT US
 
-For questions about our security practices, please contact: <span class="highlight-email">security@leapin.ai</span>
+For questions about our security practices, please contact: <span class="highlight-email">info@leapin.io</span>
 
 *This is a placeholder document. Please replace with actual security policy content.*
