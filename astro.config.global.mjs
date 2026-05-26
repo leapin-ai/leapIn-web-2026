@@ -6,20 +6,20 @@ import sitemap from '@astrojs/sitemap';
 
 import tailwindcss from '@tailwindcss/vite';
 
-// China site configuration (leapin-ai.com)
+// Global site configuration (leapin.io)
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.leapin-ai.com',
+  site: 'https://www.leapin.io',
   base: '',
   integrations: [
     react(),
     sitemap({
       // i18n configuration
       i18n: {
-        defaultLocale: 'zh-CN',
+        defaultLocale: 'en',
         locales: {
-          'zh-CN': 'zh-CN',
-          'en': 'en'
+          'en': 'en',
+          'zh-CN': 'zh-CN'
         }
       },
 
@@ -29,20 +29,20 @@ export default defineConfig({
         item.links = [
           {
             url: item.url,
-            lang: 'zh-CN'
-          },
-          {
-            url: item.url.replace('www.leapin-ai.com', 'www.leapin.io'),
             lang: 'en'
           },
           {
-            url: item.url.replace('www.leapin-ai.com', 'www.leapin.io'),
+            url: item.url,
             lang: 'x-default'
+          },
+          {
+            url: item.url.replace('www.leapin.io', 'www.leapin-ai.com'),
+            lang: 'zh-CN'
           }
         ];
 
         // Set priority and changefreq based on page type
-        if (item.url === 'https://www.leapin-ai.com/') {
+        if (item.url === 'https://www.leapin.io/') {
           // Homepage
           item.priority = 1.0;
           item.changefreq = 'daily';

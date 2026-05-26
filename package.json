@@ -4,15 +4,18 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "npm run build:cn",
+    "build:cn": "astro build --config astro.config.mjs && node scripts/copy-robots.mjs cn",
+    "build:global": "astro build --config astro.config.global.mjs && node scripts/copy-robots.mjs global",
     "preview": "astro preview",
     "astro": "astro",
     "deploy-ap": "cross-env INDEX_HTML_PATH=dist/index.html OUTPUT_HTML_PATH=dist/index-en.html DEPLOY_URL=/ RUNTIME_ENV='isAP:true;locale:en' npx @kne/npm-tools entryHtml",
-    "deploy-ap-all": "node scripts/generate-en-html.mjs"
+    "deploy-ap-all": "npm run build:global && node scripts/generate-en-html.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",
     "@astrojs/react": "^4.4.2",
+    "@astrojs/sitemap": "^3.7.2",
     "@tailwindcss/vite": "^4.2.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
