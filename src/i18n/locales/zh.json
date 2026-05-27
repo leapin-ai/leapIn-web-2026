@@ -546,7 +546,8 @@
     "email": "邮箱 *",
     "emailLabel": "邮箱 *",
     "submit": "提交",
-    "copyright": "© LeapIn AI Talent Intelligence Platform"
+    "copyright": "© LeapIn AI 人才智能决策平台",
+    "websiteUrl": "https://www.leapin-ai.com"
   },
   "chatbot": {
     "title": "AI Assistant",

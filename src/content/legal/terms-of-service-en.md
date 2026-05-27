@@ -51,5 +51,4 @@ We reserve the right to update these Terms at any time. Updates will be posted o
 
 LEAPIN GROUP PTE. LTD., Singapore
 
-Email: <span class="highlight-email">info@leapin-ai.com</span>
-
+Email: <span class="highlight-email">info@leapin.io</span>

@@ -56,4 +56,4 @@ Elsa 的对话数据处理方式详见《LeapIn 官网隐私政策》。
 
 斯智信息科技（上海）有限公司
 
-电子邮件：<span class="highlight-email">info@leapin-ai.com</span>
+电子邮件：<span class="highlight-email">info@leapin.io</span>

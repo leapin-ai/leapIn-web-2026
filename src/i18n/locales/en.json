@@ -579,7 +579,8 @@
     "email": "Email *",
     "emailLabel": "Email *",
     "submit": "Submit",
-    "copyright": "© LeapIn AI Talent Intelligence Platform"
+    "copyright": "© LeapIn AI Workforce Intelligence Platform",
+    "websiteUrl": "https://www.leapin.io"
   },
   "chatbot": {
     "title": "AI Assistant",
