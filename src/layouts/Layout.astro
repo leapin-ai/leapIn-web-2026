@@ -25,6 +25,8 @@ const { title, description } = Astro.props;
 		<script is:inline src="https://cdn.leapin-ai.com/components/@kne-components/leapin-ai-agent-sdk/0.0.7/build/static/js/sdk-main.js"></script>
 		<script is:inline>
 			// 语言检测 - runtimeEnv 优先级最高
+			// 中文站（leapin-ai.com）默认中文，不跟随系统/浏览器语言；
+			// 仅当用户通过语言切换器或 /en 路径主动选择时保留英文。
 			function applyEnForced() {
 				localStorage.setItem('language', 'en');
 				document.documentElement.setAttribute('lang', 'en');
@@ -35,24 +37,23 @@ const { title, description } = Astro.props;
 				return window.runtimeEnv && window.runtimeEnv.locale === 'en';
 			}
 
-			// 如果 runtimeEnv 已经可用，立即应用
+			function isManualLanguageChoice() {
+				return localStorage.getItem('languageManual') === '1';
+			}
+
+			// 如果 runtimeEnv 已经可用，立即应用（全球站锁定英文）
 			if (checkRuntimeEnv()) {
 				applyEnForced();
-			} else if (!localStorage.getItem('language')) {
-				// localStorage 中没有语言设置，检测浏览器语言
-				var browserLang = navigator.language.toLowerCase();
-				if (browserLang.startsWith('zh')) {
-					localStorage.setItem('language', 'zh');
-				} else if (browserLang.startsWith('en')) {
-					localStorage.setItem('language', 'en');
-				} else {
-					localStorage.setItem('language', 'zh');
-				}
+			} else if (!isManualLanguageChoice()) {
+				// 中文站默认中文，忽略浏览器语言及历史自动检测结果
+				localStorage.setItem('language', 'zh');
 			}
 
 			// 设置 html lang 属性和标题（仅当 runtimeEnv 未锁定时）
 			if (!checkRuntimeEnv()) {
-				var currentLang = localStorage.getItem('language') || 'zh';
+				var currentLang = isManualLanguageChoice()
+					? (localStorage.getItem('language') || 'zh')
+					: 'zh';
 				document.documentElement.setAttribute('lang', currentLang);
 				var titles = {
 					zh: 'AI 人才智能决策平台',
@@ -61,11 +62,12 @@ const { title, description } = Astro.props;
 				document.title = titles[currentLang] || titles.zh;
 			}
 
-			// 如果 URL 中有 /en 路径，重定向到根路径
+			// 如果 URL 中有 /en 路径，视为主动选择英文并重定向到根路径
 			var currentPath = window.location.pathname;
 			if (currentPath.startsWith('/en')) {
 				var newPath = currentPath.replace(/^\/en/, '') || '/';
 				localStorage.setItem('language', 'en');
+				localStorage.setItem('languageManual', '1');
 				window.location.href = newPath;
 			}
 

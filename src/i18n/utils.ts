@@ -23,32 +23,22 @@ export function detectLanguage(): Language {
     return 'en';
   }
 
-  // 1. 再检查 localStorage
-  const savedLang = localStorage.getItem('language');
-  if (savedLang === 'zh' || savedLang === 'en') {
-    return savedLang;
+  // 1. 仅当用户主动切换语言时使用 localStorage
+  if (localStorage.getItem('languageManual') === '1') {
+    const savedLang = localStorage.getItem('language');
+    if (savedLang === 'zh' || savedLang === 'en') {
+      return savedLang;
+    }
   }
 
-  // 2. 检查浏览器语言
-  const browserLang = navigator.language.toLowerCase();
-  
-  // 如果是中文相关语言，返回中文
-  if (browserLang.startsWith('zh')) {
-    return 'zh';
-  }
-  
-  // 如果是英文相关语言，返回英文
-  if (browserLang.startsWith('en')) {
-    return 'en';
-  }
-
-  // 3. 其他语言默认返回中文
+  // 2. 中文站默认中文（不跟随浏览器/系统语言）
   return 'zh';
 }
 
 export function setLanguage(lang: Language) {
   if (typeof window !== 'undefined') {
     localStorage.setItem('language', lang);
+    localStorage.setItem('languageManual', '1');
   }
 }
 

@@ -200,9 +200,13 @@
   const langOptions = document.querySelectorAll('.lang-option');
   const langDisplay = document.getElementById('lang-display');
 
-  // 初始化显示当前语言
+  // 初始化显示当前语言（中文站仅在用户主动切换后保留英文）
   function updateDisplay() {
-    const currentLang = (window.runtimeEnv && window.runtimeEnv.locale === 'en') ? 'en' : (localStorage.getItem('language') || 'zh');
+    const isEnForced = window.runtimeEnv && window.runtimeEnv.locale === 'en';
+    const isManual = localStorage.getItem('languageManual') === '1';
+    const currentLang = isEnForced
+      ? 'en'
+      : (isManual ? (localStorage.getItem('language') || 'zh') : 'zh');
     if (langDisplay) {
       langDisplay.textContent = currentLang === 'zh' ? 'Cn' : 'En';
     }
@@ -243,8 +247,9 @@
       const targetLang = option.getAttribute('data-lang');
       if (!targetLang) return;
 
-      // 保存到 localStorage
+      // 保存到 localStorage（标记为用户主动选择，避免被站点默认语言覆盖）
       localStorage.setItem('language', targetLang);
+      localStorage.setItem('languageManual', '1');
 
       // 更新显示
       updateDisplay();

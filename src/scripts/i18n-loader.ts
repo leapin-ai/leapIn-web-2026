@@ -10,13 +10,19 @@ function getNestedValue(obj: any, path: string) {
 export function loadTranslations() {
   // 检测是否为英文锁定环境（通过 npm-tools entryHtml 注入的 runtimeEnv）
   const isEnForced = typeof window !== 'undefined' && (window as any).runtimeEnv?.locale === 'en';
+  const isManualChoice = typeof window !== 'undefined' && localStorage.getItem('languageManual') === '1';
   
   // 如果 runtimeEnv 锁定英文，强制同步 localStorage
   if (isEnForced) {
     localStorage.setItem('language', 'en');
+  } else if (!isManualChoice) {
+    // 中文站默认中文，不跟随浏览器语言或历史自动检测
+    localStorage.setItem('language', 'zh');
   }
   
-  const lang = isEnForced ? 'en' : ((localStorage.getItem('language') || 'zh') as 'zh' | 'en');
+  const lang = isEnForced
+    ? 'en'
+    : ((isManualChoice ? (localStorage.getItem('language') || 'zh') : 'zh') as 'zh' | 'en');
   const t = translations[lang];
 
   // 更新所有带 data-i18n 属性的元素（纯文本）
