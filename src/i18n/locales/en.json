@@ -13,26 +13,26 @@
   "homepage": {
     "hero": {
       "areaTitle": "AI Workforce Intelligence",
-      "title": "Predict performance. \nBefore you hire.",
+      "title": "Redesign Your Workforce for the AI Era.",
       "subtitle": "",
-      "description": "The AI talent intelligence platform built for enterprise. Predict who will perform, who will leave, and who is ready to lead — across hiring, mobility, and development.",
+      "description": "LeapIn helps organizations understand workforce capability, leadership readiness, critical skills, and organizational health—enabling better decisions across hiring, workforce planning, internal mobility, succession, and AI transformation.",
       "cta": "Get Started",
       "secondary": "Learn More",
       "cards": {
         "aiInterviewScore": {
-          "title": "AI INTERVIEW SCORE",
+          "title": "AI Talent Acquisition",
           "subtitle": "Ronald Richards · 91/100",
-          "info": "High performance probability · Low attrition risk"
+          "info": "High capability · Low attrition risk"
         },
         "internalMatch": {
-          "title": "INTERNAL MATCH",
-          "subtitle": "GM Role · 3 candidates surfaced",
-          "info": "Capability-matched · Ready now"
+          "title": "AI Talent Mobility",
+          "subtitle": "GM Role · 3 Ready Candidates",
+          "info": "Capability matched · Ready now"
         },
         "successionCoverage": {
-          "title": "SUCCESSION COVERAGE",
-          "subtitle": "Critical roles · 88% Coverage",
-          "info": "Up from 40% · One candidate short of full coverage"
+          "title": "AI Leadership Review",
+          "subtitle": "Critical Roles · 88% Coverage",
+          "info": "12 successors identified"
         }
       }
     },

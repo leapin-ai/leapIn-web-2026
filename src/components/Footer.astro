@@ -164,7 +164,11 @@ const base = import.meta.env.BASE_URL;
 
   // 根据语言显示/隐藏 footer-copyright 及更新链接
   function getCurrentLang() {
-    return (window as any).runtimeEnv?.locale === 'en' ? 'en' : (localStorage.getItem('language') || 'zh');
+    if ((window as any).runtimeEnv?.locale === 'en') return 'en';
+    if (localStorage.getItem('languageManual') === '1') {
+      return localStorage.getItem('language') || 'zh';
+    }
+    return 'zh';
   }
 
   function updateFooterByLang() {
