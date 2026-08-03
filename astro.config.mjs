@@ -11,11 +11,6 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://www.leapin-ai.com',
   base: '',
-  image: {
-    service: {
-      entrypoint: 'astro/assets/services/noop'
-    }
-  },
   integrations: [
     react(),
     sitemap({
