@@ -4,37 +4,17 @@
 ---
 
 <script is:inline>
-  // 初始化 SDK
-  window.leapinAiAgentSDK({
-    host: 'https://app.leapin-ai.com',
-    tpl: '{{url}}/ai-agent',
-    tips: 'Chat here to apply',
-    secret: 'f0c31bf6-d230-4940-8327-1a55c5908d97',
-    bottom: '120px',
-    right: '40px',
-    width: '100%',
-    onVisibleChange: function (open) {
-      if (open) {
-        document.body.style['overflow'] = 'hidden';
-      } else {
-        document.body.style['overflow'] = '';
-      }
-    }
-  });
-
-  // SDK 加载后会动态注入样式，延迟一次性将 SDK 样式移到项目样式之前
-  // 这样项目样式在 DOM 中后出现，优先级更高
-  setTimeout(function() {
-    var projectStyles = document.querySelectorAll('style[data-astro], link[rel="stylesheet"]');
-    if (projectStyles.length === 0) return;
-
-    var firstProjectStyle = projectStyles[0];
-
-    // 查找 SDK 注入的样式（不含 data-astro 属性的 style 和 leapin CDN 的 link）
-    document.querySelectorAll('head style:not([data-astro]):not([data-vite-dev-id]), head link[href*="leapin-ai.com"]').forEach(function(sdkStyle) {
-      if (sdkStyle !== firstProjectStyle) {
-        firstProjectStyle.parentNode.insertBefore(sdkStyle, firstProjectStyle);
-      }
+    document.addEventListener('DOMContentLoaded', function () {
+        const botDom = document.createElement('div');
+        document.body.appendChild(botDom);
+        window.leapinSaasSdk(botDom, {
+            type: 'ChatBot',
+            tips: 'Chat here to apply',
+            bottom: '120px',
+            right: '40px',
+            baseUrl: "https://rag-chatbot.leapin-ai.com",
+            chatId: "f3f808da-9bc4-4ebc-aefe-fd65428643ef",
+            token: "sk-bot_cpN-fd9dQ1eS390i9_vaAVICxNyTaDnXcvsD_SseS8E"
+        });
     });
-  }, 2000);
 </script>

@@ -22,8 +22,8 @@ const { title, description } = Astro.props;
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
 		<SEOHead title={title} description={description} />
-		<script is:inline src="https://cdn.leapin-ai.com/components/@kne-components/leapin-ai-agent-sdk/0.0.7/build/static/js/sdk-main.js"></script>
-		<script is:inline>
+        <script is:inline src="https://cdn.leapin-ai.com/components/@leapin-components/leapin-saas-sdk/0.1.25/build/static/js/sdk-main.js"></script>
+        <script is:inline>
 			// 语言检测 - runtimeEnv 优先级最高
 			// 中文站（leapin-ai.com）默认中文，不跟随系统/浏览器语言；
 			// 仅当用户通过语言切换器或 /en 路径主动选择时保留英文。
