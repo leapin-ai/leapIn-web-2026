@@ -3,14 +3,14 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "NODE_OPTIONS='--max-old-space-size=4096' astro dev",
     "build": "npm run build:cn",
-    "build:cn": "astro build --config astro.config.mjs && node scripts/copy-robots.mjs cn",
-    "build:global": "astro build --config astro.config.global.mjs && node scripts/copy-robots.mjs global",
+    "build:cn": "NODE_OPTIONS='--max-old-space-size=4096' astro build --config astro.config.mjs && node scripts/copy-robots.mjs cn",
+    "build:global": "NODE_OPTIONS='--max-old-space-size=4096' astro build --config astro.config.global.mjs && node scripts/copy-robots.mjs global",
     "preview": "astro preview",
-    "astro": "astro",
+    "astro": "NODE_OPTIONS='--max-old-space-size=4096' astro",
     "deploy-ap": "cross-env INDEX_HTML_PATH=dist/index.html OUTPUT_HTML_PATH=dist/index-en.html DEPLOY_URL=/ RUNTIME_ENV='isAP:true;locale:en' npx @kne/npm-tools entryHtml",
-    "deploy-ap-all": "npm run build:global && node scripts/generate-en-html.mjs"
+    "deploy-ap-all": "npm run build:global && NODE_OPTIONS='--max-old-space-size=4096' node scripts/generate-en-html.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",
