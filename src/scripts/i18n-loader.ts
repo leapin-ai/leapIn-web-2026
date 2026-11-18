@@ -7,10 +7,19 @@ function getNestedValue(obj: any, path: string) {
   return path.split('.').reduce((current, key) => current?.[key], obj);
 }
 
-export function loadTranslations() {
+export function getCurrentLang(): 'zh' | 'en' {
   // 检测是否为英文锁定环境（通过 npm-tools entryHtml 注入的 runtimeEnv）
   const isEnForced = typeof window !== 'undefined' && (window as any).runtimeEnv?.locale === 'en';
-  const lang = isEnForced ? 'en' : ((localStorage.getItem('language') || 'zh') as 'zh' | 'en');
+  return isEnForced ? 'en' : ((localStorage.getItem('language') || 'zh') as 'zh' | 'en');
+}
+
+// 按当前语言取单条文案
+export function t(key: string): string {
+  return getNestedValue(translations[getCurrentLang()], key) ?? '';
+}
+
+export function loadTranslations() {
+  const lang = getCurrentLang();
   const t = translations[lang];
 
   // 更新所有带 data-i18n 属性的元素（纯文本）
@@ -19,6 +28,15 @@ export function loadTranslations() {
     if (key) {
       const value = getNestedValue(t, key);
       if (value) el.textContent = value;
+    }
+  });
+
+  // 更新所有带 data-i18n-placeholder 属性的输入框占位文案
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (key) {
+      const value = getNestedValue(t, key);
+      if (value) el.setAttribute('placeholder', value);
     }
   });
 

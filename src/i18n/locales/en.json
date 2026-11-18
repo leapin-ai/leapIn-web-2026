@@ -607,7 +607,21 @@
       "size5": "1000+ employees",
       "submitting": "Submitting...",
       "success": "Success! We'll contact you soon.",
-      "error": "Submission failed. Please try again or contact us."
+      "error": "Submission failed. Please try again or contact us.",
+      "placeholder": {
+        "name": "Enter your name",
+        "email": "name@company.com",
+        "phone": "Enter your phone number",
+        "company": "Enter your company name",
+        "position": "Enter your job title",
+        "message": "Tell us briefly about your needs or what you would like to learn"
+      },
+      "countrySearch": "Search country or code...",
+      "validation": {
+        "required": "Please fill out this field",
+        "select": "Please select an option",
+        "email": "Please enter a valid email address"
+      }
     }
   }
 }
