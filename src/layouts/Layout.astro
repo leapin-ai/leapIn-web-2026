@@ -1,8 +1,16 @@
 ---
 import '../styles/global.css';
 import ChatbotButton from '../components/ChatbotButton.astro';
+import SEOHead from '../components/SEOHead.astro';
 import bgBottom1 from '../assets/index/bg_linear_1.png';
 import bgBottom2 from '../assets/index/bg_linear_2.png';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
@@ -13,73 +21,62 @@ import bgBottom2 from '../assets/index/bg_linear_2.png';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>LeapIn - AI 人才智能决策平台</title>
-		<script is:inline src="https://cdn.leapin-ai.com/components/@kne-components/leapin-ai-agent-sdk/0.0.7/build/static/js/sdk-main.js"></script>
-		<script is:inline>
-			// 语言检测 - 只检测并保存到 localStorage，不进行路径跳转
-			(function() {
-				// 检测是否为英文锁定环境（通过 npm-tools entryHtml 注入的 runtimeEnv）
-				var isEnForced = window.runtimeEnv && window.runtimeEnv.locale === 'en';
+		<SEOHead title={title} description={description} />
+        <script is:inline src="https://cdn.leapin-ai.com/components/@leapin-components/leapin-saas-sdk/0.1.25/build/static/js/sdk-main.js"></script>
+        <script is:inline>
+			// 语言检测 - runtimeEnv 优先级最高
+			// 中文站（leapin-ai.com）默认中文，不跟随系统/浏览器语言；
+			// 仅当用户通过语言切换器或 /en 路径主动选择时保留英文。
+			function applyEnForced() {
+				localStorage.setItem('language', 'en');
+				document.documentElement.setAttribute('lang', 'en');
+				document.title = 'AI Workforce Intelligence';
+			}
 
-				// 检测浏览器语言
-				function detectLanguage() {
-					// 英文锁定环境，直接返回英文
-					if (isEnForced) {
-						return 'en';
-					}
+			function checkRuntimeEnv() {
+				return window.runtimeEnv && window.runtimeEnv.locale === 'en';
+			}
 
-					// 1. 先检查 localStorage
-					const savedLang = localStorage.getItem('language');
-					if (savedLang === 'zh' || savedLang === 'en') {
-						return savedLang;
-					}
+			function isManualLanguageChoice() {
+				return localStorage.getItem('languageManual') === '1';
+			}
 
-					// 2. 检查浏览器语言
-					const browserLang = navigator.language.toLowerCase();
-					
-					// 如果是中文相关语言，返回中文
-					if (browserLang.startsWith('zh')) {
-						return 'zh';
-					}
-					
-					// 如果是英文相关语言，返回英文
-					if (browserLang.startsWith('en')) {
-						return 'en';
-					}
+			// 如果 runtimeEnv 已经可用，立即应用（全球站锁定英文）
+			if (checkRuntimeEnv()) {
+				applyEnForced();
+			} else if (!isManualLanguageChoice()) {
+				// 中文站默认中文，忽略浏览器语言及历史自动检测结果
+				localStorage.setItem('language', 'zh');
+			}
 
-					// 3. 其他语言默认返回中文
-					return 'zh';
-				}
-
-				// 如果是英文锁定环境，强制设置语言为英文
-				if (isEnForced) {
-					localStorage.setItem('language', 'en');
-				} else if (!localStorage.getItem('language')) {
-					// 如果 localStorage 中没有语言设置，则保存检测到的语言
-					const detectedLang = detectLanguage();
-					localStorage.setItem('language', detectedLang);
-				}
-
-				// 设置 html lang 属性
-				const currentLang = isEnForced ? 'en' : (localStorage.getItem('language') || 'zh');
+			// 设置 html lang 属性和标题（仅当 runtimeEnv 未锁定时）
+			if (!checkRuntimeEnv()) {
+				var currentLang = isManualLanguageChoice()
+					? (localStorage.getItem('language') || 'zh')
+					: 'zh';
 				document.documentElement.setAttribute('lang', currentLang);
-
-				// 根据语言设置页面标题
-				const titles = {
+				var titles = {
 					zh: 'AI 人才智能决策平台',
 					en: 'AI Workforce Intelligence'
 				};
 				document.title = titles[currentLang] || titles.zh;
+			}
 
-				// 如果 URL 中有 /en 路径，重定向到根路径（因为我们已经删除了 /en 目录）
-				const currentPath = window.location.pathname;
-				if (currentPath.startsWith('/en')) {
-					const newPath = currentPath.replace(/^\/en/, '') || '/';
-					// 保存英文语言偏好
-					localStorage.setItem('language', 'en');
-					window.location.href = newPath;
+			// 如果 URL 中有 /en 路径，视为主动选择英文并重定向到根路径
+			var currentPath = window.location.pathname;
+			if (currentPath.startsWith('/en')) {
+				var newPath = currentPath.replace(/^\/en/, '') || '/';
+				localStorage.setItem('language', 'en');
+				localStorage.setItem('languageManual', '1');
+				window.location.href = newPath;
+			}
+
+			// 延迟检查 runtimeEnv（处理 entryHtml 注入晚于语言检测脚本的情况）
+			document.addEventListener('DOMContentLoaded', function() {
+				if (checkRuntimeEnv()) {
+					applyEnForced();
 				}
-			})();
+			});
 		</script>
 	</head>
 	<body>

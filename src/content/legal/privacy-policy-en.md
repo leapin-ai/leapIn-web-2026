@@ -48,7 +48,7 @@ Under the Singapore Personal Data Protection Act (PDPA), you have the following 
 
 **Right to lodge a complaint:** If you believe your personal data rights have been violated, you may lodge a complaint with the Personal Data Protection Commission (PDPC) of Singapore at www.pdpc.gov.sg
 
-To exercise any of the above rights, please contact us at: info@leapin-ai.com
+To exercise any of the above rights, please contact us at: info@leapin.io
 
 ### 5. Minors
 
@@ -62,6 +62,6 @@ If we make material changes to this Privacy Policy, we will provide notice on ou
 
 LEAPIN GROUP PTE. LTD., Singapore
 
-Email: <span class="highlight-email">info@leapin-ai.com</span>
+Email: <span class="highlight-email">info@leapin.io</span>
 
 Any disputes arising from this Privacy Policy shall be governed by the laws of Singapore and submitted to the courts of Singapore with appropriate jurisdiction.

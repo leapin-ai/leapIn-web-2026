@@ -1,0 +1,24 @@
+# robots.txt for China site (www.leapin-ai.com)
+# Optimized for Chinese search engines
+
+User-agent: *
+Allow: /
+
+# Prioritize Chinese search engines
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Sosospider
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Sitemap
+Sitemap: https://www.leapin-ai.com/sitemap-index.xml

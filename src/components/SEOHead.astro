@@ -1,0 +1,115 @@
+---
+/**
+ * SEO Head Component with Geo-Targeting
+ * Adds hreflang tags and canonical URLs based on build environment
+ */
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+// Determine which site we're building for based on Astro.site
+const isGlobalSite = Astro.site?.hostname === 'www.leapin.io';
+const isChinaSite = Astro.site?.hostname === 'www.leapin-ai.com';
+
+// Get current page path
+const currentPath = Astro.url.pathname;
+
+// Build URLs for both sites
+const globalUrl = `https://www.leapin.io${currentPath}`;
+const chinaUrl = `https://www.leapin-ai.com${currentPath}`;
+
+// Canonical URL is always self-referencing
+const canonicalUrl = isGlobalSite ? globalUrl : chinaUrl;
+
+// Default meta info
+const defaultTitle = isGlobalSite
+  ? 'LeapIn - AI Workforce Intelligence Platform'
+  : 'LeapIn - AI 人才智能决策平台';
+
+const defaultDescription = isGlobalSite
+  ? 'Transform your workforce with AI-powered talent intelligence and decision-making'
+  : '借助AI驱动的人才智能和决策，助力企业人才转型';
+
+const pageTitle = title || defaultTitle;
+const pageDescription = description || defaultDescription;
+
+// Language and geo meta tags
+const htmlLang = isGlobalSite ? 'en' : 'zh-CN';
+const geoRegion = isGlobalSite ? 'US' : 'CN';
+const geoPlacename = isGlobalSite ? 'Global' : 'China';
+const contentLanguage = isGlobalSite ? 'en' : 'zh-CN';
+---
+
+<!-- Primary Meta Tags -->
+<title>{pageTitle}</title>
+<meta name="title" content={pageTitle} />
+<meta name="description" content={pageDescription} />
+
+<!-- Canonical URL (self-referencing) -->
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Hreflang Tags for Geo-Targeting -->
+{isGlobalSite && (
+  <>
+    <link rel="alternate" hreflang="en" href={globalUrl} />
+    <link rel="alternate" hreflang="x-default" href={globalUrl} />
+    <link rel="alternate" hreflang="zh-CN" href={chinaUrl} />
+  </>
+)}
+
+{isChinaSite && (
+  <>
+    <link rel="alternate" hreflang="zh-CN" href={chinaUrl} />
+    <link rel="alternate" hreflang="en" href={globalUrl} />
+    <link rel="alternate" hreflang="x-default" href={globalUrl} />
+  </>
+)}
+
+<!-- Geo-Targeting Meta Tags -->
+<meta name="geo.region" content={geoRegion} />
+<meta name="geo.placename" content={geoPlacename} />
+<meta http-equiv="content-language" content={contentLanguage} />
+
+<!-- Language Attribute (applied to html tag via script) -->
+<script is:inline define:vars={{ htmlLang }}>
+  document.documentElement.setAttribute('lang', htmlLang);
+</script>
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={pageDescription} />
+<meta property="og:locale" content={isGlobalSite ? 'en_US' : 'zh_CN'} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalUrl} />
+<meta property="twitter:title" content={pageTitle} />
+<meta property="twitter:description" content={pageDescription} />
+
+<!-- Schema.org Organization Markup -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "LeapIn",
+  "alternateName": isChinaSite ? "LeapIn中国" : undefined,
+  "url": Astro.site?.href,
+  "logo": `${Astro.site?.href}logo.png`,
+  "description": pageDescription,
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": geoRegion
+  },
+  "inLanguage": htmlLang,
+  "sameAs": isGlobalSite ? [
+    "https://twitter.com/leapin",
+    "https://linkedin.com/company/leapin"
+  ] : [
+    "https://weibo.com/leapin"
+  ]
+})} />

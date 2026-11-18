@@ -10,7 +10,19 @@ function getNestedValue(obj: any, path: string) {
 export function getCurrentLang(): 'zh' | 'en' {
   // 检测是否为英文锁定环境（通过 npm-tools entryHtml 注入的 runtimeEnv）
   const isEnForced = typeof window !== 'undefined' && (window as any).runtimeEnv?.locale === 'en';
-  return isEnForced ? 'en' : ((localStorage.getItem('language') || 'zh') as 'zh' | 'en');
+  const isManualChoice = typeof window !== 'undefined' && localStorage.getItem('languageManual') === '1';
+  
+  // 如果 runtimeEnv 锁定英文，强制同步 localStorage
+  if (isEnForced) {
+    localStorage.setItem('language', 'en');
+  } else if (!isManualChoice) {
+    // 中文站默认中文，不跟随浏览器语言或历史自动检测
+    localStorage.setItem('language', 'zh');
+  }
+  
+  return isEnForced
+    ? 'en'
+    : ((isManualChoice ? (localStorage.getItem('language') || 'zh') : 'zh') as 'zh' | 'en');
 }
 
 // 按当前语言取单条文案

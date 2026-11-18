@@ -52,7 +52,7 @@
 
 **投诉权：** 向有关政府部门反映您认为我们侵害您合法权益的行为
 
-如需行使上述权利，请通过以下方式联系我们：info@leapin-ai.com
+如需行使上述权利，请通过以下方式联系我们：info@leapin.io
 
 ### 五、未成年人
 
@@ -66,6 +66,6 @@
 
 斯智信息科技（上海）有限公司
 
-电子邮件：<span class="highlight-email">info@leapin-ai.com</span>
+电子邮件：<span class="highlight-email">info@leapin.io</span>
 
 如您对本政策有任何疑问，或希望行使您的个人信息权利，欢迎通过上述方式与我们联系。因本政策引发的争议，适用中华人民共和国法律，由有管辖权的人民法院处理。
