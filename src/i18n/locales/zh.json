@@ -575,7 +575,21 @@
       "size5": "1000+人",
       "submitting": "提交中...",
       "success": "提交成功！我们会尽快与您联系。",
-      "error": "提交失败，请稍后重试或联系我们。"
+      "error": "提交失败，请稍后重试或联系我们。",
+      "placeholder": {
+        "name": "请输入您的姓名",
+        "email": "请输入工作邮箱，如 name@company.com",
+        "phone": "请输入手机号码",
+        "company": "请输入公司名称",
+        "position": "请输入您的职位",
+        "message": "请简要描述您的需求或想了解的内容"
+      },
+      "countrySearch": "搜索国家或区号...",
+      "validation": {
+        "required": "请填写此字段",
+        "select": "请选择一项",
+        "email": "请输入有效的邮箱地址"
+      }
     }
   }
 }

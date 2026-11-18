@@ -70,7 +70,7 @@ const logos = [
                                     <span data-i18n="request.form.name">姓名</span>
                                     <span class="required">*</span>
                                 </label>
-                                <input type="text" id="name" name="name" required />
+                                <input type="text" id="name" name="name" data-i18n-placeholder="request.form.placeholder.name" required />
                             </div>
 
                             <div class="form-row">
@@ -79,7 +79,7 @@ const logos = [
                                         <span data-i18n="request.form.email">工作邮箱</span>
                                         <span class="required">*</span>
                                     </label>
-                                    <input type="email" id="email" name="email" required />
+                                    <input type="email" id="email" name="email" data-i18n-placeholder="request.form.placeholder.email" required />
                                 </div>
 
                                 <div class="form-group">
@@ -89,7 +89,7 @@ const logos = [
                                     </label>
                                     <div class="phone-input">
                                         <CountryCodeSelect />
-                                        <input type="tel" id="phone" name="phone" required />
+                                        <input type="tel" id="phone" name="phone" data-i18n-placeholder="request.form.placeholder.phone" required />
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@ const logos = [
                                     <span data-i18n="request.form.company">公司</span>
                                     <span class="required">*</span>
                                 </label>
-                                <input type="text" id="company" name="company" required />
+                                <input type="text" id="company" name="company" data-i18n-placeholder="request.form.placeholder.company" required />
                             </div>
 
                             <div class="form-row">
@@ -108,7 +108,7 @@ const logos = [
                                         <span data-i18n="request.form.position">职位</span>
                                         <span class="required">*</span>
                                     </label>
-                                    <input type="text" id="position" name="position" required />
+                                    <input type="text" id="position" name="position" data-i18n-placeholder="request.form.placeholder.position" required />
                                 </div>
 
                                 <div class="form-group">
@@ -118,11 +118,11 @@ const logos = [
                                     </label>
                                     <select id="companySize" name="companySize" required>
                                         <option value="" data-i18n="request.form.pleaseSelect">请选择</option>
-                                        <option value="1-10" data-i18n="request.form.size1">1-10人</option>
-                                        <option value="10-50" data-i18n="request.form.size1">10-50人</option>
-                                        <option value="50-100" data-i18n="request.form.size2">50-100人</option>
-                                        <option value="100-500" data-i18n="request.form.size3">100-500人</option>
-                                        <option value="500+" data-i18n="request.form.size4">500+人</option>
+                                        <option value="1-50" data-i18n="request.form.size1">1-50人</option>
+                                        <option value="51-200" data-i18n="request.form.size2">51-200人</option>
+                                        <option value="201-500" data-i18n="request.form.size3">201-500人</option>
+                                        <option value="501-1000" data-i18n="request.form.size4">501-1000人</option>
+                                        <option value="1000+" data-i18n="request.form.size5">1000+人</option>
                                     </select>
                                 </div>
                             </div>
@@ -132,7 +132,7 @@ const logos = [
                                     <span data-i18n="request.form.message">留言</span>
                                     <span class="required">*</span>
                                 </label>
-                                <textarea id="message" name="message" rows="4" required></textarea>
+                                <textarea id="message" name="message" rows="4" data-i18n-placeholder="request.form.placeholder.message" required></textarea>
                             </div>
 
                             <button type="submit" class="btn-submit" data-i18n="request.form.submit">提交信息</button>
@@ -148,7 +148,7 @@ const logos = [
 </Layout>
 
 <script>
-	import { loadTranslations } from '../scripts/i18n-loader';
+	import { loadTranslations, t } from '../scripts/i18n-loader';
 	loadTranslations();
 
 	// 表单提交处理
@@ -156,33 +156,51 @@ const logos = [
 	const formMessage = document.getElementById('formMessage') as HTMLDivElement;
 	const submitButton = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
 
-	// API 端点 - 待定
-	const API_ENDPOINT = '/api/request-demo';
+	// 表单校验提示跟随页面语言（浏览器原生提示跟随浏览器语言，会出现中文）
+	form?.addEventListener(
+		'invalid',
+		(e) => {
+			const el = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+			if (el.validity.valueMissing) {
+				el.setCustomValidity(t(el instanceof HTMLSelectElement ? 'request.form.validation.select' : 'request.form.validation.required'));
+			} else if (el.validity.typeMismatch) {
+				el.setCustomValidity(t('request.form.validation.email'));
+			}
+		},
+		true
+	);
+	const clearValidity = (e: Event) => (e.target as HTMLInputElement).setCustomValidity?.('');
+	form?.addEventListener('input', clearValidity);
+	form?.addEventListener('change', clearValidity);
+
+	// 预约演示接口
+	const API_ENDPOINT = 'https://sms.leapin-ai.com/api/website/appointment';
 
 	form?.addEventListener('submit', async (e) => {
 		e.preventDefault();
 
 		if (!form || !submitButton || !formMessage) return;
 
+		formMessage.style.display = '';
 		submitButton.disabled = true;
-		submitButton.textContent = '提交中...';
+		submitButton.textContent = t('request.form.submitting');
 
 		const formData = new FormData(form);
 		const data = {
 			name: formData.get('name'),
-			email: formData.get('email'),
 			phone: `${formData.get('countryCode')}${formData.get('phone')}`,
+			email: formData.get('email'),
 			company: formData.get('company'),
+			company_size: formData.get('companySize'),
 			position: formData.get('position'),
-			companySize: formData.get('companySize'),
 			message: formData.get('message'),
-			timestamp: new Date().toISOString(),
 		};
 
 		try {
 			const response = await fetch(API_ENDPOINT, {
 				method: 'POST',
 				headers: {
+					accept: '*/*',
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(data),
@@ -190,18 +208,18 @@ const logos = [
 
 			if (response.ok) {
 				formMessage.className = 'form-message success';
-				formMessage.textContent = '提交成功！我们会尽快与您联系。';
+				formMessage.textContent = t('request.form.success');
 				form.reset();
 			} else {
 				throw new Error('提交失败');
 			}
 		} catch (error) {
 			formMessage.className = 'form-message error';
-			formMessage.textContent = '提交失败，请稍后重试或联系我们。';
+			formMessage.textContent = t('request.form.error');
 			console.error('Form submission error:', error);
 		} finally {
 			submitButton.disabled = false;
-			submitButton.textContent = '提交信息';
+			submitButton.textContent = t('request.form.submit');
 
 			setTimeout(() => {
 				formMessage.style.display = 'none';
